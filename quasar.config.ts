@@ -34,7 +34,7 @@ export default defineConfig((/* ctx */) => {
     build: {
       target: {
         browser: ['es2022', 'firefox115', 'chrome115', 'safari14'],
-        node: 'node20',
+        node: 'node22',
       },
 
       typescript: {
@@ -43,15 +43,15 @@ export default defineConfig((/* ctx */) => {
         // extendTsConfig (tsConfig) {}
       },
 
-      vueRouterMode: 'hash', // available values: 'hash', 'history'
+      vueRouterMode: 'history', // available values: 'hash', 'history'
       // vueRouterBase,
-      // vueDevtools,
-      // vueOptionsAPI: false,
+      vueDevtools: true,
+      vueOptionsAPI: false,
 
       // rebuildCache: true, // rebuilds Vite/linter/etc cache on startup
 
       // publicPath: '/',
-      // analyze: true,
+      analyze: true,
       // env: {},
       // rawDefine: {}
       // ignorePublicFolder: true,
@@ -81,11 +81,17 @@ export default defineConfig((/* ctx */) => {
     devServer: {
       // https: true,
       open: true, // opens browser window automatically
+      // vueDevtools: true, // enables Vue Devtools in development mode
     },
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#framework
     framework: {
-      config: {},
+      config: {
+        screen: {
+          bodyClasses: true, // adds classes to body element based on screen size
+          // bodyAttributes: true, // adds attributes to body element based on screen size}
+        },
+      },
 
       // iconSet: 'material-icons', // Quasar icon set
       // lang: 'en-US', // Quasar language pack
