@@ -38,8 +38,10 @@
       />
     </q-tabs>
     <q-tab-panels v-model="tab" animated keep-alive>
-      <q-tab-panel v-for="tab in tabs" :key="tab.type" :name="tab.type">
-        <component :is="tab.component" />
+      <q-tab-panel v-for="tab in tabs" :key="tab.type" :name="tab.type" class="tw:mt-4">
+        <div class="panel-content-wrapper tw:rounded-lg tw:p-10">
+          <component :is="tab.component" />
+        </div>
       </q-tab-panel>
     </q-tab-panels>
   </q-page>
@@ -74,6 +76,15 @@ const tab = ref<TabType>('my-cards');
       margin-left: 28px;
       &:first-child {
         margin-left: 0;
+      }
+    }
+  }
+
+  .q-tab-panels {
+    .q-tab-panel {
+      padding: 6px;
+      .panel-content-wrapper {
+        box-shadow: 0 2px 12px 0 rgba(#000000, 0.14);
       }
     }
   }

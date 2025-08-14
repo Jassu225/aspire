@@ -10,7 +10,7 @@
       :width="340"
       class="q-py-xl main-layout__drawer"
     >
-      <q-img src="/src/assets/logo/logo-with-name.svg" width="125px" class="lr-margin" />
+      <q-img src="~assets/logo/logo-with-name.svg" width="125px" class="lr-margin" />
       <p style="margin-bottom: 0; margin-top: 20px" class="trust-indicator lr-padding">
         Trusted way of banking for 3,000+ SMEs and startups in Singapore
       </p>
@@ -64,6 +64,7 @@ const leftDrawerOpen = ref(false);
 .main-layout {
   .q-drawer-container {
     :deep(.q-drawer) {
+      position: fixed;
       background-color: #0c365a;
 
       .lr-padding {

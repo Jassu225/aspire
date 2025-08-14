@@ -1,5 +1,5 @@
 <template>
-  <q-card>All Cards</q-card>
+  <div>All Cards</div>
 </template>
 
 <script setup lang="ts"></script>
