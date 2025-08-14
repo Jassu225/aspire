@@ -10,7 +10,10 @@
       <q-icon :name="detailsVisible ? 'o_visibility_off' : 'visibility'" size="xs" />
       <span class="tw:ml-1 tw:font-bold">{{ detailsVisible ? 'Hide' : 'Show' }} details</span>
     </q-btn>
-    <div class="card column tw:rounded-2xl tw:p-7">
+    <div
+      class="card column tw:rounded-2xl tw:p-7"
+      :style="{ backgroundColor: card.cardDesign?.backgroundColor }"
+    >
       <div v-if="logo !== null || card.issuingBank" class="q-ml-auto">
         <q-img
           no-spinner
@@ -24,12 +27,18 @@
         />
         <span
           v-if="(logo === null || !card.cardDesign?.logoHasName) && card.issuingBank"
-          class="tw:lowercase tw:ml-1 text-black"
+          class="tw:lowercase tw:ml-1"
+          :style="{ color: card.cardDesign?.textColor }"
           >{{ card.issuingBank }}</span
         >
       </div>
-      <span class="tw:m-0 tw:text-2xl tw:mt-7">{{ card.cardHolderName }}</span>
-      <div class="card-number row items-center tw:mt-8">
+      <span class="tw:m-0 tw:text-2xl tw:mt-7" :style="{ color: card.cardDesign?.textColor }">{{
+        card.cardHolderName
+      }}</span>
+      <div
+        class="card-number row items-center tw:mt-8"
+        :style="{ color: card.cardDesign?.textColor }"
+      >
         <span
           v-for="(group, index) in cardNumberGroups"
           :key="index"
@@ -43,7 +52,10 @@
           }}
         </span>
       </div>
-      <div class="expiry-cvv-container row items-center tw:text=[13px] tw:mt-5">
+      <div
+        class="expiry-cvv-container row items-center tw:text=[13px] tw:mt-5"
+        :style="{ color: card.cardDesign?.textColor }"
+      >
         <span class="expiry-container">
           Thru: <span class="expiry tw:tracking-[1px]">{{ card.expiry }}</span>
         </span>
