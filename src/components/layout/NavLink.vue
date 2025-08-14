@@ -1,0 +1,49 @@
+<template>
+  <router-link :to="link" class="nav-link">
+    <q-item :class="$attrs.class">
+      <q-item-section avatar>
+        <q-icon :name="`svguse:${iconPath}`" size="24px" />
+      </q-item-section>
+
+      <q-item-section>
+        <q-item-label>{{ title }}</q-item-label>
+      </q-item-section>
+    </q-item>
+  </router-link>
+</template>
+
+<script setup lang="ts">
+defineOptions({
+  inheritAttrs: false,
+});
+
+export interface NavLinkProps {
+  title: string;
+  link?: string;
+  iconPath: string;
+}
+
+const { link = '#', title, iconPath } = defineProps<NavLinkProps>();
+</script>
+
+<style lang="scss" scoped>
+.nav-link {
+  &.router-link-exact-active {
+    .q-item {
+      .q-icon,
+      .q-item__label {
+        color: $primary;
+        font-size: bold;
+      }
+    }
+  }
+
+  .q-item {
+    margin-top: 60px;
+    .q-icon,
+    .q-item__label {
+      color: white;
+    }
+  }
+}
+</style>

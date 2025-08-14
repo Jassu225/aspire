@@ -1,11 +1,21 @@
 <template>
-  <q-layout view="hHh lpR fFf">
-    <q-drawer show-if-above v-model="leftDrawerOpen" side="left" bordered>
-      <!-- drawer content -->
+  <q-layout view="hHh lpR fFf" class="main-layout">
+    <q-drawer
+      show-if-above
+      v-model="leftDrawerOpen"
+      side="left"
+      bordered
+      no-swipe-close
+      persistent
+      :width="340"
+      class="q-py-xl main-layout__drawer"
+    >
+      <q-img src="/src/assets/logo/logo-with-name.svg" width="125px" class="lr-margin" />
+      <p style="margin-bottom: 0; margin-top: 20px" class="trust-indicator lr-padding">
+        Trusted way of banking for 3,000+ SMEs and startups in Singapore
+      </p>
       <q-list>
-        <q-item-label header> Essential Links </q-item-label>
-
-        <EssentialLink v-for="link in linksList" :key="link.title" v-bind="link" />
+        <NavLink v-for="link in linksList" :key="link.title" v-bind="link" class="lr-padding" />
       </q-list>
     </q-drawer>
 
@@ -17,52 +27,64 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import EssentialLink, { type EssentialLinkProps } from 'components/EssentialLink.vue';
+import NavLink, { type NavLinkProps } from 'components/layout/NavLink.vue';
 
-const linksList: EssentialLinkProps[] = [
+const linksList: NavLinkProps[] = [
   {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev',
+    title: 'Home',
+    link: '/',
+    iconPath: 'icons/logo.svg|0 0 25.595 25',
   },
   {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework',
+    title: 'Cards',
+    iconPath: 'icons/card-back.svg',
+    link: '/cards',
   },
   {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev',
+    title: 'Payments',
+    iconPath: 'icons/logo.svg|0 0 24 24.25',
+    link: '/payments',
   },
   {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev',
+    title: 'Credit',
+    iconPath: 'icons/credit.svg',
+    link: '/credit',
   },
   {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev',
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev',
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev',
+    title: 'Settings',
+    iconPath: 'icons/account.svg',
+    link: '/settings',
   },
 ];
 
 const leftDrawerOpen = ref(false);
 </script>
+
+<style lang="scss" scoped>
+.main-layout {
+  .q-drawer-container {
+    :deep(.q-drawer) {
+      background-color: #0c365a;
+
+      .lr-padding {
+        padding-left: 48px;
+        padding-right: 40px;
+      }
+      .lr-margin {
+        // for images
+        margin-left: 48px;
+        margin-right: 40px;
+      }
+
+      .trust-indicator {
+        color: rgba(#ffffff, 0.3);
+        font-size: 15px;
+      }
+
+      .q-list {
+        margin-top: 80px;
+      }
+    }
+  }
+}
+</style>
