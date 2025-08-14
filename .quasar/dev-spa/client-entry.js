@@ -33,6 +33,8 @@ import 'quasar/dist/quasar.sass'
 
 
 
+import 'src/css/tailwind.scss'
+
 import 'src/css/app.scss'
 
 

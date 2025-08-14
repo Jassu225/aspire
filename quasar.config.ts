@@ -14,7 +14,7 @@ export default defineConfig((/* ctx */) => {
     boot: [],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#css
-    css: ['app.scss'],
+    css: ['tailwind.scss', 'app.scss'],
 
     // https://github.com/quasarframework/quasar/tree/dev/extras
     extras: [
@@ -90,6 +90,10 @@ export default defineConfig((/* ctx */) => {
         screen: {
           bodyClasses: true, // adds classes to body element based on screen size
           // bodyAttributes: true, // adds attributes to body element based on screen size}
+        },
+        brand: {
+          primary: '#01d167',
+          secondary: '#325baf',
         },
       },
 

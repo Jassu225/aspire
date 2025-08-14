@@ -15,5 +15,5 @@
 
 
 
-export default { config: {"screen":{"bodyClasses":true}} }
+export default { config: {"screen":{"bodyClasses":true},"brand":{"primary":"#01d167","secondary":"#325baf"}} }
 
