@@ -22,6 +22,8 @@ import { createApp } from 'vue'
 
 import '@quasar/extras/material-icons/material-icons.css'
 
+import '@quasar/extras/material-icons-round/material-icons-round.css'
+
 
 
 

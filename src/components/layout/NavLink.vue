@@ -43,6 +43,7 @@ const { link = '#', title, iconPath } = defineProps<NavLinkProps>();
     .q-icon,
     .q-item__label {
       color: white;
+      font-size: 1rem;
     }
   }
 }
