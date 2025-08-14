@@ -11,7 +11,7 @@
       <span class="tw:ml-1 tw:font-bold">{{ detailsVisible ? 'Hide' : 'Show' }} details</span>
     </q-btn>
     <div
-      class="card column tw:rounded-2xl tw:p-7"
+      class="card column tw:rounded-2xl tw:p-7 tw:mt-1"
       :style="{ backgroundColor: card.cardDesign?.backgroundColor }"
     >
       <div v-if="logo !== null || card.issuingBank" class="q-ml-auto">

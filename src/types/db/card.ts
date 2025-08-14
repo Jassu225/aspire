@@ -49,3 +49,21 @@ export type Card = {
     cardNetworkLogo?: ImageResource; // Optional, card network logo
   };
 };
+
+export enum CardActionType {
+  FREEZE = 'FREEZE',
+  UNFREEZE = 'UNFREEZE',
+  SET_SPEND_LIMIT = 'SET_SPEND_LIMIT',
+  ADD_TO_GPAY = 'ADD_TO_GPAY',
+  REPLACE = 'REPLACE',
+  CANCEL = 'CANCEL',
+}
+
+export type CardAction = {
+  type: CardActionType;
+  name: string; // Name of the action
+  icon: ImageResource; // Path to the icon for the action
+  description?: string; // Optional, description of the action
+  isVisible: boolean; // Whether the action is visible in the UI
+  isActive: boolean; // Whether the action is currently active
+};

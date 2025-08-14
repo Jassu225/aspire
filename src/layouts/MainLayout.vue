@@ -37,22 +37,22 @@ const linksList: NavLinkProps[] = [
   },
   {
     title: 'Cards',
-    iconPath: 'icons/card-back.svg',
+    iconPath: 'icons/navigation/card-back.svg',
     link: '/cards',
   },
   {
     title: 'Payments',
-    iconPath: 'icons/logo.svg|0 0 24 24.25',
+    iconPath: 'icons/navigation/transactions.svg|0 0 24 24.25',
     link: '/payments',
   },
   {
     title: 'Credit',
-    iconPath: 'icons/credit.svg',
+    iconPath: 'icons/navigation/credit.svg',
     link: '/credit',
   },
   {
     title: 'Settings',
-    iconPath: 'icons/account.svg',
+    iconPath: 'icons/navigation/account.svg',
     link: '/settings',
   },
 ];
@@ -65,7 +65,7 @@ const leftDrawerOpen = ref(false);
   .q-drawer-container {
     :deep(.q-drawer) {
       position: fixed;
-      background-color: #0c365a;
+      background-color: $primary-container;
 
       .lr-padding {
         padding-left: 48px;

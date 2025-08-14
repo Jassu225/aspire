@@ -10,11 +10,11 @@
     transition-next="slide-left"
     height="364px"
   >
-    <template #navigation-icon="{ active, onClick }">
+    <template #navigation-icon="{ active, onClick, index }">
       <q-btn round @click="onClick" size="xs" push unelevated flat>
         <span
           class="tw:rounded-full tw:inline-block control-icon"
-          :class="{ active: active }"
+          :class="{ active: active || cards[index]?.uid === selectedCardUid }"
         ></span>
       </q-btn>
     </template>

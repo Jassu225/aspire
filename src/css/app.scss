@@ -48,7 +48,8 @@
   src: url('./fonts/open-sans-v43-latin-800.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
 
-* {
+*,
+pre {
   font-family:
     'Open Sans',
     -apple-system,
