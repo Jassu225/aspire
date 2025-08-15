@@ -2,7 +2,7 @@
   <router-link :to="link" class="nav-link">
     <q-item :class="$attrs.class">
       <q-item-section avatar>
-        <q-icon size="24px"><icon /></q-icon>
+        <q-icon size="24px"><component :is="icon" /></q-icon>
       </q-item-section>
 
       <q-item-section>

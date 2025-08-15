@@ -10,7 +10,7 @@
   >
     <template #header>
       <q-item-section side>
-        <q-icon><icon /></q-icon>
+        <q-icon><component :is="icon" /></q-icon>
       </q-item-section>
 
       <q-item-section class="title"> {{ title }} </q-item-section>
