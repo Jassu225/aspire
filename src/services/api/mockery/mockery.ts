@@ -1,0 +1,30 @@
+import { findMockAndExec } from './data';
+
+const setupMockery = (): (() => void) => {
+  console.log(`--------- Mockery Enabled -------`);
+  const originalFetch = self.fetch;
+
+  self.fetch = async (input: RequestInfo | URL, init?: RequestInit): Promise<Response> => {
+    if (typeof input === 'string') {
+      const resPromise = findMockAndExec(input, JSON.parse((init?.body as string) || '{}'));
+      if (resPromise instanceof Promise) {
+        const res = await resPromise;
+        const response = new Response(JSON.stringify(res), {
+          status: 200,
+          statusText: 'OK',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        return response;
+      }
+    }
+    return originalFetch(input, init);
+  };
+
+  return () => {
+    self.fetch = originalFetch;
+  };
+};
+
+export default setupMockery;
