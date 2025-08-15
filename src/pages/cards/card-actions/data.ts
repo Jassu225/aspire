@@ -3,6 +3,7 @@ import { CardActionType } from 'src/types/db/card';
 
 const cardActions: CardAction[] = [
   {
+    uid: '1',
     type: CardActionType.FREEZE,
     name: 'Freeze card',
     icon: {
@@ -12,6 +13,7 @@ const cardActions: CardAction[] = [
     isActive: true,
   },
   {
+    uid: '2',
     type: CardActionType.SET_SPEND_LIMIT,
     name: 'Set spend limit',
     icon: {
@@ -21,6 +23,7 @@ const cardActions: CardAction[] = [
     isActive: true,
   },
   {
+    uid: '3',
     type: CardActionType.ADD_TO_GPAY,
     name: 'Add to GPay',
     icon: {
@@ -30,6 +33,7 @@ const cardActions: CardAction[] = [
     isActive: true,
   },
   {
+    uid: '4',
     type: CardActionType.REPLACE,
     name: 'Replace card',
     icon: {
@@ -39,6 +43,7 @@ const cardActions: CardAction[] = [
     isActive: true,
   },
   {
+    uid: '5',
     type: CardActionType.CANCEL,
     name: 'Cancel card',
     icon: {

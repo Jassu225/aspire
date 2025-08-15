@@ -10,7 +10,7 @@
       :width="340"
       class="q-py-xl main-layout__drawer"
     >
-      <q-img src="~assets/logo/logo-with-name.svg?url" width="125px" class="lr-margin" />
+      <q-img src="~assets/icons/logo/logo-with-name.svg" width="125px" class="lr-margin" />
       <p style="margin-bottom: 0; margin-top: 20px" class="trust-indicator lr-padding">
         Trusted way of banking for 3,000+ SMEs and startups in Singapore
       </p>

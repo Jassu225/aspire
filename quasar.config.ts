@@ -77,7 +77,7 @@ export default defineConfig((/* ctx */) => {
           },
           { server: false },
         ],
-        svgLoader({ svgoConfig: { multipass: true } }),
+        svgLoader({ defaultImport: 'url', svgoConfig: { multipass: true } }),
       ],
     },
 

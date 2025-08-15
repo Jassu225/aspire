@@ -1,8 +1,9 @@
-import type { ImageResource } from './helpers';
+import type { ImageResource } from '../helpers';
 
 export enum CardType {
   DEBIT = 'DEBIT',
   CREDIT = 'CREDIT',
+  PREPAID = 'PREPAID',
 }
 
 export enum CardStatus {
@@ -60,10 +61,79 @@ export enum CardActionType {
 }
 
 export type CardAction = {
+  uid: string;
   type: CardActionType;
   name: string; // Name of the action
   icon: ImageResource; // Path to the icon for the action
   description?: string; // Optional, description of the action
   isVisible: boolean; // Whether the action is visible in the UI
   isActive: boolean; // Whether the action is currently active
+};
+
+export enum CardTransactionType {
+  PURCHASE = 'PURCHASE',
+  REFUND = 'REFUND',
+  CASHBACK_ADJUSTMENT = 'CASHBACK_ADJUSTMENT',
+  FEE = 'FEE', // annual fee, transaction fee ...
+  PAYMENT_RECEIVED = 'PAYMENT_RECEIVED',
+  CASHBACK_RECEIVED = 'CASHBACK_RECEIVED', // paying using cashback
+  DEPOSIT = 'DEPOSIT',
+  WITHDRAWL = 'WITHDRAWL',
+}
+
+export enum CardTransactionStatus {
+  PENDING = 'PENDING',
+  SETTLED = 'SETTLED',
+  FAILED = 'FAILED',
+  CANCELLED = 'CANCELLED',
+  DISPUTED = 'DISPUTED',
+}
+
+export enum MerchantCategory {
+  UTILITY = 'UTILITY',
+  TRAVEL = 'TRAVEL',
+  HEALTHCARE = 'HEALTHCARE',
+  ENTERTAINMENT = 'ENTERTAINMENT',
+  DINING = 'DINING',
+  FOOD_AND_GROCERIES = 'FOOD_AND_GROCERIES',
+  TRANSPORT = 'TRANSPORT',
+  LEISURE = 'LEISURE',
+  PAYMENTS = 'PAYMENTS',
+  TRANSFERS = 'TRANSFERS',
+  EDUCATION = 'EDUCATION',
+  ATM = 'ATM',
+  MISCELLANEOUS = 'MISCELLANEOUS', // un-categorized
+}
+
+export type Merchant = {
+  uid: string;
+  name: string;
+  mcc: string; // merchant category code
+  registeredCountry: string; // ISO 3166-1 alpha-3 code
+  acquiringBankId: string;
+  acquiringBankName: string;
+  category: MerchantCategory;
+  icon?: ImageResource;
+};
+
+// export enum CashFlowType {
+//   INWARDS = 'INWARDS',
+//   OUTWARDS = 'OUTWARDS',
+// }
+
+export type Amount = {
+  value: number; // Amount in smallest currency unit (e.g., cents)
+  currency: string; // ISO 4217 currency code (USD, EUR, etc.)
+  currencySign?: string;
+  fractionFactor: number; // We divide by this to get the value in units
+};
+
+export type CardTransaction = {
+  uid: string;
+  merchantUid: string;
+  amount: Amount;
+  type: CardTransactionType;
+  status: CardTransactionStatus;
+  createdAt: string;
+  settledAt?: string;
 };
