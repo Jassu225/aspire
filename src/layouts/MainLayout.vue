@@ -10,7 +10,7 @@
       :width="340"
       class="q-py-xl main-layout__drawer"
     >
-      <q-img src="~assets/logo/logo-with-name.svg" width="125px" class="lr-margin" />
+      <q-img src="~assets/logo/logo-with-name.svg?url" width="125px" class="lr-margin" />
       <p style="margin-bottom: 0; margin-top: 20px" class="trust-indicator lr-padding">
         Trusted way of banking for 3,000+ SMEs and startups in Singapore
       </p>
@@ -28,31 +28,36 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import NavLink, { type NavLinkProps } from 'components/layout/NavLink.vue';
+import HomeIcon from 'assets/icons/logo/logo.svg?component';
+import CardBackIcon from 'assets/icons/navigation/card-back.svg?component';
+import TransactionsIcon from 'assets/icons/navigation/transactions.svg?component';
+import CreditIcon from 'assets/icons/navigation/credit.svg?component';
+import AccountIcon from 'assets/icons/navigation/account.svg?component';
 
 const linksList: NavLinkProps[] = [
   {
     title: 'Home',
     link: '/',
-    iconPath: 'icons/logo.svg|0 0 25.595 25',
+    icon: HomeIcon,
   },
   {
     title: 'Cards',
-    iconPath: 'icons/navigation/card-back.svg',
+    icon: CardBackIcon,
     link: '/cards',
   },
   {
     title: 'Payments',
-    iconPath: 'icons/navigation/transactions.svg|0 0 24 24.25',
+    icon: TransactionsIcon,
     link: '/payments',
   },
   {
     title: 'Credit',
-    iconPath: 'icons/navigation/credit.svg',
+    icon: CreditIcon,
     link: '/credit',
   },
   {
     title: 'Settings',
-    iconPath: 'icons/navigation/account.svg',
+    icon: AccountIcon,
     link: '/settings',
   },
 ];

@@ -6,7 +6,7 @@ const cardActions: CardAction[] = [
     type: CardActionType.FREEZE,
     name: 'Freeze card',
     icon: {
-      url: 'http://localhost:9000/icons/card-actions/freeze.png',
+      url: 'http://localhost:9000/icons/card/card-actions/freeze.png',
     },
     isVisible: true,
     isActive: true,
@@ -15,7 +15,7 @@ const cardActions: CardAction[] = [
     type: CardActionType.SET_SPEND_LIMIT,
     name: 'Set spend limit',
     icon: {
-      url: 'http://localhost:9000/icons/card-actions/meter.png',
+      url: 'http://localhost:9000/icons/card/card-actions/meter.png',
     },
     isVisible: true,
     isActive: true,
@@ -24,7 +24,7 @@ const cardActions: CardAction[] = [
     type: CardActionType.ADD_TO_GPAY,
     name: 'Add to GPay',
     icon: {
-      url: 'http://localhost:9000/icons/card-actions/gpay.png',
+      url: 'http://localhost:9000/icons/card/card-actions/gpay.png',
     },
     isVisible: true,
     isActive: true,
@@ -33,7 +33,7 @@ const cardActions: CardAction[] = [
     type: CardActionType.REPLACE,
     name: 'Replace card',
     icon: {
-      url: 'http://localhost:9000/icons/card-actions/replace.png',
+      url: 'http://localhost:9000/icons/card/card-actions/replace.png',
     },
     isVisible: true,
     isActive: true,
@@ -42,7 +42,7 @@ const cardActions: CardAction[] = [
     type: CardActionType.CANCEL,
     name: 'Cancel card',
     icon: {
-      url: 'http://localhost:9000/icons/card-actions/deactivate.png',
+      url: 'http://localhost:9000/icons/card/card-actions/deactivate.png',
     },
     isVisible: true,
     isActive: true,

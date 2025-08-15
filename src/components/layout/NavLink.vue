@@ -2,7 +2,7 @@
   <router-link :to="link" class="nav-link">
     <q-item :class="$attrs.class">
       <q-item-section avatar>
-        <q-icon :name="`svguse:${iconPath}`" size="24px" />
+        <q-icon size="24px"><component :is="icon" /></q-icon>
       </q-item-section>
 
       <q-item-section>
@@ -13,6 +13,7 @@
 </template>
 
 <script setup lang="ts">
+import type { Component } from 'vue';
 defineOptions({
   inheritAttrs: false,
 });
@@ -20,10 +21,10 @@ defineOptions({
 export interface NavLinkProps {
   title: string;
   link?: string;
-  iconPath: string;
+  icon: Component;
 }
 
-const { link = '#', title, iconPath } = defineProps<NavLinkProps>();
+const { link = '#', title, icon } = defineProps<NavLinkProps>();
 </script>
 
 <style lang="scss" scoped>

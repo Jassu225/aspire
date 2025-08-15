@@ -2,6 +2,7 @@
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file
 
 import { defineConfig } from '#q-app/wrappers';
+import svgLoader from 'vite-svg-loader';
 
 export default defineConfig((/* ctx */) => {
   return {
@@ -76,6 +77,7 @@ export default defineConfig((/* ctx */) => {
           },
           { server: false },
         ],
+        svgLoader({ svgoConfig: { multipass: true } }),
       ],
     },
 
