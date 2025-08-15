@@ -1,3 +1,4 @@
+import { CardsInfoType } from 'src/types/user/card';
 import { defineAsyncComponent, h } from 'vue';
 
 const LoadingComponent = h('q-spinner', { color: 'primary', size: '2em' });
@@ -22,15 +23,13 @@ const AllCardsPage = defineAsyncComponent({
 
 export const tabs = [
   {
-    type: 'my-cards',
+    type: CardsInfoType.OWN,
     label: 'My debit cards',
     component: MyCardsPage,
   },
   {
-    type: 'all-cards',
+    type: CardsInfoType.ALL,
     label: 'All company cards',
     component: AllCardsPage,
   },
-] as const;
-
-export type TabType = (typeof tabs)[number]['type'];
+];

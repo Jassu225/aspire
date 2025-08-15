@@ -1,7 +1,7 @@
 <template>
   <div class="card-actions row items-center justify-between tw:rounded-2xl tw:px-7 tw:py-5">
     <q-btn
-      v-for="action in cardActions"
+      v-for="action in cardsStore.selectedCard?.actions"
       :key="action.type"
       flat
       class="action-btn"
@@ -18,7 +18,9 @@
 </template>
 
 <script setup lang="ts">
-import cardActions from './data';
+import useCardsStore from 'src/stores/cards';
+
+const cardsStore = useCardsStore();
 
 const formatActionName = (name: string) => {
   const words = name.split(' ');

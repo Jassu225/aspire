@@ -48,11 +48,38 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onWatcherCleanup, ref, watch } from 'vue';
 import { formatAsCurrencyWithoutSign } from 'src/utils/number';
 import { tabs } from './types';
-import type { TabType } from './types';
-const tab = ref<TabType>('my-cards');
+import useCardsStore from 'src/stores/cards';
+import { CardsInfoType } from 'src/types/user/card';
+
+const tab = ref<CardsInfoType>(CardsInfoType.OWN);
+
+watch(
+  tab,
+  () => {
+    console.log('calling --- ', tab.value);
+    const store = useCardsStore();
+    const abortController = new AbortController();
+
+    void store.fetchCardsInfo(
+      {
+        cardsInfoType: tab.value,
+      },
+      {
+        signal: abortController.signal,
+      },
+    );
+
+    onWatcherCleanup(() => {
+      abortController.abort();
+    });
+  },
+  {
+    immediate: true,
+  },
+);
 </script>
 
 <style lang="scss" scoped>

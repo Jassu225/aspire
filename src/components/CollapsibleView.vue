@@ -5,6 +5,8 @@
     expandIconClass="expand-icon"
     header-class="header tw:rounded-lg"
     :default-opened="defaultOpened"
+    @show="$emit('show')"
+    @hide="$emit('hide')"
   >
     <template #header>
       <q-item-section side>
@@ -23,7 +25,8 @@
 </template>
 
 <script setup lang="ts">
-import type { Component } from 'vue';
+import { type Component } from 'vue';
+defineEmits(['show', 'hide']);
 
 const {
   icon,

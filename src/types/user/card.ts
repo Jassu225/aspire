@@ -1,12 +1,12 @@
 import type {
-  CardAction as DbCardAction,
+  CardAction,
   CardTransaction as DbCardTransaction,
   Merchant,
+  Card as DbCard,
 } from '../db/card';
 
-export type CardAction = DbCardAction & {
-  isVisible: boolean; // Whether the action is visible in the UI
-  isActive: boolean; // Whether the action is currently active
+export type UiCard = DbCard & {
+  actions: CardAction[];
 };
 
 export type CardTransaction = Omit<DbCardTransaction, 'merchantUid'> & {
@@ -17,3 +17,8 @@ export type CardTransaction = Omit<DbCardTransaction, 'merchantUid'> & {
     category: Merchant['category'];
   };
 };
+
+export enum CardsInfoType {
+  OWN = 'OWN',
+  ALL = 'ALL',
+}
