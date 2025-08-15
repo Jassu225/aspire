@@ -5,7 +5,7 @@
       <CardActions />
     </div>
     <div class="tw:pt-14">
-      <CollapsibleView :icon="TransactionsIcon" title="Recent transactions">
+      <CollapsibleView :icon="TransactionsIcon" title="Recent transactions" default-opened>
         <q-list>
           <template v-for="(transaction, index) in transactions" :key="transaction.uid">
             <q-separator v-if="index > 0" />

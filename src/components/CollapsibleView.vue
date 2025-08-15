@@ -4,6 +4,7 @@
     expand-icon="r_expand_circle_down"
     expandIconClass="expand-icon"
     header-class="header tw:rounded-lg"
+    :default-opened="defaultOpened"
   >
     <template #header>
       <q-item-section side>
@@ -24,9 +25,14 @@
 <script setup lang="ts">
 import type { Component } from 'vue';
 
-const { icon, title } = defineProps<{
+const {
+  icon,
+  title,
+  defaultOpened = false,
+} = defineProps<{
   icon: Component;
   title: string;
+  defaultOpened?: boolean;
 }>();
 </script>
 
