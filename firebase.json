@@ -1,0 +1,7 @@
+{
+  "hosting": {
+    "site": "aspire-play",
+    "public": "dist/spa",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
+  }
+}
