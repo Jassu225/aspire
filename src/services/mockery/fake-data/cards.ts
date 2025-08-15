@@ -6,6 +6,7 @@ import {
   CardType,
 } from 'src/types/db/card';
 import type { UiCard } from 'src/types/user/card';
+import { getAssetUrl } from 'src/utils/url';
 
 export const fakeCardActions: CardAction[] = [
   {
@@ -13,7 +14,7 @@ export const fakeCardActions: CardAction[] = [
     type: CardActionType.FREEZE,
     name: 'Freeze card',
     icon: {
-      url: 'http://localhost:9000/icons/card/card-actions/freeze.png',
+      url: getAssetUrl('/icons/card/card-actions/freeze.png'),
     },
     isVisible: true,
     isActive: true,
@@ -23,7 +24,7 @@ export const fakeCardActions: CardAction[] = [
     type: CardActionType.SET_SPEND_LIMIT,
     name: 'Set spend limit',
     icon: {
-      url: 'http://localhost:9000/icons/card/card-actions/meter.png',
+      url: getAssetUrl('/icons/card/card-actions/meter.png'),
     },
     isVisible: true,
     isActive: true,
@@ -33,7 +34,7 @@ export const fakeCardActions: CardAction[] = [
     type: CardActionType.ADD_TO_GPAY,
     name: 'Add to GPay',
     icon: {
-      url: 'http://localhost:9000/icons/card/card-actions/gpay.png',
+      url: getAssetUrl('/icons/card/card-actions/gpay.png'),
     },
     isVisible: true,
     isActive: true,
@@ -43,7 +44,7 @@ export const fakeCardActions: CardAction[] = [
     type: CardActionType.REPLACE,
     name: 'Replace card',
     icon: {
-      url: 'http://localhost:9000/icons/card/card-actions/replace.png',
+      url: getAssetUrl('/icons/card/card-actions/replace.png'),
     },
     isVisible: true,
     isActive: true,
@@ -53,7 +54,7 @@ export const fakeCardActions: CardAction[] = [
     type: CardActionType.CANCEL,
     name: 'Cancel card',
     icon: {
-      url: 'http://localhost:9000/icons/card/card-actions/deactivate.png',
+      url: getAssetUrl('/icons/card/card-actions/deactivate.png'),
     },
     isVisible: true,
     isActive: true,
@@ -71,7 +72,7 @@ export const cardsFakeData: UiCard[] = [
       backgroundColor: '#01D167',
       textColor: 'white',
       logo: {
-        url: 'http://localhost:9000/icons/logo.svg',
+        url: getAssetUrl('/icons/logo.svg'),
         width: 24,
         height: 23,
         alt: 'Card Logo',
@@ -101,7 +102,7 @@ export const cardsFakeData: UiCard[] = [
       backgroundColor: '#000000',
       textColor: '#ffffff',
       logo: {
-        url: 'http://localhost:9000/icons/logo-with-name.svg',
+        url: getAssetUrl('/icons/logo-with-name.svg'),
         width: 85,
         height: 24,
         alt: 'Card Logo with Name',

@@ -1,11 +1,12 @@
 import { CardTransactionStatus, CardTransactionType, MerchantCategory } from 'src/types/db/card';
 import { type CardTransaction } from 'src/types/user/card';
+import { getAssetUrl } from 'src/utils/url';
 
 const hamleysMerchant: CardTransaction['merchant'] = {
   uid: 'hamleys',
   name: 'Hamleys',
   icon: {
-    url: 'http://localhost:9000/icons/card/transactions/categories/file-storage.svg',
+    url: getAssetUrl('/icons/card/transactions/categories/file-storage.svg'),
     color: '#009DFF',
     width: 16,
     height: 15.2,
@@ -17,7 +18,7 @@ const mcDonalsdsMerchant: CardTransaction['merchant'] = {
   uid: 'mcD',
   name: 'Mc Donalds',
   icon: {
-    url: 'http://localhost:9000/icons/card/transactions/categories/fast-food.svg',
+    url: getAssetUrl('/icons/card/transactions/categories/fast-food.svg'),
     color: '#009DFF',
     width: 24,
     height: 24,
