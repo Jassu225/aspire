@@ -3,7 +3,6 @@ import type { ImageResource } from '../helpers';
 export enum CardType {
   DEBIT = 'DEBIT',
   CREDIT = 'CREDIT',
-  PREPAID = 'PREPAID',
 }
 
 export enum CardStatus {

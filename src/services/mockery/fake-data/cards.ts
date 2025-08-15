@@ -7,7 +7,7 @@ import {
 } from 'src/types/db/card';
 import type { UiCard } from 'src/types/user/card';
 
-const cardActions: CardAction[] = [
+export const fakeCardActions: CardAction[] = [
   {
     uid: '1',
     type: CardActionType.FREEZE,
@@ -89,7 +89,7 @@ export const cardsFakeData: UiCard[] = [
     status: CardStatus.ACTIVE,
     createdAt: '2023-10-01T00:00:00Z',
     cardNetwork: CardNetwork.VISA,
-    actions: cardActions,
+    actions: fakeCardActions,
   },
   {
     uid: '2',
@@ -118,6 +118,6 @@ export const cardsFakeData: UiCard[] = [
     status: CardStatus.ACTIVE,
     createdAt: '2023-10-01T00:00:00Z',
     cardNetwork: CardNetwork.VISA,
-    actions: cardActions.slice(1),
+    actions: fakeCardActions.slice(1),
   },
 ];

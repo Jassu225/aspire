@@ -3,7 +3,10 @@ import type {
   FetchCardsInfoResponse,
   FetchCardTransactionsRequest,
   FetchCardTransactionsResponse,
+  SubmitNewCardFormRequest,
 } from 'src/types/api/cards';
+import type { UiCard } from 'src/types/user/card';
+import { Notify } from 'quasar';
 // import type { CardsInfoType } from 'src/types/user/card';
 
 const API_BASE_URL = process.env.API_BASE_URL || window.origin;
@@ -64,4 +67,12 @@ export const fetchCardTransactions = (
     data: req,
     options,
   });
+};
+
+export const submitNewCardForm = (req: SubmitNewCardFormRequest, options?: RequestOptions) => {
+  return makeApiCall<SubmitNewCardFormRequest, UiCard>({
+    endpoint: '/api/cards/create',
+    data: req,
+    options,
+  }).then(() => Notify.create({ type: 'info', message: 'New card issued!', position: 'top' }));
 };

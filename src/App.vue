@@ -4,6 +4,6 @@
 
 <script setup lang="ts">
 //
-import setupMockery from 'src/services/api/mockery/mockery';
+import setupMockery from 'src/services/mockery/mockery';
 setupMockery();
 </script>

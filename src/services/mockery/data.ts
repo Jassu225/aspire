@@ -3,9 +3,13 @@ import type {
   FetchCardsInfoResponse,
   FetchCardTransactionsRequest,
   FetchCardTransactionsResponse,
+  SubmitNewCardFormRequest,
 } from 'src/types/api/cards';
 import { cardsFakeData } from './fake-data/cards';
 import fakeCardTransactions from './fake-data/card-transactions';
+import type { UiCard } from 'src/types/user/card';
+import { toUiCard } from 'src/utils/card';
+import { generateNewCard } from '../backend/card-generator';
 
 type BaseMock = {
   endpoint: string;
@@ -38,7 +42,15 @@ const cardTrasactionsMock: MockType<FetchCardTransactionsRequest, FetchCardTrans
   },
 };
 
-const mocks: BaseMock[] = [cardsMock as BaseMock, cardTrasactionsMock as BaseMock];
+const createNewCardMock: MockType<SubmitNewCardFormRequest, UiCard> = {
+  endpoint: '/api/cards/create',
+  requestTrap: async function (req) {
+    await new Promise((res) => setTimeout(res, 2000));
+    return toUiCard(generateNewCard(req));
+  },
+};
+
+const mocks = [cardsMock, cardTrasactionsMock, createNewCardMock] as BaseMock[];
 
 export const findMockAndExec = (endpointUrl: string, req: unknown): Promise<object> | null => {
   for (const mock of mocks) {

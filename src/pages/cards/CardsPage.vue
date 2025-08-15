@@ -13,7 +13,13 @@
           }}</span>
         </div>
       </div>
-      <q-btn color="accent" class="new-card-btn" :ripple="false" :no-caps="true">
+      <q-btn
+        color="accent"
+        class="new-card-btn"
+        :ripple="false"
+        :no-caps="true"
+        @click="showNewCardForm = true"
+      >
         <q-icon name="r_add_circle" />
         <span class="tw:ml-1 tw:font-bold">New card</span>
       </q-btn>
@@ -44,6 +50,7 @@
         </div>
       </q-tab-panel>
     </q-tab-panels>
+    <NewCardForm v-model="showNewCardForm" />
   </q-page>
 </template>
 
@@ -53,7 +60,9 @@ import { formatAsCurrencyWithoutSign } from 'src/utils/number';
 import { tabs } from './types';
 import useCardsStore from 'src/stores/cards';
 import { CardsInfoType } from 'src/types/user/card';
+import NewCardForm from './NewCardForm.vue';
 
+const showNewCardForm = ref(false);
 const tab = ref<CardsInfoType>(CardsInfoType.OWN);
 
 watch(

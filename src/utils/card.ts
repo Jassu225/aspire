@@ -1,6 +1,7 @@
-import { CardTransactionType, type CardType } from 'src/types/db/card';
-import type { CardTransaction } from 'src/types/user/card';
+import { type Card, CardTransactionType, type CardType } from 'src/types/db/card';
+import type { CardTransaction, UiCard } from 'src/types/user/card';
 import { enumToSentence } from './enum';
+import { fakeCardActions } from 'src/services/mockery/fake-data/cards';
 
 export const splitCardNumber = (cardNumber: string): string[] => {
   // Split the card number into groups of 4 digits
@@ -47,3 +48,8 @@ export const getTransactionCaption = (transaction: CardTransaction, cardType: Ca
       return `Charged to the ${enumToSentence(cardType).toLowerCase()} card`;
   }
 };
+
+export const MAX_CARD_NAME_LENGTH = 16;
+export const CARD_VALIDITY_RANGE_IN_YEARS = [2, 3, 4, 5];
+
+export const toUiCard = (card: Card): UiCard => ({ ...card, actions: fakeCardActions });
