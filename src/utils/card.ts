@@ -1,5 +1,6 @@
 import {
   type Card,
+  CardNetwork,
   type CardTransaction,
   CardTransactionType,
   type CardType,
@@ -7,6 +8,8 @@ import {
 import type { UiCardTransaction, UiCard } from 'src/types/user/card';
 import { enumToSentence } from './enum';
 import { fakeCardActions } from 'src/services/mockery/fake-data/cards';
+import { getAssetUrl } from './url';
+import type { ImageResource } from 'src/types/helpers';
 
 export const splitCardNumber = (cardNumber: string): string[] => {
   // Split the card number into groups of 4 digits
@@ -52,6 +55,34 @@ export const getTransactionCaption = (transaction: UiCardTransaction, cardType: 
     case CardTransactionType.PURCHASE:
       return `Charged to the ${enumToSentence(cardType).toLowerCase()} card`;
   }
+};
+
+export const getCardNetworkLogo = (cardNetwork: CardNetwork): ImageResource | undefined => {
+  const assetPathPrefix = '/icons/card/networks';
+  switch (cardNetwork) {
+    case CardNetwork.VISA:
+      return {
+        url: getAssetUrl(`${assetPathPrefix}/visa.svg`),
+        width: 69,
+        height: 23,
+        alt: 'Visa',
+      };
+    case CardNetwork.MASTERCARD:
+      return {
+        url: getAssetUrl(`${assetPathPrefix}/mastercard.png`),
+        width: 82.27,
+        height: 54,
+        alt: 'Mastercard',
+      };
+    case CardNetwork.RUPAY:
+      return {
+        url: getAssetUrl(`${assetPathPrefix}/rupay.svg`),
+        width: 230,
+        height: 60,
+        alt: 'Rupay',
+      };
+  }
+  return undefined;
 };
 
 export const MAX_CARD_NAME_LENGTH = 16;

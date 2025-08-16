@@ -46,7 +46,7 @@ export type Card = {
     textColor?: string; // Optional, text color on the card
     logo?: ImageResource; // Optional, logo on the card / bank logo
     logoHasName?: boolean; // Optional, if the logo has a name
-    cardNetworkLogo?: ImageResource; // Optional, card network logo
+    networkLogo?: ImageResource; // Optional, card network logo
   };
 };
 

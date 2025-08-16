@@ -20,6 +20,9 @@
       <q-card-section>
         <slot></slot>
       </q-card-section>
+      <q-card-actions class="column items-stretch">
+        <q-btn flat no-caps label="View all card transactions" />
+      </q-card-actions>
     </q-card>
   </q-expansion-item>
 </template>
@@ -56,9 +59,21 @@ const {
     }
   }
 
+  $radius: 8px;
   .q-card {
+    border-radius: $radius;
     .q-card__section {
       padding: 24px;
+    }
+    .q-card__actions {
+      padding: 0;
+      .q-btn {
+        border-radius: 0 0 $radius $radius;
+        background-color: #edfff5;
+        color: #01d167;
+        padding: 16px 8px;
+        font-weight: 600;
+      }
     }
   }
 }

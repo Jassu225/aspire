@@ -3,7 +3,7 @@
 // } | null;
 
 import { toDbCard, toDbCardTransaction } from 'src/utils/card';
-import { cardsFakeData, fakeCardActions } from './fake-data/cards';
+import { fakeCardActions, getCardsFakeData } from './fake-data/cards';
 import fakeCardTransactions from './fake-data/card-transactions';
 import { nanoid } from 'nanoid';
 
@@ -111,6 +111,7 @@ class DB {
       };
 
       try {
+        const cardsFakeData = getCardsFakeData();
         // Add cards
         const cardsStore = transaction.objectStore(COLLECTIONS.CARDS);
         cardsFakeData.forEach((uiCard) => {

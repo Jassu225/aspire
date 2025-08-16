@@ -11,7 +11,7 @@
       <span class="tw:ml-1 tw:font-bold">{{ detailsVisible ? 'Hide' : 'Show' }} details</span>
     </q-btn>
     <div
-      class="card column tw:rounded-2xl tw:p-7 tw:mt-1"
+      class="card column tw:rounded-2xl tw:p-7 tw:pb-4 tw:mt-1 no-wrap"
       :style="{ backgroundColor: card.cardDesign?.backgroundColor }"
     >
       <div v-if="logo !== null || card.issuingBank" class="q-ml-auto">
@@ -52,21 +52,29 @@
           }}
         </span>
       </div>
-      <div
-        class="expiry-cvv-container row items-center tw:text=[13px] tw:mt-5"
-        :style="{ color: card.cardDesign?.textColor }"
-      >
-        <span class="expiry-container">
-          Thru: <span class="expiry tw:tracking-[1px]">{{ card.expiry }}</span>
-        </span>
-        <div class="cvv-container row inline items-center tw:ml-9">
-          <span>CVV:&nbsp;</span>
-          <span v-if="detailsVisible" class="cvv">{{ card.cvv || '- - -' }}</span>
-          <span v-else class="mask">&#10034; &#10034; &#10034;</span>
+      <div class="row no-wrap justify-between items-start tw:flex-auto">
+        <div
+          class="expiry-cvv-container row items-center tw:text=[13px] tw:mt-5"
+          :style="{ color: card.cardDesign?.textColor }"
+        >
+          <span class="expiry-container">
+            Thru: <span class="expiry tw:tracking-[1px]">{{ card.expiry }}</span>
+          </span>
+          <div class="cvv-container row inline items-center tw:ml-9">
+            <span>CVV:&nbsp;</span>
+            <span v-if="detailsVisible" class="cvv">{{ card.cvv || '- - -' }}</span>
+            <span v-else class="mask">&#10034; &#10034; &#10034;</span>
+          </div>
         </div>
-        <!-- <span class="tw:ml-4 tw:font-bold tw:text-lg">
-          {{ card.cardNetwork === CardNetwork.VISA ? 'VISA' : 'MASTERCARD' }}
-        </span> -->
+        <div class="row no-wrap justify-end tw:self-end">
+          <q-img
+            v-if="card.cardDesign?.networkLogo?.url"
+            :src="card.cardDesign.networkLogo.url"
+            :alt="card.cardDesign.networkLogo.alt"
+            :width="toPx(card.cardDesign.networkLogo.width)"
+          />
+          <span v-else>{{ enumToSentence(card.cardNetwork) }}</span>
+        </div>
       </div>
     </div>
   </div>
@@ -76,6 +84,8 @@
 import { computed, ref } from 'vue';
 import type { Card } from 'src/types/db/card';
 import { splitCardNumber } from 'src/utils/card';
+import { toPx } from 'src/utils/ui';
+import { enumToSentence } from 'src/utils/enum';
 
 const props = defineProps<{
   card: Card;

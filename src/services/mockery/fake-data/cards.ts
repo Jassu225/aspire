@@ -7,6 +7,7 @@ import {
   CardType,
 } from 'src/types/db/card';
 import type { UiCard } from 'src/types/user/card';
+import { getCardNetworkLogo } from 'src/utils/card';
 import { getAssetUrl } from 'src/utils/url';
 
 export const fakeCardActions: CardAction[] = [
@@ -67,7 +68,7 @@ export const fakeCardActions: CardAction[] = [
   },
 ];
 
-export const cardsFakeData: UiCard[] = [
+export const getCardsFakeData: () => UiCard[] = () => [
   {
     uid: nanoid(12),
     type: CardType.DEBIT,
@@ -84,12 +85,7 @@ export const cardsFakeData: UiCard[] = [
         alt: 'Card Logo',
       },
       logoHasName: false,
-      cardNetworkLogo: {
-        url: 'https://example.com/logo.png',
-        width: 50,
-        height: 50,
-        alt: 'Card Logo',
-      },
+      networkLogo: getCardNetworkLogo(CardNetwork.VISA)!,
     },
     cvv: '789',
     issuingBank: 'Aspire',
@@ -114,17 +110,12 @@ export const cardsFakeData: UiCard[] = [
         alt: 'Card Logo with Name',
       },
       logoHasName: true,
-      cardNetworkLogo: {
-        url: 'https://example.com/logo.png',
-        width: 50,
-        height: 50,
-        alt: 'Card Logo',
-      },
+      networkLogo: getCardNetworkLogo(CardNetwork.MASTERCARD)!,
     },
     cvv: '012',
     status: CardStatus.ACTIVE,
     createdAt: '2023-10-01T00:00:00Z',
-    cardNetwork: CardNetwork.VISA,
+    cardNetwork: CardNetwork.MASTERCARD,
     actions: fakeCardActions.slice(1),
   },
 ];
