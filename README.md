@@ -2,7 +2,7 @@
 
 A Vue.js 3 + Quasar banking application with card management features and mock backend.
 
-**🌐 Live Demo:** [https://aspire-play.web.app/](https://aspire-play.web.app/)
+**🌐 Live Demo:** [https://aspire-play.web.app/cards](https://aspire-play.web.app/cards)
 
 ## Quick Start
 
