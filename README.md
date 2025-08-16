@@ -38,6 +38,14 @@ src/
 └── utils/                 # Helper functions
 ```
 
+## Tech Stack
+
+- **Frontend**: Vue 3 + Quasar Framework
+- **State**: Pinia
+- **Styling**: Tailwind CSS + SCSS
+- **Build**: Vite + TypeScript
+- **Database**: IndexedDB (browser)
+
 ## Main Features
 
 ### 🃏 Card Management
@@ -66,14 +74,6 @@ src/
 - **Collections**: CARDS, TRANSACTIONS, CARD_ACTIONS
 - **Auto-seeding**: Populates database with sample data on first run
 - **CRUD Operations**: Add, retrieve, and query data (index-based)
-
-## Tech Stack
-
-- **Frontend**: Vue 3 + Quasar Framework
-- **State**: Pinia
-- **Styling**: Tailwind CSS + SCSS
-- **Build**: Vite + TypeScript
-- **Database**: IndexedDB (browser)
 
 ## Key Files
 
