@@ -19,7 +19,7 @@ export const fakeMcDonalsdsMerchant: UiCardTransaction['merchant'] = {
   name: 'Mc Donalds',
   icon: {
     url: getAssetUrl('/icons/card/transactions/categories/fast-food.svg'),
-    color: '#009DFF',
+    color: '#00D6B5',
     width: 24,
     height: 24,
   },

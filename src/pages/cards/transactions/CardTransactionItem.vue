@@ -2,7 +2,10 @@
   <q-item class="card-transaction-item items-start">
     <q-item-section side class="icon-wrapper">
       <div class="icon-container tw:rounded-full tw:relative">
-        <div class="icon-background tw:rounded-full tw:w-full tw:h-full tw:absolute"></div>
+        <div
+          class="icon-background tw:rounded-full tw:w-full tw:h-full tw:absolute"
+          :style="{ backgroundColor: transaction.merchant.icon?.color }"
+        ></div>
         <div class="icon-content row no-wrap flex-center tw:rounded-full tw:w-full tw:h-full">
           <img
             v-if="transaction.merchant.icon?.url"
@@ -79,9 +82,9 @@ const amount = computed(() => {
     .icon-container {
       width: 48px;
       height: 48px;
-      background-color: rgba(#009dff, 0.1);
       .icon-background {
         opacity: 0.1;
+        background-color: #009dff;
       }
     }
   }
