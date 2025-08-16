@@ -6,15 +6,23 @@ const setupMockery = (): (() => void) => {
 
   self.fetch = async (input: RequestInfo | URL, init?: RequestInit): Promise<Response> => {
     if (typeof input === 'string') {
-      const resPromise = findMockAndExec(input, JSON.parse((init?.body as string) || '{}'));
-      if (resPromise instanceof Promise) {
-        const res = await resPromise;
-        const response = new Response(JSON.stringify(res), {
-          status: 200,
-          statusText: 'OK',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+      try {
+        const resPromise = findMockAndExec(input, JSON.parse((init?.body as string) || '{}'));
+        if (resPromise instanceof Promise) {
+          const res = await resPromise;
+          const response = new Response(JSON.stringify(res), {
+            status: 200,
+            statusText: 'OK',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+          return response;
+        }
+      } catch (e) {
+        const response = new Response(null, {
+          status: 400,
+          statusText: (e as Error)?.message || 'Bad Request',
         });
         return response;
       }

@@ -46,6 +46,7 @@ async function makeApiCall<ReqT, ResT>({
     }
   } catch (e) {
     console.error(e);
+    Notify.create({ type: 'negative', message: (e as Error)?.message || 'Something went wrong!' });
     throw e;
   }
 }
@@ -74,5 +75,8 @@ export const submitNewCardForm = (req: SubmitNewCardFormRequest, options?: Reque
     endpoint: '/api/cards/create',
     data: req,
     options,
-  }).then(() => Notify.create({ type: 'info', message: 'New card issued!', position: 'top' }));
+  }).then((res) => {
+    Notify.create({ type: 'info', message: 'New card issued!', position: 'top' });
+    return res;
+  });
 };

@@ -51,7 +51,6 @@ const cardTrasactionsMock: MockType<FetchCardTransactionsRequest, FetchCardTrans
   endpoint: '/api/cards/transactions',
   requestTrap: async function (req) {
     await db.ready;
-    console.log(`Fetching transactions for ---- `, req.cardUid);
     const [, cardTransactions] = await Promise.all([
       sleep(),
       db.getAllFromCollectionBy(COLLECTIONS.TRANSACTIONS, 'cardUid', req.cardUid) as Promise<
@@ -73,8 +72,9 @@ const createNewCardMock: MockType<SubmitNewCardFormRequest, UiCard> = {
   endpoint: '/api/cards/create',
   requestTrap: async function (req) {
     await db.ready;
-    await new Promise((res) => setTimeout(res, 2000));
-    return toUiCard(generateNewCard(req));
+    const newCard = generateNewCard(req);
+    await Promise.all([sleep(), db.addToCollection(COLLECTIONS.CARDS, newCard)]);
+    return toUiCard(newCard);
   },
 };
 

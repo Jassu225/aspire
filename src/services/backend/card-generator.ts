@@ -3,6 +3,7 @@ import { type Card, CardNetwork, CardStatus, CardType } from 'src/types/db/card'
 import { CARD_VALIDITY_RANGE_IN_YEARS } from 'src/utils/card';
 import { nameRule } from 'src/utils/form';
 import { nanoid } from 'nanoid';
+import { enumToSentence } from 'src/utils/enum';
 
 export const ISSUING_BANK = 'Axis';
 const CREDIT_BINS = {
@@ -61,7 +62,7 @@ export const generateCardNumber = (cardType: CardType, cardNetwork: CardNetwork)
 
   if (!bin) {
     throw new Error(
-      `Unsupported combination: ${cardType} ${cardNetwork}. Available combinations: ${Object.keys(bins).join(', ')}`,
+      `${enumToSentence(cardNetwork)} for ${enumToSentence(cardType)} is not yet supported. Available networks: ${Object.keys(bins).map(enumToSentence).join(', ')}`,
     );
   }
 

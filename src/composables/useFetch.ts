@@ -21,7 +21,10 @@ export function useFetch<ReqT, ResT>(
         data.value = json;
         return json;
       })
-      .catch((err) => (error.value = err))
+      .catch((err) => {
+        error.value = err;
+        throw err;
+      })
       .finally(() => (isFetching.value = false));
   };
 

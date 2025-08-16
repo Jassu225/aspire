@@ -17,6 +17,7 @@
             v-model="newCardFormData.type"
             :options="cardTypes"
             :display-value="enumToSentence(newCardFormData.type)"
+            :option-label="enumToSentence"
             label="Select card type *"
             lazy-rules
             :rules="[requiredRule()]"
@@ -64,6 +65,7 @@ import { enumToSentence } from 'src/utils/enum';
 import type { SubmitNewCardFormRequest } from 'src/types/api/cards';
 import { useFetch } from 'src/composables/useFetch';
 import { submitNewCardForm } from 'src/services/api/cards';
+import useCardsStore from 'src/stores/cards';
 
 const model = defineModel<boolean>({
   default: () => false,
@@ -76,14 +78,9 @@ const defaultValue = (): SubmitNewCardFormRequest => ({
   validityInYears: CARD_VALIDITY_RANGE_IN_YEARS[0] || 2,
 });
 
-const cardTypes = Object.values(CardType).map((cardType) => ({
-  label: enumToSentence(cardType),
-  value: cardType,
-}));
-const cardNetworks = Object.values(CardNetwork).map((nextwork) => ({
-  label: enumToSentence(nextwork),
-  value: nextwork,
-}));
+const cardTypes = Object.values(CardType);
+const cardNetworks = Object.values(CardNetwork);
+const cardsStore = useCardsStore();
 
 const newCardFormData = reactive(defaultValue());
 const formRef = useTemplateRef<QForm>('new-card-form');
@@ -112,9 +109,15 @@ const onSubmit = async () => {
       message: 'Please resolve all the errors.',
     });
   }
-  await fetch(toValue(newCardFormData));
-  model.value = false;
+  try {
+    const newCard = await fetch(toValue(newCardFormData));
+    cardsStore.$patch((state) => {
+      state.cardsInfoResponse?.cards.push(newCard);
+      state.selectedCardUid = newCard.uid;
+    });
+    model.value = false;
+  } catch {
+    /* suppress*/
+  }
 };
 </script>
-
-<style lang="scss" scoped></style>
