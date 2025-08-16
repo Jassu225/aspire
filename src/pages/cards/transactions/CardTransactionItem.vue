@@ -12,12 +12,8 @@
             :src="transaction.merchant.icon.url"
             :alt="transaction.merchant.icon.alt || ''"
             :style="{
-              width: transaction.merchant.icon.width
-                ? `${transaction.merchant.icon.width}px`
-                : undefined,
-              height: transaction.merchant.icon.height
-                ? `${transaction.merchant.icon.height}px`
-                : undefined,
+              width: toPx(transaction.merchant.icon.width),
+              height: toPx(transaction.merchant.icon.height),
             }"
           />
         </div>
@@ -62,6 +58,7 @@ import { getCashFlow, CashFlow, getTransactionCaption } from 'src/utils/card';
 import { formatAsDate } from 'src/utils/date';
 import CardIcon from 'src/assets/icons/card/card-back-simple.svg?component';
 import { type CardType } from 'src/types/db/card';
+import { toPx } from 'src/utils/ui';
 
 const props = defineProps<{ transaction: UiCardTransaction; cardType: CardType }>();
 const amount = computed(() => {

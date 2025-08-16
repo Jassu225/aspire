@@ -20,8 +20,8 @@
           v-if="logo !== null && logo.url"
           :src="logo.url"
           v-bind="{
-            width: logo.width ? `${logo.width}px` : undefined,
-            height: logo.height ? `${logo.height}px` : undefined,
+            width: toPx(logo.width),
+            height: toPx(logo.height),
             alt: logo.alt || 'Card Logo',
           }"
         />
