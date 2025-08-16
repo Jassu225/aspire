@@ -12,8 +12,8 @@ type CardsStore = {
   selectedCardUid: string;
   selectedCardTransactions: FetchCardTransactionsResponse['transactions'];
 
-  isFetchingCardsInfo: boolean;
-  isFetchingSelectedCardTransactions: boolean;
+  fetchingCardsApiCallCount: number;
+  fetchingSelectedCardTransactionsApiCallCount: number;
 };
 
 const useCardsStore = defineStore('cards-store', {
@@ -21,36 +21,39 @@ const useCardsStore = defineStore('cards-store', {
     cardsInfoRequest: null,
     cardsInfoResponse: null,
     selectedCardUid: '',
-    isFetchingCardsInfo: false,
-    isFetchingSelectedCardTransactions: false,
+    fetchingCardsApiCallCount: 0,
+    fetchingSelectedCardTransactionsApiCallCount: 0,
     selectedCardTransactions: [],
   }),
   getters: {
     selectedCard: (state) =>
       state.cardsInfoResponse?.cards.find((card) => card.uid === state.selectedCardUid) || null,
+    isFetchingCardsInfo: (state) => state.fetchingCardsApiCallCount > 0,
+    isFetchingSelectedCardTransactions: (state) =>
+      state.fetchingSelectedCardTransactionsApiCallCount > 0,
   },
   actions: {
     async fetchCardsInfo(cardsInfoRequest: FetchCardsInfoRequest, options?: RequestOptions) {
       this.cardsInfoRequest = cardsInfoRequest;
       try {
-        this.isFetchingCardsInfo = true;
+        ++this.fetchingCardsApiCallCount;
         const res = await fetchCards(cardsInfoRequest, options);
         this.cardsInfoResponse = res;
         if (res.cards.length > 0) {
           this.selectedCardUid = res.cards[0]!.uid;
         }
       } finally {
-        this.isFetchingCardsInfo = false;
+        --this.fetchingCardsApiCallCount;
       }
     },
     async fetchSelectedCardTransactions(options?: RequestOptions) {
       try {
-        this.isFetchingSelectedCardTransactions = true;
+        ++this.fetchingSelectedCardTransactionsApiCallCount;
         this.selectedCardTransactions = [];
         const res = await fetchCardTransactions({ cardUid: this.selectedCardUid }, options);
         this.selectedCardTransactions = res.transactions || [];
       } finally {
-        this.isFetchingSelectedCardTransactions = false;
+        --this.fetchingSelectedCardTransactionsApiCallCount;
       }
     },
   },

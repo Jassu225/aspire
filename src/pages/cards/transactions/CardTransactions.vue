@@ -20,6 +20,9 @@
           </q-inner-loading>
         </q-item-section>
       </q-item>
+      <q-item v-else-if="(cardsStore.selectedCardTransactions?.length || 0) === 0">
+        <q-item-section class="tw:text-center"> No transactions yet. </q-item-section>
+      </q-item>
     </q-list>
   </CollapsibleView>
 </template>

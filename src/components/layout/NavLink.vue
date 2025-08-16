@@ -29,6 +29,11 @@ const { link = '#', title, icon } = defineProps<NavLinkProps>();
 
 <style lang="scss" scoped>
 .nav-link {
+  &:hover {
+    .q-item {
+      background-color: rgba($primary, 0.2);
+    }
+  }
   &.router-link-exact-active {
     .q-item {
       .q-icon,

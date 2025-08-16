@@ -1,10 +1,9 @@
-import { nanoid } from 'nanoid';
 import { CardTransactionStatus, CardTransactionType, MerchantCategory } from 'src/types/db/card';
 import { type UiCardTransaction } from 'src/types/user/card';
 import { getAssetUrl } from 'src/utils/url';
 
 const hamleysMerchant: UiCardTransaction['merchant'] = {
-  uid: nanoid(12),
+  uid: 'QAcfRbWmo__5',
   name: 'Hamleys',
   icon: {
     url: getAssetUrl('/icons/card/transactions/categories/file-storage.svg'),
@@ -16,7 +15,7 @@ const hamleysMerchant: UiCardTransaction['merchant'] = {
 };
 
 export const fakeMcDonalsdsMerchant: UiCardTransaction['merchant'] = {
-  uid: nanoid(12),
+  uid: 'dZ7TIXv6vJ6e',
   name: 'Mc Donalds',
   icon: {
     url: getAssetUrl('/icons/card/transactions/categories/fast-food.svg'),

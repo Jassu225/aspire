@@ -40,12 +40,19 @@ async function makeApiCall<ReqT, ResT>({
       };
     }
     const res = await fetch(url.href, requestOptions);
+    // Needed only in case of mockery
+    if (options.signal?.aborted) {
+      throw new DOMException('Aborted', 'AbortError');
+    }
     if (res.status === 200) return res.json() as ResT;
     else {
       throw new Error(`${res.status} - ${res.statusText}`);
     }
   } catch (e) {
     console.error(e);
+    if ((e as Error)?.name === 'AbortError') {
+      throw e;
+    }
     Notify.create({ type: 'negative', message: (e as Error)?.message || 'Something went wrong!' });
     throw e;
   }
