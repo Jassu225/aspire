@@ -70,7 +70,7 @@ const leftDrawerOpen = ref(false);
   .q-drawer-container {
     :deep(.q-drawer) {
       position: fixed;
-      background-color: $primary-container;
+      background-color: $bg-secondary;
 
       .lr-padding {
         padding-left: 48px;

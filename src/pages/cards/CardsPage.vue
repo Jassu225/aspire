@@ -120,7 +120,7 @@ watch(
     .q-tab-panel {
       padding: 6px;
       .panel-content-wrapper {
-        box-shadow: 0 2px 12px 0 rgba(#000000, 0.14);
+        box-shadow: 0 2px 12px 0 rgba($shadow, 0.14);
       }
     }
   }

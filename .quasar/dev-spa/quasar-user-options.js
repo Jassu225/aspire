@@ -11,9 +11,11 @@
  * Boot files are your "main.js"
  **/
 
-import { Loading, Notify } from 'quasar';
 
-export default {
-  config: { screen: { bodyClasses: true }, brand: { primary: '#01d167', secondary: '#325baf' } },
-  plugins: { Loading, Notify },
-};
+
+import {Loading,Notify} from 'quasar'
+
+
+
+export default { config: {"screen":{"bodyClasses":true}},plugins: {Loading,Notify} }
+

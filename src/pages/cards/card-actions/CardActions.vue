@@ -31,7 +31,7 @@ const formatActionName = (name: string) => {
 
 <style lang="scss" scoped>
 .card-actions {
-  background-color: #edf3ff;
+  background-color: rgb($secondary, 0.1);
 
   .q-btn {
     padding-left: 4px;
@@ -43,7 +43,7 @@ const formatActionName = (name: string) => {
     .name {
       font-size: 13px;
       font-weight: 500;
-      color: $on-primary-container;
+      color: $text-secondary;
       line-height: 1.5;
     }
   }

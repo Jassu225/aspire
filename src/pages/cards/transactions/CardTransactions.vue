@@ -24,6 +24,11 @@
         <q-item-section class="tw:text-center"> No transactions yet. </q-item-section>
       </q-item>
     </q-list>
+    <template v-if="(cardsStore.selectedCardTransactions?.length || 0) > 0" #footer>
+      <q-card-actions class="column items-stretch">
+        <q-btn flat no-caps label="View all card transactions" color="primary" />
+      </q-card-actions>
+    </template>
   </CollapsibleView>
 </template>
 
@@ -54,4 +59,14 @@ watch([selectedCardUid, expanded], () => {
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.q-card__actions {
+  padding: 0;
+  .q-btn {
+    border-radius: 0 0 8px 8px;
+    background-color: rgba($primary, 0.15);
+    padding: 16px 8px;
+    font-weight: 600;
+  }
+}
+</style>

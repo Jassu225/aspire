@@ -101,11 +101,11 @@ const amount = computed(() => {
     .icon-container {
       width: 24px;
       height: 20px;
-      background-color: #325baf;
+      background-color: $secondary;
     }
 
     .caption {
-      color: #325baf;
+      color: $secondary;
     }
   }
 }

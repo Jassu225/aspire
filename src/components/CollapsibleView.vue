@@ -20,9 +20,7 @@
       <q-card-section>
         <slot></slot>
       </q-card-section>
-      <q-card-actions class="column items-stretch">
-        <q-btn flat no-caps label="View all card transactions" />
-      </q-card-actions>
+      <slot name="footer"></slot>
     </q-card>
   </q-expansion-item>
 </template>
@@ -44,18 +42,19 @@ const {
 
 <style lang="scss" scoped>
 .collapsible-view {
-  border: 1px solid #f5f5f5;
+  border: 1px solid $border-primary;
 
   :deep(.header) {
-    background-color: #f5f9ff;
-    box-shadow: 0 0 8px 0 rgba(#000000, 0.04);
+    background-color: rgba($secondary, 0.035);
+    box-shadow: 0 0 8px 0 rgba($shadow, 0.04);
+    padding: 24px;
 
     .title {
-      color: #0c365a;
+      color: $text-secondary;
     }
 
     .expand-icon {
-      color: rgba(#325baf, 0.15);
+      color: rgba($secondary, 0.15);
     }
   }
 
@@ -64,16 +63,6 @@ const {
     border-radius: $radius;
     .q-card__section {
       padding: 24px;
-    }
-    .q-card__actions {
-      padding: 0;
-      .q-btn {
-        border-radius: 0 0 $radius $radius;
-        background-color: #edfff5;
-        color: #01d167;
-        padding: 16px 8px;
-        font-weight: 600;
-      }
     }
   }
 }

@@ -95,10 +95,6 @@ export default defineConfig((/* ctx */) => {
           bodyClasses: true, // adds classes to body element based on screen size
           // bodyAttributes: true, // adds attributes to body element based on screen size}
         },
-        brand: {
-          primary: '#01d167',
-          secondary: '#325baf',
-        },
       },
 
       // iconSet: 'material-icons', // Quasar icon set
