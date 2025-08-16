@@ -1,5 +1,5 @@
 import { CardTransactionStatus, CardTransactionType, MerchantCategory } from 'src/types/db/card';
-import { type UiCardTransaction } from 'src/types/user/card';
+import { type UiCardTransaction } from 'src/types/ui/card';
 import { getAssetUrl } from 'src/utils/url';
 
 const hamleysMerchant: UiCardTransaction['merchant'] = {

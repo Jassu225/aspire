@@ -1,5 +1,5 @@
 import type { CardNetwork, CardType } from '../db/card';
-import type { CardsInfoType, UiCardTransaction, UiCard } from '../user/card';
+import type { CardsInfoType, UiCardTransaction, UiCard } from '../ui/card';
 
 export type FetchCardsInfoRequest = {
   cardsInfoType: CardsInfoType;

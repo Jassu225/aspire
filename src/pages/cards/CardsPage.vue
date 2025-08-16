@@ -59,7 +59,7 @@ import { onWatcherCleanup, ref, watch } from 'vue';
 import { formatAsCurrencyWithoutSign } from 'src/utils/number';
 import { tabs } from './types';
 import useCardsStore from 'src/stores/cards';
-import { CardsInfoType } from 'src/types/user/card';
+import { CardsInfoType } from 'src/types/ui/card';
 import NewCardForm from './NewCardForm.vue';
 
 const showNewCardForm = ref(false);

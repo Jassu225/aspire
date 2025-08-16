@@ -6,7 +6,7 @@ import type {
   SubmitNewCardFormRequest,
 } from 'src/types/api/cards';
 import { fakeMcDonalsdsMerchant, fakeMerchantUidMap } from './fake-data/card-transactions';
-import type { UiCard, UiCardTransaction } from 'src/types/user/card';
+import type { UiCard, UiCardTransaction } from 'src/types/ui/card';
 import { toUiCard } from 'src/utils/card';
 import { generateNewCard } from '../backend/card-generator';
 import db, { COLLECTIONS } from './db';

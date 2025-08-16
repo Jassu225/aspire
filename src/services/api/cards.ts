@@ -5,9 +5,9 @@ import type {
   FetchCardTransactionsResponse,
   SubmitNewCardFormRequest,
 } from 'src/types/api/cards';
-import type { UiCard } from 'src/types/user/card';
+import type { UiCard } from 'src/types/ui/card';
 import { Notify } from 'quasar';
-// import type { CardsInfoType } from 'src/types/user/card';
+// import type { CardsInfoType } from 'src/types/ui/card';
 
 const API_BASE_URL = process.env.API_BASE_URL || window.origin;
 

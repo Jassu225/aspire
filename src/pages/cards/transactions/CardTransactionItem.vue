@@ -52,7 +52,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { type UiCardTransaction } from 'src/types/user/card';
+import { type UiCardTransaction } from 'src/types/ui/card';
 import { formatAmount } from 'src/utils/number';
 import { getCashFlow, CashFlow, getTransactionCaption } from 'src/utils/card';
 import { formatAsDate } from 'src/utils/date';

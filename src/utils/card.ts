@@ -5,7 +5,7 @@ import {
   CardTransactionType,
   type CardType,
 } from 'src/types/db/card';
-import type { UiCardTransaction, UiCard } from 'src/types/user/card';
+import type { UiCardTransaction, UiCard } from 'src/types/ui/card';
 import { enumToSentence } from './enum';
 import { fakeCardActions } from 'src/services/mockery/fake-data/cards';
 import { getAssetUrl } from './url';

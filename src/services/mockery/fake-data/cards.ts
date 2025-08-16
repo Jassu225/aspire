@@ -6,7 +6,7 @@ import {
   CardStatus,
   CardType,
 } from 'src/types/db/card';
-import type { UiCard } from 'src/types/user/card';
+import type { UiCard } from 'src/types/ui/card';
 import { getCardNetworkLogo } from 'src/utils/card';
 import { getAssetUrl } from 'src/utils/url';
 

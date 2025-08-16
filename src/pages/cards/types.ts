@@ -1,4 +1,4 @@
-import { CardsInfoType } from 'src/types/user/card';
+import { CardsInfoType } from 'src/types/ui/card';
 import { defineAsyncComponent, h } from 'vue';
 
 const LoadingComponent = h('q-spinner', { color: 'primary', size: '2em' });
