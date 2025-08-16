@@ -9,7 +9,7 @@ export type UiCard = DbCard & {
   actions: CardAction[];
 };
 
-export type CardTransaction = Omit<DbCardTransaction, 'merchantUid'> & {
+export type UiCardTransaction = Omit<DbCardTransaction, 'merchantUid'> & {
   merchant: {
     uid: Merchant['uid'];
     name: Merchant['name'];

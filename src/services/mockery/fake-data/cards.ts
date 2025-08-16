@@ -1,3 +1,4 @@
+import { nanoid } from 'nanoid';
 import {
   type CardAction,
   CardActionType,
@@ -11,6 +12,7 @@ import { getAssetUrl } from 'src/utils/url';
 export const fakeCardActions: CardAction[] = [
   {
     uid: '1',
+    cardUid: '1',
     type: CardActionType.FREEZE,
     name: 'Freeze card',
     icon: {
@@ -21,6 +23,7 @@ export const fakeCardActions: CardAction[] = [
   },
   {
     uid: '2',
+    cardUid: '1',
     type: CardActionType.SET_SPEND_LIMIT,
     name: 'Set spend limit',
     icon: {
@@ -31,6 +34,7 @@ export const fakeCardActions: CardAction[] = [
   },
   {
     uid: '3',
+    cardUid: '1',
     type: CardActionType.ADD_TO_GPAY,
     name: 'Add to GPay',
     icon: {
@@ -41,6 +45,7 @@ export const fakeCardActions: CardAction[] = [
   },
   {
     uid: '4',
+    cardUid: '1',
     type: CardActionType.REPLACE,
     name: 'Replace card',
     icon: {
@@ -51,6 +56,7 @@ export const fakeCardActions: CardAction[] = [
   },
   {
     uid: '5',
+    cardUid: '1',
     type: CardActionType.CANCEL,
     name: 'Cancel card',
     icon: {
@@ -63,7 +69,7 @@ export const fakeCardActions: CardAction[] = [
 
 export const cardsFakeData: UiCard[] = [
   {
-    uid: '1',
+    uid: nanoid(12),
     type: CardType.DEBIT,
     cardNumber: '1234 5678 9012 3456',
     expiry: '12/25',
@@ -93,7 +99,7 @@ export const cardsFakeData: UiCard[] = [
     actions: fakeCardActions,
   },
   {
-    uid: '2',
+    uid: nanoid(12),
     type: CardType.DEBIT,
     cardNumber: '1111 5678 9012 3456',
     expiry: '12/26',

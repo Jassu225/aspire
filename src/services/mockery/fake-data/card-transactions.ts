@@ -1,9 +1,10 @@
+import { nanoid } from 'nanoid';
 import { CardTransactionStatus, CardTransactionType, MerchantCategory } from 'src/types/db/card';
-import { type CardTransaction } from 'src/types/user/card';
+import { type UiCardTransaction } from 'src/types/user/card';
 import { getAssetUrl } from 'src/utils/url';
 
-const hamleysMerchant: CardTransaction['merchant'] = {
-  uid: 'hamleys',
+const hamleysMerchant: UiCardTransaction['merchant'] = {
+  uid: nanoid(12),
   name: 'Hamleys',
   icon: {
     url: getAssetUrl('/icons/card/transactions/categories/file-storage.svg'),
@@ -14,8 +15,8 @@ const hamleysMerchant: CardTransaction['merchant'] = {
   category: MerchantCategory.LEISURE,
 };
 
-const mcDonalsdsMerchant: CardTransaction['merchant'] = {
-  uid: 'mcD',
+export const fakeMcDonalsdsMerchant: UiCardTransaction['merchant'] = {
+  uid: nanoid(12),
   name: 'Mc Donalds',
   icon: {
     url: getAssetUrl('/icons/card/transactions/categories/fast-food.svg'),
@@ -26,9 +27,15 @@ const mcDonalsdsMerchant: CardTransaction['merchant'] = {
   category: MerchantCategory.LEISURE,
 };
 
-const fakeCardTransactions: CardTransaction[] = [
+export const fakeMerchantUidMap: Record<string, UiCardTransaction['merchant']> = {
+  [fakeMcDonalsdsMerchant.uid]: fakeMcDonalsdsMerchant,
+  [hamleysMerchant.uid]: hamleysMerchant,
+};
+
+const fakeCardTransactions: UiCardTransaction[] = [
   {
     uid: '1',
+    cardUid: '1',
     merchant: hamleysMerchant,
     amount: {
       value: 150000, // in paisa
@@ -43,7 +50,8 @@ const fakeCardTransactions: CardTransaction[] = [
   },
   {
     uid: '2',
-    merchant: mcDonalsdsMerchant,
+    cardUid: '1',
+    merchant: fakeMcDonalsdsMerchant,
     amount: {
       value: 15000, // in cents
       currencySign: 'S$',
@@ -56,6 +64,7 @@ const fakeCardTransactions: CardTransaction[] = [
   },
   {
     uid: '3',
+    cardUid: '1',
     merchant: hamleysMerchant,
     amount: {
       value: 150000, // in paisa
@@ -70,7 +79,8 @@ const fakeCardTransactions: CardTransaction[] = [
   },
   {
     uid: '4',
-    merchant: mcDonalsdsMerchant,
+    cardUid: '1',
+    merchant: fakeMcDonalsdsMerchant,
     amount: {
       value: 15000, // in cents
       currencySign: 'S$',

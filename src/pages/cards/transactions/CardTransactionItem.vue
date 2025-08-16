@@ -53,14 +53,14 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { type CardTransaction } from 'src/types/user/card';
+import { type UiCardTransaction } from 'src/types/user/card';
 import { formatAmount } from 'src/utils/number';
 import { getCashFlow, CashFlow, getTransactionCaption } from 'src/utils/card';
 import { formatAsDate } from 'src/utils/date';
 import CardIcon from 'src/assets/icons/card/card-back-simple.svg?component';
 import { type CardType } from 'src/types/db/card';
 
-const props = defineProps<{ transaction: CardTransaction; cardType: CardType }>();
+const props = defineProps<{ transaction: UiCardTransaction; cardType: CardType }>();
 const amount = computed(() => {
   const cashFlow = getCashFlow(props.transaction);
   return {

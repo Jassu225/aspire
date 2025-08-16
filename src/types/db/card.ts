@@ -61,6 +61,7 @@ export enum CardActionType {
 
 export type CardAction = {
   uid: string;
+  cardUid: string;
   type: CardActionType;
   name: string; // Name of the action
   icon: ImageResource; // Path to the icon for the action
@@ -129,6 +130,7 @@ export type Amount = {
 
 export type CardTransaction = {
   uid: string;
+  cardUid: string;
   merchantUid: string;
   amount: Amount;
   type: CardTransactionType;

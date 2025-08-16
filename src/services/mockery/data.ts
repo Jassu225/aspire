@@ -5,11 +5,12 @@ import type {
   FetchCardTransactionsResponse,
   SubmitNewCardFormRequest,
 } from 'src/types/api/cards';
-import { cardsFakeData } from './fake-data/cards';
-import fakeCardTransactions from './fake-data/card-transactions';
-import type { UiCard } from 'src/types/user/card';
+import { fakeMcDonalsdsMerchant, fakeMerchantUidMap } from './fake-data/card-transactions';
+import type { UiCard, UiCardTransaction } from 'src/types/user/card';
 import { toUiCard } from 'src/utils/card';
 import { generateNewCard } from '../backend/card-generator';
+import db, { COLLECTIONS } from './db';
+import type { CardAction, Card, CardTransaction } from 'src/types/db/card';
 
 type BaseMock = {
   endpoint: string;
@@ -22,22 +23,48 @@ type MockType<ReqT, ResT> = {
 };
 //
 
+const sleep = () => new Promise((res) => setTimeout(res, 2000));
+
 const cardsMock: MockType<FetchCardsInfoRequest, FetchCardsInfoResponse> = {
   endpoint: '/api/cards',
   requestTrap: async function () {
-    await new Promise((res) => setTimeout(res, 2000));
+    await db.ready;
+    const [, cards, allCardsActions] = await Promise.all([
+      sleep(),
+      db.getAllFromCollection(COLLECTIONS.CARDS) as Promise<Card[]>,
+      db.getAllFromCollection(COLLECTIONS.CARD_ACTIONS) as Promise<CardAction[]>,
+    ]);
+    const uiCards: UiCard[] = cards.map((card) => {
+      const cardActions = allCardsActions.filter((action) => action.cardUid === card.uid);
+      return {
+        ...card,
+        actions: cardActions,
+      };
+    });
     return {
-      cards: cardsFakeData,
+      cards: uiCards,
     };
   },
 };
 
 const cardTrasactionsMock: MockType<FetchCardTransactionsRequest, FetchCardTransactionsResponse> = {
   endpoint: '/api/cards/transactions',
-  requestTrap: async function () {
-    await new Promise((res) => setTimeout(res, 2000));
+  requestTrap: async function (req) {
+    await db.ready;
+    console.log(`Fetching transactions for ---- `, req.cardUid);
+    const [, cardTransactions] = await Promise.all([
+      sleep(),
+      db.getAllFromCollectionBy(COLLECTIONS.TRANSACTIONS, 'cardUid', req.cardUid) as Promise<
+        CardTransaction[]
+      >,
+    ]);
+    const uiTransactions: UiCardTransaction[] = cardTransactions.map((transaction) => ({
+      ...transaction,
+      merchantUid: undefined,
+      merchant: fakeMerchantUidMap[transaction.merchantUid] || fakeMcDonalsdsMerchant,
+    }));
     return {
-      transactions: fakeCardTransactions,
+      transactions: uiTransactions,
     };
   },
 };
@@ -45,6 +72,7 @@ const cardTrasactionsMock: MockType<FetchCardTransactionsRequest, FetchCardTrans
 const createNewCardMock: MockType<SubmitNewCardFormRequest, UiCard> = {
   endpoint: '/api/cards/create',
   requestTrap: async function (req) {
+    await db.ready;
     await new Promise((res) => setTimeout(res, 2000));
     return toUiCard(generateNewCard(req));
   },
