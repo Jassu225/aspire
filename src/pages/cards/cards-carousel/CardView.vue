@@ -14,23 +14,26 @@
       class="card column tw:rounded-2xl tw:p-7 tw:pb-4 tw:mt-1 no-wrap"
       :style="{ backgroundColor: card.cardDesign?.backgroundColor }"
     >
-      <div v-if="logo !== null || card.issuingBank" class="q-ml-auto">
-        <q-img
-          no-spinner
-          v-if="logo !== null && logo.url"
-          :src="logo.url"
-          v-bind="{
-            width: toPx(logo.width),
-            height: toPx(logo.height),
-            alt: logo.alt || 'Card Logo',
-          }"
-        />
-        <span
-          v-if="(logo === null || !card.cardDesign?.logoHasName) && card.issuingBank"
-          class="tw:lowercase tw:ml-1"
-          :style="{ color: card.cardDesign?.textColor }"
-          >{{ card.issuingBank }}</span
-        >
+      <div class="row no-wrap justify-between">
+        <span>{{ enumToSentence(card.type) }}</span>
+        <div v-if="logo !== null || card.issuingBank">
+          <q-img
+            no-spinner
+            v-if="logo !== null && logo.url"
+            :src="logo.url"
+            v-bind="{
+              width: toPx(logo.width),
+              height: toPx(logo.height),
+              alt: logo.alt || 'Card Logo',
+            }"
+          />
+          <span
+            v-if="(logo === null || !card.cardDesign?.logoHasName) && card.issuingBank"
+            class="tw:lowercase tw:ml-1"
+            :style="{ color: card.cardDesign?.textColor }"
+            >{{ card.issuingBank }}</span
+          >
+        </div>
       </div>
       <span class="tw:m-0 tw:text-2xl tw:mt-7" :style="{ color: card.cardDesign?.textColor }">{{
         card.cardHolderName
