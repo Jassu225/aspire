@@ -1,4 +1,4 @@
-import { type Amount } from 'src/types/db/card';
+import { type Amount } from 'src/types/helpers';
 
 export const formatAsCurrency = (value: number, currency = 'INR'): string => {
   return new Intl.NumberFormat('en-IN', {

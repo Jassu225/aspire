@@ -19,7 +19,6 @@ export const fakeCardActions: CardAction[] = [
     icon: {
       url: getAssetUrl('/icons/card/card-actions/freeze.png'),
     },
-    isVisible: true,
     isActive: true,
   },
   {
@@ -30,7 +29,6 @@ export const fakeCardActions: CardAction[] = [
     icon: {
       url: getAssetUrl('/icons/card/card-actions/meter.png'),
     },
-    isVisible: true,
     isActive: true,
   },
   {
@@ -41,7 +39,6 @@ export const fakeCardActions: CardAction[] = [
     icon: {
       url: getAssetUrl('/icons/card/card-actions/gpay.png'),
     },
-    isVisible: true,
     isActive: true,
   },
   {
@@ -52,7 +49,6 @@ export const fakeCardActions: CardAction[] = [
     icon: {
       url: getAssetUrl('/icons/card/card-actions/replace.png'),
     },
-    isVisible: true,
     isActive: true,
   },
   {
@@ -63,7 +59,6 @@ export const fakeCardActions: CardAction[] = [
     icon: {
       url: getAssetUrl('/icons/card/card-actions/deactivate.png'),
     },
-    isVisible: true,
     isActive: true,
   },
 ];

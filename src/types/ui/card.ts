@@ -1,9 +1,5 @@
-import type {
-  CardAction,
-  CardTransaction as DbCardTransaction,
-  Merchant,
-  Card as DbCard,
-} from '../db/card';
+import type { CardAction, CardTransaction as DbCardTransaction, Card as DbCard } from '../db/card';
+import type { Merchant } from '../db/merchant';
 
 export type UiCard = DbCard & {
   actions: CardAction[];

@@ -1,4 +1,5 @@
-import { CardTransactionStatus, CardTransactionType, MerchantCategory } from 'src/types/db/card';
+import { CardTransactionStatus, CardTransactionType } from 'src/types/db/card';
+import { MerchantCategory } from 'src/types/db/merchant';
 import { type UiCardTransaction } from 'src/types/ui/card';
 import { getAssetUrl } from 'src/utils/url';
 
