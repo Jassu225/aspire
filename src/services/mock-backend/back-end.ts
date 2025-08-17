@@ -34,7 +34,7 @@ const cardsMock: MockType<FetchCardsInfoRequest, FetchCardsInfoResponse> = {
     await db.ready;
     const [, cards, allCardsActions, allCardsLimits] = await Promise.all([
       sleep(),
-      db.getAllFromCollection(COLLECTIONS.CARDS) as Promise<Card[]>,
+      db.getAllFromCollectionWithSort(COLLECTIONS.CARDS, 'createdAt') as Promise<Card[]>,
       db.getAllFromCollection(COLLECTIONS.CARD_ACTIONS) as Promise<CardAction[]>,
       db.getAllFromCollection(COLLECTIONS.CARD_LIMITS) as Promise<CardLimit[]>,
     ]);

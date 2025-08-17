@@ -1,9 +1,8 @@
+import { nanoid } from 'nanoid';
 import { CardTransactionStatus, CardTransactionType } from 'src/types/db/card';
 import { MerchantCategory } from 'src/types/db/merchant';
 import { type UiCardTransaction } from 'src/types/ui/card';
 import { getAssetUrl } from 'src/utils/url';
-import { inrCurrency, sgdCurrency } from './cards';
-import { nanoid } from 'nanoid';
 
 const hamleysMerchant: UiCardTransaction['merchant'] = {
   uid: 'QAcfRbWmo__5',
@@ -40,11 +39,7 @@ const getFakeCardTransactions = (cardUid: string): UiCardTransaction[] => {
       uid: nanoid(12),
       cardUid,
       merchant: hamleysMerchant,
-      amount: {
-        value: 150000, // in paisa
-        currency: inrCurrency,
-        fractionFactor: 2,
-      },
+      amount: 150000, // in paisa
       type: CardTransactionType.REFUND,
       status: CardTransactionStatus.SETTLED,
       createdAt: '2025-08-10T00:46:14.000Z',
@@ -54,11 +49,7 @@ const getFakeCardTransactions = (cardUid: string): UiCardTransaction[] => {
       uid: nanoid(12),
       cardUid,
       merchant: fakeMcDonalsdsMerchant,
-      amount: {
-        value: 15000, // in cents
-        currency: sgdCurrency,
-        fractionFactor: 2,
-      },
+      amount: 15000, // in cents,
       type: CardTransactionType.PURCHASE,
       status: CardTransactionStatus.PENDING,
       createdAt: '2025-08-11T00:46:14.000Z',
@@ -67,11 +58,7 @@ const getFakeCardTransactions = (cardUid: string): UiCardTransaction[] => {
       uid: nanoid(12),
       cardUid,
       merchant: hamleysMerchant,
-      amount: {
-        value: 150000, // in paisa
-        currency: inrCurrency,
-        fractionFactor: 2,
-      },
+      amount: 150000, // in paisa,
       type: CardTransactionType.REFUND,
       status: CardTransactionStatus.SETTLED,
       createdAt: '2025-08-17T00:46:14.000Z',
@@ -81,11 +68,7 @@ const getFakeCardTransactions = (cardUid: string): UiCardTransaction[] => {
       uid: nanoid(12),
       cardUid,
       merchant: fakeMcDonalsdsMerchant,
-      amount: {
-        value: 15000, // in cents
-        currency: sgdCurrency,
-        fractionFactor: 2,
-      },
+      amount: 15000, // in paisa
       type: CardTransactionType.PURCHASE,
       status: CardTransactionStatus.PENDING,
       createdAt: '2025-08-12T00:46:14.000Z',

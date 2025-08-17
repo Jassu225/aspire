@@ -25,9 +25,8 @@ export const toUiCard = (card: Card, actions: CardAction[], limits: CardLimit[])
   return {
     ...card,
     actions: sortCardActions(actions),
-    limits: limits.reduce(
-      (map, limit) => ({ ...map, [limit.type]: limit.value }),
-      {} as UiCardLimit,
-    ),
+    limits: limits.reduce<UiCardLimit>((map, limit) => {
+      return { ...map, [limit.type]: limit.value };
+    }, {} as UiCardLimit),
   };
 };

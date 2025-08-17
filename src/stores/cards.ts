@@ -5,8 +5,10 @@ import type {
   FetchCardsInfoResponse,
   FetchCardTransactionsResponse,
 } from 'src/types/api/cards';
+import { CardsInfoType } from 'src/types/ui/card';
 
 type CardsStore = {
+  selectedTab: CardsInfoType;
   cardsInfoRequest: FetchCardsInfoRequest | null;
   cardsInfoResponse: FetchCardsInfoResponse | null;
   selectedCardUid: string;
@@ -18,6 +20,7 @@ type CardsStore = {
 
 const useCardsStore = defineStore('cards-store', {
   state: (): CardsStore => ({
+    selectedTab: CardsInfoType.OWN,
     cardsInfoRequest: null,
     cardsInfoResponse: null,
     selectedCardUid: '',

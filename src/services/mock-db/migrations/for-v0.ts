@@ -1,4 +1,3 @@
-import { nanoid } from 'nanoid';
 import { getFakeCardActions, getCardsFakeData } from 'src/services/mockery/fake-data/cards';
 import { toDbCardTransaction } from 'src/utils/card';
 import getFakeCardTransactions from 'src/services/mockery/fake-data/card-transactions';
@@ -53,15 +52,15 @@ class MigrationV0 extends BaseMigration {
         cardsFakeData.forEach((uiCard) => {
           const fakeCardActions = getFakeCardActions(uiCard.uid);
           fakeCardActions.forEach((action) => {
-            cardActionsStore.add({ ...action, uid: nanoid(12), cardUid: uiCard.uid });
+            cardActionsStore.add(action);
           });
         });
         console.log(`----- CARDS' ACTIONS ADDED ---- `);
 
         console.log(`----- ADDING CARDS' TRANSACTIONS ---- `);
         const transactionsStore = transaction.objectStore(COLLECTIONS.TRANSACTIONS);
-        cardsFakeData.forEach((uiCard) => {
-          getFakeCardTransactions(uiCard.uid).forEach((transaction) => {
+        cardsFakeData.forEach((card) => {
+          getFakeCardTransactions(card.uid).forEach((transaction) => {
             transactionsStore.add(toDbCardTransaction(transaction));
           });
         });

@@ -59,15 +59,19 @@ import { formatAsDate } from 'src/utils/date';
 import CardIcon from 'src/assets/icons/card/card-back-simple.svg?component';
 import { type CardType } from 'src/types/db/card';
 import { toPx } from 'src/utils/ui';
+import { storeToRefs } from 'pinia';
+import useCardsStore from 'src/stores/cards';
 
 const props = defineProps<{ transaction: UiCardTransaction; cardType: CardType }>();
+
+const { selectedCard } = storeToRefs(useCardsStore());
 const amount = computed(() => {
   const cashFlow = getCashFlow(props.transaction);
   return {
     cashFlow,
     sign: cashFlow === CashFlow.INWARDS ? '+' : '-',
-    value: formatAmount(props.transaction.amount),
-    currencySign: getCurrencySign(props.transaction.amount.currency),
+    value: formatAmount(props.transaction.amount, selectedCard.value!.currency),
+    currencySign: getCurrencySign(selectedCard.value!.currency),
   };
 });
 </script>

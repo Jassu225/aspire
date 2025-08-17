@@ -7,6 +7,7 @@ import type BaseMigration from './migrations/types';
 const migrations: BaseMigration[] = [migrationV0, migrationV1];
 
 type Filter = Record<string, IDBValidKey>;
+type SortDirection = 'ASC' | 'DESC';
 
 class DB {
   ready: Promise<boolean> | null = null;
@@ -15,9 +16,6 @@ class DB {
   private oldVersion = 0;
   private get VERSION() {
     return 2;
-  }
-  private get INDEX_KEY_SEPARATOR() {
-    return '-';
   }
 
   constructor() {
@@ -121,6 +119,49 @@ class DB {
     }
   }
 
+  private async getResultsUsingCursor(
+    index: IDBIndex,
+    query?: IDBValidKey | IDBKeyRange | null,
+    direction: SortDirection = 'ASC',
+  ) {
+    return new Promise<object[]>((resolve, reject) => {
+      const results: object[] = [];
+      const cursorDirection: IDBCursorDirection = direction === 'ASC' ? 'next' : 'prev';
+      const request = index.openCursor(query, cursorDirection);
+
+      request.onsuccess = (event) => {
+        const cursor = (event.target as IDBRequest).result;
+        if (cursor) {
+          results.push(cursor.value);
+          cursor.continue();
+        } else {
+          resolve(results);
+        }
+      };
+      request.onerror = () => reject(request.error as Error);
+    });
+  }
+
+  async getAllFromCollectionWithSort(
+    name: COLLECTIONS,
+    sortKey: string,
+    direction: SortDirection = 'ASC',
+  ): Promise<unknown[]> {
+    if (!(await this.ready)) throw ERRORS.notReady;
+    const db = await this.openDB();
+    try {
+      const results = await new Promise<unknown[]>((resolve, reject) => {
+        const transaction = db.transaction([name], 'readonly');
+        const store = transaction.objectStore(name);
+        const index = store.index(getIndexNameFromKeys([sortKey]));
+        this.getResultsUsingCursor(index, null, direction).then(resolve).catch(reject);
+      });
+      return results;
+    } finally {
+      db.close();
+    }
+  }
+
   async getAllFromCollectionWithFilter(name: COLLECTIONS, filter: Filter): Promise<unknown[]> {
     if (!(await this.ready)) throw ERRORS.notReady;
     return this.openDB().then((db) => {
@@ -143,7 +184,7 @@ class DB {
     name: COLLECTIONS,
     filter: Filter,
     sortKey: string,
-    direction: 'ASC' | 'DESC' = 'ASC',
+    direction: SortDirection = 'ASC',
   ): Promise<unknown[]> {
     if (!(await this.ready)) throw ERRORS.notReady;
     const db = await this.openDB();
@@ -152,7 +193,6 @@ class DB {
       const store = transaction.objectStore(name);
       const index = store.index(getIndexNameFromKeys([...Object.keys(filter), sortKey]));
       const values = Object.values(filter);
-      const cursorDirection: IDBCursorDirection = direction === 'ASC' ? 'next' : 'prev';
 
       const query = IDBKeyRange.bound(
         [...values, new Date(0).toISOString()],
@@ -160,20 +200,7 @@ class DB {
         false,
         false,
       );
-
-      const results: unknown[] = [];
-      const request = index.openCursor(query, cursorDirection);
-
-      request.onsuccess = (event) => {
-        const cursor = (event.target as IDBRequest).result;
-        if (cursor) {
-          results.push(cursor.value);
-          cursor.continue();
-        } else {
-          resolve(results);
-        }
-      };
-      request.onerror = () => reject(request.error as Error);
+      this.getResultsUsingCursor(index, query, direction).then(resolve).catch(reject);
     }).finally(() => db.close());
   }
 }

@@ -4,13 +4,13 @@
     <div class="row justify-between items-end tw:pb-1">
       <div class="balance-container">
         <p>Available balance</p>
-        <div class="row inline items-center" style="gap: 12px">
+        <div v-if="selectedCard" class="row inline items-center" style="gap: 12px">
           <div class="currency-sign-container">
-            <span class="sign text-white tw:font-bold">S$</span>
+            <span class="sign text-white tw:font-bold">{{
+              getCurrencySign(selectedCard.currency)
+            }}</span>
           </div>
-          <span class="balance-amount tw:text-[26px] tw:font-bold">{{
-            formatAsCurrencyWithoutSign(3000)
-          }}</span>
+          <span class="balance-amount tw:text-[26px] tw:font-bold">{{ usableLimit }}</span>
         </div>
       </div>
       <q-btn
@@ -25,7 +25,7 @@
       </q-btn>
     </div>
     <q-tabs
-      v-model="tab"
+      v-model="selectedTab"
       no-caps
       outside-arrows
       mobile-arrows
@@ -43,7 +43,7 @@
         :ripple="false"
       />
     </q-tabs>
-    <q-tab-panels v-model="tab" animated keep-alive>
+    <q-tab-panels v-model="selectedTab" animated keep-alive>
       <q-tab-panel v-for="tab in tabs" :key="tab.type" :name="tab.type" class="tw:mt-4">
         <div class="panel-content-wrapper tw:rounded-lg tw:p-10">
           <component :is="tab.component" />
@@ -55,26 +55,35 @@
 </template>
 
 <script setup lang="ts">
-import { onWatcherCleanup, ref, watch } from 'vue';
-import { formatAsCurrencyWithoutSign } from 'src/utils/number';
-import { tabs } from './types';
+import { computed, onWatcherCleanup, ref, watch } from 'vue';
+import { storeToRefs } from 'pinia';
+import { getCurrencySign } from 'src/utils/number';
+import { formatAmount } from 'src/utils/number';
 import useCardsStore from 'src/stores/cards';
-import { CardsInfoType } from 'src/types/ui/card';
+import { tabs } from './types';
 import NewCardForm from './NewCardForm.vue';
 
-const showNewCardForm = ref(false);
-const tab = ref<CardsInfoType>(CardsInfoType.OWN);
+const { selectedTab, selectedCard } = storeToRefs(useCardsStore());
 
+console.log(selectedCard.value?.currency);
+
+const usableLimit = computed(() =>
+  selectedCard.value
+    ? formatAmount(selectedCard.value.limits.USABLE_LIMIT, selectedCard.value.currency)
+    : '-',
+);
+
+const showNewCardForm = ref(false);
 watch(
-  tab,
+  selectedTab,
   () => {
-    console.log('calling --- ', tab.value);
+    console.log('calling --- ', selectedTab.value);
     const store = useCardsStore();
     const abortController = new AbortController();
 
     void store.fetchCardsInfo(
       {
-        cardsInfoType: tab.value,
+        cardsInfoType: selectedTab.value,
       },
       {
         signal: abortController.signal,

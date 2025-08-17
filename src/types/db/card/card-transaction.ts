@@ -1,5 +1,3 @@
-import type { Amount } from 'src/types/helpers';
-
 export enum CardTransactionType {
   PURCHASE = 'PURCHASE',
   REFUND = 'REFUND',
@@ -24,7 +22,7 @@ export type CardTransaction = {
   uid: string;
   cardUid: string;
   merchantUid: string;
-  amount: Amount;
+  amount: number;
   type: CardTransactionType;
   status: CardTransactionStatus;
   createdAt: string;

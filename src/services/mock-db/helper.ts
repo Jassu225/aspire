@@ -1,5 +1,5 @@
 export const getAll = (store: IDBObjectStore) => {
-  return new Promise<unknown[]>((resolve, reject) => {
+  return new Promise<object[]>((resolve, reject) => {
     const request = store.getAll();
 
     request.onsuccess = () => {

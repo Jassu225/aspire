@@ -9,10 +9,5 @@ export type ImageResource = {
 export type Currency = {
   type: string; // ISO 4217 currency code (INR, SGD ...)
   sign?: string;
-};
-
-export type Amount = {
-  value: number; // Amount in smallest currency unit (e.g., cents)
-  currency: Currency;
   fractionFactor: number; // We divide by this to get the value in units
 };

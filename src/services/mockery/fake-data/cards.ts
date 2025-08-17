@@ -13,11 +13,13 @@ import { getAssetUrl } from 'src/utils/url';
 
 export const inrCurrency: Currency = {
   type: 'INR',
+  fractionFactor: 2,
 };
 
 export const sgdCurrency: Currency = {
   type: 'SGD',
   sign: 'S$',
+  fractionFactor: 2,
 };
 
 export const getFakeCardActions = (cardUid: string): CardAction[] => {
