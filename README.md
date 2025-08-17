@@ -28,15 +28,15 @@ src/
 ├── components/            # Reusable UI components
 ├── stores/                # Pinia state management
 ├── services/              # API and business logic
-│   ├── api/              # API endpoints and HTTP calls
-│   ├── mock-backend/          # Business logic and card generation
-│   └── mockery/          # Mock backend and IndexedDB
-│   └── mock-db/          # Mock db using IndexedDB
+│   ├── api/               # API endpoints and HTTP calls
+│   ├── mock-backend/      # Business logic and card generation
+│   └── mockery/           # Mock backend and IndexedDB
+│   └── mock-db/           # Mock db using IndexedDB
 │       └── migrations/    # Migrations for IndexedDB
 ├── types/                 # TypeScript definitions
-│   ├── api/              # API request/response types
-│   ├── db/               # Database model types
-│   └── ui/               # UI model and component types
+│   ├── api/               # API request/response types
+│   ├── db/                # Database model types
+│   └── ui/                # UI model and component types
 └── utils/                 # Helper functions
 ```
 
@@ -50,32 +50,35 @@ src/
 
 ## Main Features
 
-### 🃏 Card Management
+### Card Management
 
 - Display cards in interactive carousel
 - Show/hide card details (number, CVV, expiry)
 - Support for VISA, Mastercard, RuPay networks
 - Card actions: freeze, replace, add to GPay
 
-### 💳 Transaction History
+### Transaction History
 
 - View recent transactions with merchant details
-- Transaction categories and status tracking
+- Transaction are sorted in reverse chronological order
 - Expandable transaction sections
 
-### 🎭 Mockery System
+### Mockery System
 
-- **Mockery**: Intercepts API calls for development
+- **Mockery**: Intercepts API calls for development by monkey patching fetch API
 - **IndexedDB**: Local database for cards, transactions, actions
 - **Fake Data**: Pre-populated realistic banking data
-- **Card Generator**: Creates valid card numbers using Luhn algorithm
+- **Card Generator**:
+  - Creates valid card numbers using Luhn algorithm
+  - Uses real bin numbers of Axis bank
 
-### 🗄️ Database Class
+### Database Class
 
 - **DB Class**: Manages IndexedDB operations
 - **Collections**: CARDS, TRANSACTIONS, CARD_ACTIONS
 - **Auto-seeding**: Populates database with sample data on first run
 - **CRUD Operations**: Add, retrieve, and query data (index-based)
+- **Migration Operations**: Migration scripts for modifying schema and data in client browsers.
 
 ## Key Files
 
