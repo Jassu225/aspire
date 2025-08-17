@@ -1,7 +1,9 @@
 import { type Amount } from 'src/types/helpers';
 
+export const LOCALE = 'en-IN';
+
 export const formatAsCurrency = (value: number, currency = 'INR'): string => {
-  return new Intl.NumberFormat('en-IN', {
+  return new Intl.NumberFormat(LOCALE, {
     style: 'currency',
     currency,
     maximumFractionDigits: 2,
@@ -9,8 +11,11 @@ export const formatAsCurrency = (value: number, currency = 'INR'): string => {
   }).format(value);
 };
 
+export const getCurrencySign = (currency = 'INR') => formatAsCurrency(0, currency).slice(0, -1);
+
 export const formatAsCurrencyWithoutSign = (value: number, currency = 'INR'): string => {
-  return formatAsCurrency(value, currency).slice(1); // Remove the currency sign
+  const sign = getCurrencySign(currency);
+  return formatAsCurrency(value, currency).slice(sign.length); // Remove the currency sign
 };
 
 export const formatAmount = (amount: Amount): string => {
