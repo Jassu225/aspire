@@ -38,7 +38,7 @@ import { storeToRefs } from 'pinia';
 import CollapsibleView from 'src/components/CollapsibleView.vue';
 import TransactionsIcon from 'assets/icons/card/transactions.svg?component';
 import useCardsStore from 'src/stores/cards';
-import { CardType } from 'src/types/db/card';
+import { CardType } from 'src/types/db/card/index';
 import CardTransactionItem from './CardTransactionItem.vue';
 
 const cardsStore = useCardsStore();
