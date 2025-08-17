@@ -15,7 +15,7 @@
       :style="{ backgroundColor: card.cardDesign?.backgroundColor }"
     >
       <div class="row no-wrap justify-between">
-        <span>{{ enumToSentence(card.type) }}</span>
+        <span :style="{ color: card.cardDesign?.textColor }">{{ enumToSentence(card.type) }}</span>
         <div v-if="logo !== null || card.issuingBank">
           <q-img
             no-spinner
@@ -29,9 +29,9 @@
           />
           <span
             v-if="(logo === null || !card.cardDesign?.logoHasName) && card.issuingBank"
-            class="tw:lowercase tw:ml-1"
+            class="tw:ml-1"
             :style="{ color: card.cardDesign?.textColor }"
-            >{{ card.issuingBank }}</span
+            >{{ capitalizeSentence(card.issuingBank) }}</span
           >
         </div>
       </div>
@@ -90,6 +90,7 @@ import type { Card } from 'src/types/db/card';
 import { splitCardNumber } from 'src/utils/card';
 import { toPx } from 'src/utils/ui';
 import { enumToSentence } from 'src/utils/enum';
+import { capitalizeSentence } from 'src/utils/text';
 
 const props = defineProps<{
   card: Card;

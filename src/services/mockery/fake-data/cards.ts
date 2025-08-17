@@ -95,12 +95,12 @@ export const getCardsFakeData: () => Card[] = () => [
       backgroundColor: '#01D167',
       textColor: 'white',
       logo: {
-        url: getAssetUrl('/icons/logo.svg'),
-        width: 24,
-        height: 23,
-        alt: 'Card Logo',
+        url: getAssetUrl('/icons/logo-with-name.svg'),
+        width: 85,
+        height: 24,
+        alt: 'Card Logo with Name',
       },
-      logoHasName: false,
+      logoHasName: true,
       networkLogo: getCardNetworkLogo(CardNetwork.VISA)!,
     },
     cvv: '789',
@@ -117,7 +117,7 @@ export const getCardsFakeData: () => Card[] = () => [
     cardHolderName: 'Jane Doe',
     currency: sgdCurrency,
     cardDesign: {
-      backgroundColor: '#000000',
+      backgroundColor: '#222222',
       textColor: '#ffffff',
       logo: {
         url: getAssetUrl('/icons/logo-with-name.svg'),

@@ -1,10 +1,11 @@
 import { type SubmitNewCardFormRequest } from 'src/types/api/cards';
 import { type Card, CardNetwork, CardStatus, CardType } from 'src/types/db/card';
-import { CARD_VALIDITY_RANGE_IN_YEARS } from 'src/utils/card';
+import { CARD_VALIDITY_RANGE_IN_YEARS, getCardNetworkLogo } from 'src/utils/card';
 import { nameRule } from 'src/utils/form';
 import { nanoid } from 'nanoid';
 import { enumToSentence } from 'src/utils/enum';
 import { inrCurrency, sgdCurrency } from '../mockery/fake-data/cards';
+import { getAssetUrl } from 'src/utils/url';
 
 export const ISSUING_BANK = 'Axis';
 const CREDIT_BINS = {
@@ -144,8 +145,24 @@ const validateNewCardRequest = (cardRequest: SubmitNewCardFormRequest) => {
   }
 };
 
+export const cardColors = [
+  {
+    backgroundColor: '#01D167',
+    textColor: 'black',
+  },
+  {
+    backgroundColor: '#536DFF',
+    textColor: 'black',
+  },
+  // {
+  //   backgroundColor: '#222222',
+  //   textColor: 'white',
+  // },
+];
+
 export const generateNewCard = (cardRequest: SubmitNewCardFormRequest) => {
   validateNewCardRequest(cardRequest);
+  const colors = cardColors[Math.floor(Math.random() * cardColors.length)]!;
   const newCard: Card = {
     uid: nanoid(12),
     cardNumber: generateCardNumber(cardRequest.type, cardRequest.network),
@@ -159,8 +176,16 @@ export const generateNewCard = (cardRequest: SubmitNewCardFormRequest) => {
     issuingBank: ISSUING_BANK,
     currency: Math.random() < 0.5 ? inrCurrency : sgdCurrency,
     cardDesign: {
-      backgroundColor: 'rgba(#536DFF, 0.5)',
-      textColor: 'white',
+      backgroundColor: colors.backgroundColor,
+      textColor: colors.textColor,
+      networkLogo: getCardNetworkLogo(cardRequest.network)!,
+      logo: {
+        url: getAssetUrl('/icons/card/banks/axis-bank.png'),
+        width: 114.3,
+        height: 31,
+        alt: 'Axis bank logo',
+      },
+      logoHasName: true,
     },
   };
   return newCard;
