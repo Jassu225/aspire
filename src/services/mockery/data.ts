@@ -9,7 +9,7 @@ import { fakeMcDonalsdsMerchant, fakeMerchantUidMap } from './fake-data/card-tra
 import type { UiCard, UiCardTransaction } from 'src/types/ui/card';
 import { toUiCard } from 'src/utils/card';
 import { generateNewCard } from '../backend/card-generator';
-import db, { COLLECTIONS } from './db';
+import db, { COLLECTIONS } from '../mock-db/db';
 import type { CardAction, Card, CardTransaction } from 'src/types/db/card';
 
 type BaseMock = {

@@ -3,8 +3,8 @@
 // } | null;
 
 import { toDbCard, toDbCardTransaction } from 'src/utils/card';
-import { fakeCardActions, getCardsFakeData } from './fake-data/cards';
-import fakeCardTransactions from './fake-data/card-transactions';
+import { fakeCardActions, getCardsFakeData } from '../mockery/fake-data/cards';
+import fakeCardTransactions from '../mockery/fake-data/card-transactions';
 import { nanoid } from 'nanoid';
 
 export enum COLLECTIONS {
