@@ -11,7 +11,8 @@ export const formatAsCurrency = (value: number, currency = 'INR'): string => {
   }).format(value);
 };
 
-export const getCurrencySign = (currency = 'INR') => formatAsCurrency(0, currency).slice(0, -1);
+export const getCurrencySign = (currency = 'INR') =>
+  formatAsCurrency(0, currency).slice(0, -1).trimEnd();
 
 export const formatAsCurrencyWithoutSign = (value: number, currency = 'INR'): string => {
   const sign = getCurrencySign(currency);
