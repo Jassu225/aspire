@@ -1,4 +1,3 @@
-import { nanoid } from 'nanoid';
 import {
   type CardAction,
   CardActionType,
@@ -6,9 +5,19 @@ import {
   CardStatus,
   CardType,
 } from 'src/types/db/card';
+import { type Currency } from 'src/types/helpers';
 import type { UiCard } from 'src/types/ui/card';
 import { getCardNetworkLogo } from 'src/utils/card';
 import { getAssetUrl } from 'src/utils/url';
+
+export const inrCurrency: Currency = {
+  type: 'INR',
+};
+
+export const sgdCurrency: Currency = {
+  type: 'SGD',
+  sign: 'S$',
+};
 
 export const fakeCardActions: CardAction[] = [
   {
@@ -65,11 +74,12 @@ export const fakeCardActions: CardAction[] = [
 
 export const getCardsFakeData: () => UiCard[] = () => [
   {
-    uid: nanoid(12),
+    uid: 'mkMSzBvWSA77',
     type: CardType.DEBIT,
     cardNumber: '1234 5678 9012 3456',
     expiry: '12/25',
     cardHolderName: 'Mark Henry',
+    currency: inrCurrency,
     cardDesign: {
       backgroundColor: '#01D167',
       textColor: 'white',
@@ -90,11 +100,12 @@ export const getCardsFakeData: () => UiCard[] = () => [
     actions: fakeCardActions,
   },
   {
-    uid: nanoid(12),
+    uid: 'omAesPcPttgV',
     type: CardType.DEBIT,
     cardNumber: '1111 5678 9012 3456',
     expiry: '12/26',
     cardHolderName: 'Jane Doe',
+    currency: sgdCurrency,
     cardDesign: {
       backgroundColor: '#000000',
       textColor: '#ffffff',

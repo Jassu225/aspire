@@ -29,9 +29,10 @@ src/
 ├── stores/                # Pinia state management
 ├── services/              # API and business logic
 │   ├── api/              # API endpoints and HTTP calls
-│   ├── backend/          # Business logic and card generation
+│   ├── mock-backend/          # Business logic and card generation
 │   └── mockery/          # Mock backend and IndexedDB
 │   └── mock-db/          # Mock db using IndexedDB
+│       └── migrations/    # Migrations for IndexedDB
 ├── types/                 # TypeScript definitions
 │   ├── api/              # API request/response types
 │   ├── db/               # Database model types

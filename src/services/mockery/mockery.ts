@@ -1,4 +1,4 @@
-import { findMockAndExec } from './data';
+import { findMockAndExec } from 'src/services/mock-backend/back-end';
 
 const setupMockery = (): (() => void) => {
   console.log(`--------- Mockery Enabled -------`);

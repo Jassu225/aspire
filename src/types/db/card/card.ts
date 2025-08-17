@@ -1,4 +1,4 @@
-import type { ImageResource } from 'src/types/helpers';
+import type { Currency, ImageResource } from 'src/types/helpers';
 
 export enum CardType {
   DEBIT = 'DEBIT',
@@ -37,6 +37,7 @@ export type Card = {
   isInternational?: boolean; // Optional, if the card can be used internationally
   notes?: string; // Optional, any additional notes about the card
   tags?: string[]; // Optional, tags for categorization
+  currency: Currency; // currency type of the card
   cardDesign?: {
     backgroundColor?: string; // Optional, background color of the card
     textColor?: string; // Optional, text color on the card

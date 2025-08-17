@@ -1,8 +1,8 @@
 import { CardTransactionStatus, CardTransactionType } from 'src/types/db/card';
 import { MerchantCategory } from 'src/types/db/merchant';
-import { type Currency } from 'src/types/helpers';
 import { type UiCardTransaction } from 'src/types/ui/card';
 import { getAssetUrl } from 'src/utils/url';
+import { inrCurrency, sgdCurrency } from './cards';
 
 const hamleysMerchant: UiCardTransaction['merchant'] = {
   uid: 'QAcfRbWmo__5',
@@ -33,15 +33,6 @@ export const fakeMerchantUidMap: Record<string, UiCardTransaction['merchant']> =
   [hamleysMerchant.uid]: hamleysMerchant,
 };
 
-const inrCurrency: Currency = {
-  type: 'INR',
-};
-
-const sgdCurrency: Currency = {
-  type: 'SGD',
-  sign: 'S$',
-};
-
 const fakeCardTransactions: UiCardTransaction[] = [
   {
     uid: '1',
@@ -54,8 +45,8 @@ const fakeCardTransactions: UiCardTransaction[] = [
     },
     type: CardTransactionType.REFUND,
     status: CardTransactionStatus.SETTLED,
-    createdAt: '2025-08-15T06:16:14+0530',
-    settledAt: '2025-08-15T06:16:14+0530',
+    createdAt: '2025-08-10T00:46:14.000Z',
+    settledAt: '2025-08-10T00:46:14.000Z',
   },
   {
     uid: '2',
@@ -68,7 +59,7 @@ const fakeCardTransactions: UiCardTransaction[] = [
     },
     type: CardTransactionType.PURCHASE,
     status: CardTransactionStatus.PENDING,
-    createdAt: '2025-08-15T06:16:14+0530',
+    createdAt: '2025-08-11T00:46:14.000Z',
   },
   {
     uid: '3',
@@ -81,8 +72,8 @@ const fakeCardTransactions: UiCardTransaction[] = [
     },
     type: CardTransactionType.REFUND,
     status: CardTransactionStatus.SETTLED,
-    createdAt: '2025-08-15T06:16:14+0530',
-    settledAt: '2025-08-15T06:16:14+0530',
+    createdAt: '2025-08-17T00:46:14.000Z',
+    settledAt: '2025-08-17T00:46:14.000Z',
   },
   {
     uid: '4',
@@ -95,7 +86,7 @@ const fakeCardTransactions: UiCardTransaction[] = [
     },
     type: CardTransactionType.PURCHASE,
     status: CardTransactionStatus.PENDING,
-    createdAt: '2025-08-15T06:16:14+0530',
+    createdAt: '2025-08-12T00:46:14.000Z',
   },
 ];
 

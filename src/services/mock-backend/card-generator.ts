@@ -4,6 +4,7 @@ import { CARD_VALIDITY_RANGE_IN_YEARS } from 'src/utils/card';
 import { nameRule } from 'src/utils/form';
 import { nanoid } from 'nanoid';
 import { enumToSentence } from 'src/utils/enum';
+import { inrCurrency, sgdCurrency } from '../mockery/fake-data/cards';
 
 export const ISSUING_BANK = 'Axis';
 const CREDIT_BINS = {
@@ -156,6 +157,7 @@ export const generateNewCard = (cardRequest: SubmitNewCardFormRequest) => {
     createdAt: new Date().toISOString(),
     cardNetwork: cardRequest.network,
     issuingBank: ISSUING_BANK,
+    currency: Math.random() < 0.5 ? inrCurrency : sgdCurrency,
     cardDesign: {
       backgroundColor: 'rgba(#536DFF, 0.5)',
       textColor: 'white',

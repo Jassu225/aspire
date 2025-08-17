@@ -1,34 +1,31 @@
-// type ErrorResult = {
-//   error: Error;
-// } | null;
+import { COLLECTIONS, ERRORS } from './types';
+import { getAll, getIndexNameFromKeys } from './helper';
+import migrationV1 from './migrations/for-v1';
+import migrationV0 from './migrations/for-v0';
+import type BaseMigration from './migrations/types';
 
-import { toDbCard, toDbCardTransaction } from 'src/utils/card';
-import { fakeCardActions, getCardsFakeData } from '../mockery/fake-data/cards';
-import fakeCardTransactions from '../mockery/fake-data/card-transactions';
-import { nanoid } from 'nanoid';
+const migrations: BaseMigration[] = [migrationV0, migrationV1];
 
-export enum COLLECTIONS {
-  CARDS = 'CARDS',
-  TRANSACTIONS = 'TRANSACTIONS',
-  CARD_ACTIONS = 'CARD_ACTIONS',
-  CARD_LIMITS = 'CARD_LIMITS',
-}
-
-export const ERRORS = {
-  notReady: new Error('Db not ready or disposed!!'),
-};
+type Filter = Record<string, IDBValidKey>;
 
 class DB {
   ready: Promise<boolean> | null = null;
   private dbName = 'aspire-play';
-  private needsSeeding = false;
+  private needDataOps = false;
+  private oldVersion = 0;
+  private get VERSION() {
+    return 2;
+  }
+  private get INDEX_KEY_SEPARATOR() {
+    return '-';
+  }
 
   constructor() {
     void this.initDB();
   }
 
   private getDbRequest() {
-    return indexedDB.open(this.dbName, 1);
+    return indexedDB.open(this.dbName, this.VERSION);
   }
 
   private openDB() {
@@ -42,30 +39,22 @@ class DB {
   initDB() {
     this.ready = new Promise<void>((resolve, reject) => {
       const request = this.getDbRequest();
-      request.onupgradeneeded = (evt) => {
-        console.log('----db init ----');
+      request.onupgradeneeded = (evt: IDBVersionChangeEvent) => {
+        this.needDataOps = true;
         try {
-          const db = (evt.target as unknown as { result: IDBDatabase }).result;
-          // Create object store for users
-          if (!db.objectStoreNames.contains(COLLECTIONS.CARDS)) {
-            db.createObjectStore(COLLECTIONS.CARDS, { keyPath: 'uid' });
-            this.needsSeeding = true;
-          }
+          const target = evt.target as IDBOpenDBRequest;
+          const db = target.result;
+          const transaction = target.transaction!;
+          const oldVersion = evt.oldVersion;
+          this.oldVersion = oldVersion;
+          console.log(`---- Upgrading DB from  v${oldVersion} to  v${this.VERSION} ----`);
 
-          if (!db.objectStoreNames.contains(COLLECTIONS.CARD_ACTIONS)) {
-            this.needsSeeding = true;
-            const cardActionsStore = db.createObjectStore(COLLECTIONS.CARD_ACTIONS, {
-              keyPath: 'uid',
-            });
-            cardActionsStore.createIndex('cardUid', 'cardUid');
-          }
-
-          if (!db.objectStoreNames.contains(COLLECTIONS.TRANSACTIONS)) {
-            this.needsSeeding = true;
-            const transactionsStore = db.createObjectStore(COLLECTIONS.TRANSACTIONS, {
-              keyPath: 'uid',
-            });
-            transactionsStore.createIndex('cardUid', 'cardUid');
+          // Run all migrations from oldVersion to currentVersion
+          for (let version = oldVersion; version < this.VERSION; version++) {
+            const migration = migrations[version]!;
+            console.log(`----  Running migration for version ${migration.VERSION} ---- `);
+            migration.migration(db, transaction);
+            console.log(`---- Completed migration for version ${migration.VERSION} ---- `);
           }
         } catch (e) {
           console.error('Error in onupgradeneeded:', e);
@@ -81,73 +70,18 @@ class DB {
       };
       request.onsuccess = () => resolve();
     }).then(async () => {
-      if (!this.needsSeeding) return true;
-      await this.seedInitialData();
-      console.log(`----- SEEDING COMPLETE ----- `);
+      if (!this.needDataOps) return true;
+      const db = await this.openDB();
+      for (let version = this.oldVersion; version < this.VERSION; version++) {
+        const migration = migrations[version]!;
+
+        console.log(` ------ Running Data Ops for version ${migration.VERSION} ---- `);
+        await migration.dataOps(db);
+        console.log(` ------ Completed Data Ops for version ${version} ---- `);
+      }
       return true;
     });
     return this.ready;
-  }
-
-  private async seedInitialData() {
-    console.log(`---- SEEDING ------`);
-    const db = await this.openDB();
-
-    return new Promise<void>((resolve, reject) => {
-      const transaction = db.transaction(
-        [COLLECTIONS.CARDS, COLLECTIONS.CARD_ACTIONS, COLLECTIONS.TRANSACTIONS],
-        'readwrite',
-      );
-
-      transaction.oncomplete = () => {
-        console.log(`------ TRANSACTION COMPLETE ----- `);
-        db.close();
-        resolve();
-      };
-
-      transaction.onerror = () => {
-        console.log(`------ TRANSACTION ERROR ----- `, transaction.error);
-        db.close();
-        reject(transaction.error as Error);
-      };
-
-      try {
-        const cardsFakeData = getCardsFakeData();
-        // Add cards
-        const cardsStore = transaction.objectStore(COLLECTIONS.CARDS);
-        cardsFakeData.forEach((uiCard) => {
-          cardsStore.add(toDbCard(uiCard));
-        });
-        console.log(`----- CARDS ADDED ---- `);
-
-        // Add card actions
-        const cardActionsStore = transaction.objectStore(COLLECTIONS.CARD_ACTIONS);
-        cardsFakeData.forEach((uiCard) => {
-          fakeCardActions.forEach((action) => {
-            cardActionsStore.add({ ...action, uid: nanoid(12), cardUid: uiCard.uid });
-          });
-        });
-        console.log(`----- CARDS' ACTIONS ADDED ---- `);
-
-        // Add transactions
-        const transactionsStore = transaction.objectStore(COLLECTIONS.TRANSACTIONS);
-        cardsFakeData.forEach((uiCard) => {
-          fakeCardTransactions.forEach((transaction) => {
-            transactionsStore.add(
-              toDbCardTransaction({ ...transaction, uid: nanoid(12), cardUid: uiCard.uid }),
-            );
-          });
-        });
-        console.log(`----- CARDS' TRANSACTIONS ADDED ---- `);
-      } catch (error) {
-        console.error('Error adding seed data:', error);
-        reject(error as Error);
-      }
-    });
-  }
-
-  dispose() {
-    this.ready = null;
   }
 
   async addToCollection(name: COLLECTIONS, data: unknown): Promise<void> {
@@ -176,49 +110,76 @@ class DB {
 
   async getAllFromCollection(name: COLLECTIONS): Promise<unknown[]> {
     if (!(await this.ready)) throw ERRORS.notReady;
-    return this.openDB().then((db) => {
-      return new Promise((resolve, reject) => {
+    const db = await this.openDB();
+    try {
+      const results = await new Promise<unknown[]>((resolve, reject) => {
         const transaction = db.transaction([name], 'readonly');
         const store = transaction.objectStore(name);
-        const request = store.getAll();
+        getAll(store).then(resolve).catch(reject);
+      });
+      return results;
+    } finally {
+      db.close();
+    }
+  }
 
-        request.onsuccess = () => {
-          db.close();
-          resolve(request.result);
-        };
-        request.onerror = () => {
-          db.close();
-          reject(request.error as Error);
-        };
+  async getAllFromCollectionWithFilter(name: COLLECTIONS, filter: Filter): Promise<unknown[]> {
+    if (!(await this.ready)) throw ERRORS.notReady;
+    return this.openDB().then((db) => {
+      return new Promise<unknown[]>((resolve, reject) => {
+        const transaction = db.transaction([name], 'readonly');
+        const store = transaction.objectStore(name);
+        const index = store.index(getIndexNameFromKeys(Object.keys(filter)));
+        const values = Object.values(filter);
+        const request = index.getAll(values.length === 1 ? values[0] : values);
+
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error as Error);
+      }).finally(() => {
+        db.close();
       });
     });
   }
 
-  async getAllFromCollectionBy(
+  async getAllFromCollectionWithFilterAndSort(
     name: COLLECTIONS,
-    key: string,
-    value?: IDBValidKey | null,
+    filter: Filter,
+    sortKey: string,
+    direction: 'ASC' | 'DESC' = 'ASC',
   ): Promise<unknown[]> {
     if (!(await this.ready)) throw ERRORS.notReady;
-    return this.openDB().then((db) => {
-      return new Promise((resolve, reject) => {
-        const transaction = db.transaction([name], 'readonly');
-        const store = transaction.objectStore(name);
-        const index = store.index(key);
-        const request = index.getAll(value);
+    const db = await this.openDB();
+    return new Promise<unknown[]>((resolve, reject) => {
+      const transaction = db.transaction([name], 'readonly');
+      const store = transaction.objectStore(name);
+      const index = store.index(getIndexNameFromKeys([...Object.keys(filter), sortKey]));
+      const values = Object.values(filter);
+      const cursorDirection: IDBCursorDirection = direction === 'ASC' ? 'next' : 'prev';
 
-        request.onsuccess = () => {
-          db.close();
-          resolve(request.result);
-        };
-        request.onerror = () => {
-          db.close();
-          reject(request.error as Error);
-        };
-      });
-    });
+      const query = IDBKeyRange.bound(
+        [...values, new Date(0).toISOString()],
+        [...values, new Date().toISOString()],
+        false,
+        false,
+      );
+
+      const results: unknown[] = [];
+      const request = index.openCursor(query, cursorDirection);
+
+      request.onsuccess = (event) => {
+        const cursor = (event.target as IDBRequest).result;
+        if (cursor) {
+          results.push(cursor.value);
+          cursor.continue();
+        } else {
+          resolve(results);
+        }
+      };
+      request.onerror = () => reject(request.error as Error);
+    }).finally(() => db.close());
   }
 }
 
 const db = new DB();
 export default db;
+export { COLLECTIONS };

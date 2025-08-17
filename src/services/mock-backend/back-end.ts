@@ -5,12 +5,13 @@ import type {
   FetchCardTransactionsResponse,
   SubmitNewCardFormRequest,
 } from 'src/types/api/cards';
-import { fakeMcDonalsdsMerchant, fakeMerchantUidMap } from './fake-data/card-transactions';
+import { fakeMcDonalsdsMerchant, fakeMerchantUidMap } from '../mockery/fake-data/card-transactions';
 import type { UiCard, UiCardTransaction } from 'src/types/ui/card';
 import { toUiCard } from 'src/utils/card';
-import { generateNewCard } from '../backend/card-generator';
+import { generateNewCard } from './card-generator';
 import db, { COLLECTIONS } from '../mock-db/db';
-import type { CardAction, Card, CardTransaction } from 'src/types/db/card';
+import { type CardAction, type Card, type CardTransaction } from 'src/types/db/card';
+import { sortCardActions } from './card-actions';
 
 type BaseMock = {
   endpoint: string;
@@ -38,7 +39,7 @@ const cardsMock: MockType<FetchCardsInfoRequest, FetchCardsInfoResponse> = {
       const cardActions = allCardsActions.filter((action) => action.cardUid === card.uid);
       return {
         ...card,
-        actions: cardActions,
+        actions: sortCardActions(cardActions),
       };
     });
     return {
@@ -53,9 +54,14 @@ const cardTrasactionsMock: MockType<FetchCardTransactionsRequest, FetchCardTrans
     await db.ready;
     const [, cardTransactions] = await Promise.all([
       sleep(),
-      db.getAllFromCollectionBy(COLLECTIONS.TRANSACTIONS, 'cardUid', req.cardUid) as Promise<
-        CardTransaction[]
-      >,
+      db.getAllFromCollectionWithFilterAndSort(
+        COLLECTIONS.TRANSACTIONS,
+        {
+          cardUid: req.cardUid,
+        },
+        'createdAt',
+        'DESC',
+      ) as Promise<CardTransaction[]>,
     ]);
     const uiTransactions: UiCardTransaction[] = cardTransactions.map((transaction) => ({
       ...transaction,
