@@ -72,6 +72,7 @@
             :src="card.cardDesign.networkLogo.url"
             :alt="card.cardDesign.networkLogo.alt"
             :width="toPx(card.cardDesign.networkLogo.width)"
+            no-spinner
           />
           <span v-else>{{ enumToSentence(card.cardNetwork) }}</span>
         </div>

@@ -1,5 +1,6 @@
 import { CardTransactionStatus, CardTransactionType } from 'src/types/db/card';
 import { MerchantCategory } from 'src/types/db/merchant';
+import { type Currency } from 'src/types/helpers';
 import { type UiCardTransaction } from 'src/types/ui/card';
 import { getAssetUrl } from 'src/utils/url';
 
@@ -32,6 +33,15 @@ export const fakeMerchantUidMap: Record<string, UiCardTransaction['merchant']> =
   [hamleysMerchant.uid]: hamleysMerchant,
 };
 
+const inrCurrency: Currency = {
+  type: 'INR',
+};
+
+const sgdCurrency: Currency = {
+  type: 'SGD',
+  sign: 'S$',
+};
+
 const fakeCardTransactions: UiCardTransaction[] = [
   {
     uid: '1',
@@ -39,8 +49,7 @@ const fakeCardTransactions: UiCardTransaction[] = [
     merchant: hamleysMerchant,
     amount: {
       value: 150000, // in paisa
-      currencySign: '₹',
-      currency: 'INR',
+      currency: inrCurrency,
       fractionFactor: 2,
     },
     type: CardTransactionType.REFUND,
@@ -54,8 +63,7 @@ const fakeCardTransactions: UiCardTransaction[] = [
     merchant: fakeMcDonalsdsMerchant,
     amount: {
       value: 15000, // in cents
-      currencySign: 'S$',
-      currency: 'SGD',
+      currency: sgdCurrency,
       fractionFactor: 2,
     },
     type: CardTransactionType.PURCHASE,
@@ -68,8 +76,7 @@ const fakeCardTransactions: UiCardTransaction[] = [
     merchant: hamleysMerchant,
     amount: {
       value: 150000, // in paisa
-      currencySign: '₹',
-      currency: 'INR',
+      currency: inrCurrency,
       fractionFactor: 2,
     },
     type: CardTransactionType.REFUND,
@@ -83,8 +90,7 @@ const fakeCardTransactions: UiCardTransaction[] = [
     merchant: fakeMcDonalsdsMerchant,
     amount: {
       value: 15000, // in cents
-      currencySign: 'S$',
-      currency: 'SGD',
+      currency: sgdCurrency,
       fractionFactor: 2,
     },
     type: CardTransactionType.PURCHASE,

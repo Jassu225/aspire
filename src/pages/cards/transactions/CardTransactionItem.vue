@@ -53,7 +53,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { type UiCardTransaction } from 'src/types/ui/card';
-import { formatAmount } from 'src/utils/number';
+import { formatAmount, getCurrencySign } from 'src/utils/number';
 import { getCashFlow, CashFlow, getTransactionCaption } from 'src/utils/card';
 import { formatAsDate } from 'src/utils/date';
 import CardIcon from 'src/assets/icons/card/card-back-simple.svg?component';
@@ -67,7 +67,7 @@ const amount = computed(() => {
     cashFlow,
     sign: cashFlow === CashFlow.INWARDS ? '+' : '-',
     value: formatAmount(props.transaction.amount),
-    currencySign: props.transaction.amount.currencySign || props.transaction.amount.currency,
+    currencySign: getCurrencySign(props.transaction.amount.currency),
   };
 });
 </script>

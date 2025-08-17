@@ -1,4 +1,4 @@
-import { type Amount } from 'src/types/helpers';
+import { type Currency, type Amount } from 'src/types/helpers';
 
 export const LOCALE = 'en-IN';
 
@@ -11,11 +11,15 @@ export const formatAsCurrency = (value: number, currency = 'INR'): string => {
   }).format(value);
 };
 
-export const getCurrencySign = (currency = 'INR') =>
+const _getInternalCurrencySign = (currency = 'INR') =>
   formatAsCurrency(0, currency).slice(0, -1).trimEnd();
 
+export const getCurrencySign = (currency: Currency) => {
+  return currency.sign || _getInternalCurrencySign(currency.type);
+};
+
 export const formatAsCurrencyWithoutSign = (value: number, currency = 'INR'): string => {
-  const sign = getCurrencySign(currency);
+  const sign = _getInternalCurrencySign(currency);
   return formatAsCurrency(value, currency).slice(sign.length); // Remove the currency sign
 };
 
