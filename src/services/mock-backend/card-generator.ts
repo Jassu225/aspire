@@ -6,6 +6,7 @@ import { nanoid } from 'nanoid';
 import { enumToSentence } from 'src/utils/enum';
 import { inrCurrency, sgdCurrency } from '../mockery/fake-data/cards';
 import { getAssetUrl } from 'src/utils/url';
+import { capitalizeSentence } from 'src/utils/text';
 
 export const ISSUING_BANK = 'Axis';
 const CREDIT_BINS = {
@@ -166,7 +167,7 @@ export const generateNewCard = (cardRequest: SubmitNewCardFormRequest) => {
   const newCard: Card = {
     uid: nanoid(12),
     cardNumber: generateCardNumber(cardRequest.type, cardRequest.network),
-    cardHolderName: cardRequest.name,
+    cardHolderName: capitalizeSentence(cardRequest.name.trim()),
     expiry: getExpiry(cardRequest.validityInYears),
     cvv: generateCvv(),
     type: cardRequest.type,
