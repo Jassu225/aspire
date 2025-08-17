@@ -40,31 +40,37 @@ class MigrationV0 extends BaseMigration {
       try {
         const cardsFakeData = getCardsFakeData();
 
-        console.log(`----- ADDING CARDS ---- `);
-        const cardsStore = transaction.objectStore(COLLECTIONS.CARDS);
-        cardsFakeData.forEach((card) => {
-          cardsStore.add(card);
-        });
-        console.log(`----- CARDS ADDED ---- `);
-
-        console.log(`----- ADDING CARDS' ACTIONS ---- `);
-        const cardActionsStore = transaction.objectStore(COLLECTIONS.CARD_ACTIONS);
-        cardsFakeData.forEach((uiCard) => {
-          const fakeCardActions = getFakeCardActions(uiCard.uid);
-          fakeCardActions.forEach((action) => {
-            cardActionsStore.add(action);
+        {
+          console.log(`----- ADDING CARDS ---- `);
+          const cardsStore = transaction.objectStore(COLLECTIONS.CARDS);
+          cardsFakeData.forEach((card) => {
+            cardsStore.add(card);
           });
-        });
-        console.log(`----- CARDS' ACTIONS ADDED ---- `);
+          console.log(`----- CARDS ADDED ---- `);
+        }
 
-        console.log(`----- ADDING CARDS' TRANSACTIONS ---- `);
-        const transactionsStore = transaction.objectStore(COLLECTIONS.TRANSACTIONS);
-        cardsFakeData.forEach((card) => {
-          getFakeCardTransactions(card.uid).forEach((transaction) => {
-            transactionsStore.add(toDbCardTransaction(transaction));
+        {
+          console.log(`----- ADDING CARDS' ACTIONS ---- `);
+          const cardActionsStore = transaction.objectStore(COLLECTIONS.CARD_ACTIONS);
+          cardsFakeData.forEach((uiCard) => {
+            const fakeCardActions = getFakeCardActions(uiCard.uid);
+            fakeCardActions.forEach((action) => {
+              cardActionsStore.add(action);
+            });
           });
-        });
-        console.log(`----- CARDS' TRANSACTIONS ADDED ---- `);
+          console.log(`----- CARDS' ACTIONS ADDED ---- `);
+        }
+
+        {
+          console.log(`----- ADDING CARDS' TRANSACTIONS ---- `);
+          const transactionsStore = transaction.objectStore(COLLECTIONS.TRANSACTIONS);
+          cardsFakeData.forEach((card) => {
+            getFakeCardTransactions(card.uid).forEach((transaction) => {
+              transactionsStore.add(toDbCardTransaction(transaction));
+            });
+          });
+          console.log(`----- CARDS' TRANSACTIONS ADDED ---- `);
+        }
       } catch (error) {
         console.error(`Error in seeding for version ${this.VERSION}:`, error);
         reject(error as Error);

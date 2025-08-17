@@ -11,7 +11,9 @@ type SortDirection = 'ASC' | 'DESC';
 
 class DB {
   ready: Promise<boolean> | null = null;
-  private dbName = 'aspire-play';
+  private get DB_NAME() {
+    return 'aspire-play';
+  }
   private needDataOps = false;
   private oldVersion = 0;
   private get VERSION() {
@@ -23,7 +25,7 @@ class DB {
   }
 
   private getDbRequest() {
-    return indexedDB.open(this.dbName, this.VERSION);
+    return indexedDB.open(this.DB_NAME, this.VERSION);
   }
 
   private openDB() {
@@ -60,7 +62,7 @@ class DB {
       };
 
       request.onerror = () => {
-        indexedDB.deleteDatabase(this.dbName).onsuccess = () => {
+        indexedDB.deleteDatabase(this.DB_NAME).onsuccess = () => {
           console.log('Database deleted, try again');
           // Reinitialize your database
         };
