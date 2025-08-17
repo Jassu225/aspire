@@ -32,11 +32,6 @@ export type Card = {
   createdAt: string; // Timestamp in ISO 8601 format
   issuingBank?: string; // Optional, if the card is issued by a specific bank
   cardNetwork: CardNetwork;
-  isVirtual?: boolean; // Optional, if the card is a virtual card
-  isCorporate?: boolean; // Optional, if the card is a corporate card
-  isInternational?: boolean; // Optional, if the card can be used internationally
-  notes?: string; // Optional, any additional notes about the card
-  tags?: string[]; // Optional, tags for categorization
   currency: Currency; // currency type of the card
   cardDesign?: {
     backgroundColor?: string; // Optional, background color of the card

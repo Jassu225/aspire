@@ -3,5 +3,5 @@ const getShortMonth = (date: Date) =>
 
 export const formatAsDate = (dateStr: string) => {
   const date = new Date(dateStr);
-  return `${date.getDate()} ${getShortMonth(date)} ${date.getFullYear()}`;
+  return `${date.getDate().toString().padStart(2, '0')} ${getShortMonth(date)} ${date.getFullYear()}`;
 };

@@ -5,7 +5,8 @@
         <CardsCarousel />
         <CardActions v-if="cardsStore.selectedCard?.actions.length || 0 > 0" />
       </div>
-      <div class="tw:pt-14">
+      <div class="column tw:pt-14 tw:gap-6">
+        <CardDetails />
         <CardTransactions />
       </div>
     </div>
@@ -20,6 +21,7 @@ import useCardsStore from 'src/stores/cards';
 import CardsCarousel from '../cards-carousel/CardsCarousel.vue';
 import CardActions from '../card-actions/CardActions.vue';
 import CardTransactions from '../transactions/CardTransactions.vue';
+import CardDetails from './CardDetails.vue';
 
 const cardsStore = useCardsStore();
 </script>

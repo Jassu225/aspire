@@ -58,7 +58,7 @@
 import { computed, onWatcherCleanup, ref, watch } from 'vue';
 import { storeToRefs } from 'pinia';
 import { getCurrencySign } from 'src/utils/number';
-import { formatAmount } from 'src/utils/number';
+import { formatAsCurrencyWithoutSign } from 'src/utils/number';
 import useCardsStore from 'src/stores/cards';
 import { tabs } from './types';
 import NewCardForm from './NewCardForm.vue';
@@ -69,7 +69,10 @@ console.log(selectedCard.value?.currency);
 
 const usableLimit = computed(() =>
   selectedCard.value
-    ? formatAmount(selectedCard.value.limits.USABLE_LIMIT, selectedCard.value.currency)
+    ? formatAsCurrencyWithoutSign(
+        selectedCard.value.limits.USABLE_LIMIT,
+        selectedCard.value.currency,
+      )
     : '-',
 );
 
