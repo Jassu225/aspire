@@ -3,6 +3,7 @@ import { MerchantCategory } from 'src/types/db/merchant';
 import { type UiCardTransaction } from 'src/types/ui/card';
 import { getAssetUrl } from 'src/utils/url';
 import { inrCurrency, sgdCurrency } from './cards';
+import { nanoid } from 'nanoid';
 
 const hamleysMerchant: UiCardTransaction['merchant'] = {
   uid: 'QAcfRbWmo__5',
@@ -33,61 +34,63 @@ export const fakeMerchantUidMap: Record<string, UiCardTransaction['merchant']> =
   [hamleysMerchant.uid]: hamleysMerchant,
 };
 
-const fakeCardTransactions: UiCardTransaction[] = [
-  {
-    uid: '1',
-    cardUid: '1',
-    merchant: hamleysMerchant,
-    amount: {
-      value: 150000, // in paisa
-      currency: inrCurrency,
-      fractionFactor: 2,
+const getFakeCardTransactions = (cardUid: string): UiCardTransaction[] => {
+  return [
+    {
+      uid: nanoid(12),
+      cardUid,
+      merchant: hamleysMerchant,
+      amount: {
+        value: 150000, // in paisa
+        currency: inrCurrency,
+        fractionFactor: 2,
+      },
+      type: CardTransactionType.REFUND,
+      status: CardTransactionStatus.SETTLED,
+      createdAt: '2025-08-10T00:46:14.000Z',
+      settledAt: '2025-08-10T00:46:14.000Z',
     },
-    type: CardTransactionType.REFUND,
-    status: CardTransactionStatus.SETTLED,
-    createdAt: '2025-08-10T00:46:14.000Z',
-    settledAt: '2025-08-10T00:46:14.000Z',
-  },
-  {
-    uid: '2',
-    cardUid: '1',
-    merchant: fakeMcDonalsdsMerchant,
-    amount: {
-      value: 15000, // in cents
-      currency: sgdCurrency,
-      fractionFactor: 2,
+    {
+      uid: nanoid(12),
+      cardUid,
+      merchant: fakeMcDonalsdsMerchant,
+      amount: {
+        value: 15000, // in cents
+        currency: sgdCurrency,
+        fractionFactor: 2,
+      },
+      type: CardTransactionType.PURCHASE,
+      status: CardTransactionStatus.PENDING,
+      createdAt: '2025-08-11T00:46:14.000Z',
     },
-    type: CardTransactionType.PURCHASE,
-    status: CardTransactionStatus.PENDING,
-    createdAt: '2025-08-11T00:46:14.000Z',
-  },
-  {
-    uid: '3',
-    cardUid: '1',
-    merchant: hamleysMerchant,
-    amount: {
-      value: 150000, // in paisa
-      currency: inrCurrency,
-      fractionFactor: 2,
+    {
+      uid: nanoid(12),
+      cardUid,
+      merchant: hamleysMerchant,
+      amount: {
+        value: 150000, // in paisa
+        currency: inrCurrency,
+        fractionFactor: 2,
+      },
+      type: CardTransactionType.REFUND,
+      status: CardTransactionStatus.SETTLED,
+      createdAt: '2025-08-17T00:46:14.000Z',
+      settledAt: '2025-08-17T00:46:14.000Z',
     },
-    type: CardTransactionType.REFUND,
-    status: CardTransactionStatus.SETTLED,
-    createdAt: '2025-08-17T00:46:14.000Z',
-    settledAt: '2025-08-17T00:46:14.000Z',
-  },
-  {
-    uid: '4',
-    cardUid: '1',
-    merchant: fakeMcDonalsdsMerchant,
-    amount: {
-      value: 15000, // in cents
-      currency: sgdCurrency,
-      fractionFactor: 2,
+    {
+      uid: nanoid(12),
+      cardUid,
+      merchant: fakeMcDonalsdsMerchant,
+      amount: {
+        value: 15000, // in cents
+        currency: sgdCurrency,
+        fractionFactor: 2,
+      },
+      type: CardTransactionType.PURCHASE,
+      status: CardTransactionStatus.PENDING,
+      createdAt: '2025-08-12T00:46:14.000Z',
     },
-    type: CardTransactionType.PURCHASE,
-    status: CardTransactionStatus.PENDING,
-    createdAt: '2025-08-12T00:46:14.000Z',
-  },
-];
+  ];
+};
 
-export default fakeCardTransactions;
+export default getFakeCardTransactions;

@@ -1,4 +1,5 @@
-import { type CardAction, CardActionType } from 'src/types/db/card';
+import { CardActionType, type Card, type CardAction, type CardLimit } from 'src/types/db/card';
+import type { UiCardLimit } from 'src/types/ui/card';
 
 const cardActionsOrder = [
   CardActionType.FREEZE,
@@ -18,4 +19,15 @@ export const sortCardActions = (cardActions: CardAction[]) => {
     }
   });
   return sortedActions;
+};
+
+export const toUiCard = (card: Card, actions: CardAction[], limits: CardLimit[]) => {
+  return {
+    ...card,
+    actions: sortCardActions(actions),
+    limits: limits.reduce(
+      (map, limit) => ({ ...map, [limit.type]: limit.value }),
+      {} as UiCardLimit,
+    ),
+  };
 };

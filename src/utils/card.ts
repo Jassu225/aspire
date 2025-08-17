@@ -1,13 +1,11 @@
 import {
-  type Card,
   CardNetwork,
   type CardTransaction,
   CardTransactionType,
   type CardType,
 } from 'src/types/db/card';
-import type { UiCardTransaction, UiCard } from 'src/types/ui/card';
+import type { UiCardTransaction } from 'src/types/ui/card';
 import { enumToSentence } from './enum';
-import { fakeCardActions } from 'src/services/mockery/fake-data/cards';
 import { getAssetUrl } from './url';
 import type { ImageResource } from 'src/types/helpers';
 
@@ -87,12 +85,6 @@ export const getCardNetworkLogo = (cardNetwork: CardNetwork): ImageResource | un
 
 export const MAX_CARD_NAME_LENGTH = 16;
 export const CARD_VALIDITY_RANGE_IN_YEARS = [2, 3, 4, 5];
-
-export const toUiCard = (card: Card): UiCard => ({ ...card, actions: fakeCardActions });
-export const toDbCard = (card: UiCard): Card => {
-  const dbCard = JSON.parse(JSON.stringify({ ...card, actions: undefined }));
-  return dbCard;
-};
 
 export const toDbCardTransaction = (transaction: UiCardTransaction): CardTransaction => {
   const dbData = JSON.parse(

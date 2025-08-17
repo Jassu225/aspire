@@ -1,4 +1,6 @@
+import { nanoid } from 'nanoid';
 import {
+  type Card,
   type CardAction,
   CardActionType,
   CardNetwork,
@@ -6,7 +8,6 @@ import {
   CardType,
 } from 'src/types/db/card';
 import { type Currency } from 'src/types/helpers';
-import type { UiCard } from 'src/types/ui/card';
 import { getCardNetworkLogo } from 'src/utils/card';
 import { getAssetUrl } from 'src/utils/url';
 
@@ -19,60 +20,68 @@ export const sgdCurrency: Currency = {
   sign: 'S$',
 };
 
-export const fakeCardActions: CardAction[] = [
-  {
-    uid: '1',
-    cardUid: '1',
-    type: CardActionType.FREEZE,
-    name: 'Freeze card',
-    icon: {
-      url: getAssetUrl('/icons/card/card-actions/freeze.png'),
+export const getFakeCardActions = (cardUid: string): CardAction[] => {
+  const fakeCardActions = [
+    {
+      uid: nanoid(12),
+      cardUid,
+      type: CardActionType.FREEZE,
+      name: 'Freeze card',
+      icon: {
+        url: getAssetUrl('/icons/card/card-actions/freeze.png'),
+      },
+      isActive: true,
     },
-    isActive: true,
-  },
-  {
-    uid: '2',
-    cardUid: '1',
-    type: CardActionType.SET_SPEND_LIMIT,
-    name: 'Set spend limit',
-    icon: {
-      url: getAssetUrl('/icons/card/card-actions/meter.png'),
+    {
+      uid: nanoid(12),
+      cardUid,
+      type: CardActionType.SET_SPEND_LIMIT,
+      name: 'Set spend limit',
+      icon: {
+        url: getAssetUrl('/icons/card/card-actions/meter.png'),
+      },
+      isActive: true,
     },
-    isActive: true,
-  },
-  {
-    uid: '3',
-    cardUid: '1',
-    type: CardActionType.ADD_TO_GPAY,
-    name: 'Add to GPay',
-    icon: {
-      url: getAssetUrl('/icons/card/card-actions/gpay.png'),
+    {
+      uid: nanoid(12),
+      cardUid,
+      type: CardActionType.ADD_TO_GPAY,
+      name: 'Add to GPay',
+      icon: {
+        url: getAssetUrl('/icons/card/card-actions/gpay.png'),
+      },
+      isActive: true,
     },
-    isActive: true,
-  },
-  {
-    uid: '4',
-    cardUid: '1',
-    type: CardActionType.REPLACE,
-    name: 'Replace card',
-    icon: {
-      url: getAssetUrl('/icons/card/card-actions/replace.png'),
+    {
+      uid: nanoid(12),
+      cardUid,
+      type: CardActionType.REPLACE,
+      name: 'Replace card',
+      icon: {
+        url: getAssetUrl('/icons/card/card-actions/replace.png'),
+      },
+      isActive: true,
     },
-    isActive: true,
-  },
-  {
-    uid: '5',
-    cardUid: '1',
-    type: CardActionType.CANCEL,
-    name: 'Cancel card',
-    icon: {
-      url: getAssetUrl('/icons/card/card-actions/deactivate.png'),
+    {
+      uid: nanoid(12),
+      cardUid,
+      type: CardActionType.CANCEL,
+      name: 'Cancel card',
+      icon: {
+        url: getAssetUrl('/icons/card/card-actions/deactivate.png'),
+      },
+      isActive: true,
     },
-    isActive: true,
-  },
-];
+  ];
+  const randomIndexToRemove = Math.floor(Math.random() * fakeCardActions.length);
 
-export const getCardsFakeData: () => UiCard[] = () => [
+  return [
+    ...fakeCardActions.slice(0, randomIndexToRemove),
+    ...fakeCardActions.slice(randomIndexToRemove + 1),
+  ];
+};
+
+export const getCardsFakeData: () => Card[] = () => [
   {
     uid: 'mkMSzBvWSA77',
     type: CardType.DEBIT,
@@ -97,7 +106,6 @@ export const getCardsFakeData: () => UiCard[] = () => [
     status: CardStatus.ACTIVE,
     createdAt: '2023-10-01T00:00:00Z',
     cardNetwork: CardNetwork.VISA,
-    actions: fakeCardActions,
   },
   {
     uid: 'omAesPcPttgV',
@@ -122,6 +130,5 @@ export const getCardsFakeData: () => UiCard[] = () => [
     status: CardStatus.ACTIVE,
     createdAt: '2023-10-01T00:00:00Z',
     cardNetwork: CardNetwork.MASTERCARD,
-    actions: fakeCardActions.slice(1),
   },
 ];

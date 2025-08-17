@@ -87,24 +87,22 @@ class DB {
   async addToCollection(name: COLLECTIONS, data: unknown): Promise<void> {
     if (!(await this.ready)) throw ERRORS.notReady;
     return this.openDB().then((db) => {
-      return new Promise((resolve, reject) => {
+      return new Promise<void>((resolve, reject) => {
         // Start transaction
         const transaction = db.transaction([name], 'readwrite');
         const collection = transaction.objectStore(name);
 
         // Add data
-        const addRequest = collection.put(data);
+        if (Array.isArray(data)) {
+          data.forEach((data) => collection.add(data));
+        } else {
+          collection.add(data);
+        }
 
-        addRequest.onsuccess = () => {
-          db.close();
-          resolve();
-        };
+        transaction.oncomplete = () => resolve();
 
-        addRequest.onerror = () => {
-          db.close();
-          reject(addRequest.error as Error);
-        };
-      });
+        transaction.onerror = () => reject(transaction.error as Error);
+      }).finally(() => db.close());
     });
   }
 
