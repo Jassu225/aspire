@@ -74,7 +74,7 @@ npm run serve
 - **Fake Data**: Pre-populated realistic banking data
 - **Card Generator**:
   - Creates valid card numbers using Luhn algorithm
-  - Uses real bin numbers of Axis bank
+  - Uses real bin numbers of Axis bank (references: [Axis bank bintable](https://bintable.com/issuer/in/AXIS-BANK,-LTD.))
 
 ### Database
 
