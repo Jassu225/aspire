@@ -23,21 +23,24 @@ npm run serve
 ## Project Structure
 
 ```
-src/
-├── pages/cards/           # Card management pages
-├── components/            # Reusable UI components
-├── stores/                # Pinia state management
-├── services/              # API and business logic
-│   ├── api/               # API endpoints and HTTP calls
-│   ├── mock-backend/      # Business logic and card generation
-│   └── mockery/           # Mock backend and IndexedDB
-│   └── mock-db/           # Mock db using IndexedDB
-│       └── migrations/    # Migrations for IndexedDB
-├── types/                 # TypeScript definitions
-│   ├── api/               # API request/response types
-│   ├── db/                # Database model types
-│   └── ui/                # UI model and component types
-└── utils/                 # Helper functions
+<aspire>
+├── public/icons/              # Icons to be served from back-end
+└── src/
+    ├── assets/icons           # Icons imported within code directly
+    ├── pages/cards/           # Card management pages
+    ├── components/            # Reusable UI components
+    ├── stores/                # Pinia state management
+    ├── services/              # API and business logic
+    │   ├── api/               # API endpoints and HTTP calls
+    │   ├── mock-backend/      # Business logic and card generation
+    │   └── mockery/           # Intercepts api calls to return mock responses
+    │   └── mock-db/           # Mock db using IndexedDB
+    │       └── migrations/    # Migrations for IndexedDB
+    ├── types/                 # TypeScript definitions
+    │   ├── api/               # API request/response types
+    │   ├── db/                # Database model types
+    │   └── ui/                # UI model and component types
+    └── utils/                 # Helper functions
 ```
 
 ## Tech Stack
@@ -72,20 +75,12 @@ src/
   - Creates valid card numbers using Luhn algorithm
   - Uses real bin numbers of Axis bank
 
-### Database Class
+### Database
 
 - **DB Class**: Manages IndexedDB operations
 - **Collections**: CARDS, TRANSACTIONS, CARD_ACTIONS
 - **Auto-seeding**: Populates database with sample data on first run
 - **CRUD Operations**: Add, retrieve, and query data (index-based)
-- **Migration Operations**: Migration scripts for modifying schema and data in client browsers.
-
-## Key Files
-
-- `src/services/mockery/mockery.ts` - API interception setup
-- `src/services/mockery/db.ts` - IndexedDB management
-- `src/services/backend/card-generator.ts` - Card generation logic
-- `src/stores/cards.ts` - Card state management
-- `src/pages/cards/CardsPage.vue` - Main cards interface
+- **Migration Operations**: Migration classes for modifying schema and data in client browsers.
 
 The app runs entirely in the browser and no external backend is required.
