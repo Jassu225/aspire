@@ -83,6 +83,11 @@ npm run serve
 - **CRUD Operations**: Add, retrieve, and query data (index-based)
 - **Migration Operations**: Migration classes for modifying schema and data in client browsers.
 
+### Deployment
+
+- **Hosting**: Hosted using firebase hosting
+- **Continuous deployment**: Auto deployment to firebase (on push to main) using github workflows (created using firebase CLI)
+
 The app runs entirely in the browser and no external backend is required.
 
 > NOTE: In case you encounter any problems, please clear the site data and try again.
