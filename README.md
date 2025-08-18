@@ -84,3 +84,5 @@ npm run serve
 - **Migration Operations**: Migration classes for modifying schema and data in client browsers.
 
 The app runs entirely in the browser and no external backend is required.
+
+> NOTE: In case you encounter any problems, please clear the site data and try again.
