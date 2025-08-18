@@ -75,8 +75,8 @@ export const getCardNetworkLogo = (cardNetwork: CardNetwork): ImageResource | un
     case CardNetwork.RUPAY:
       return {
         url: getAssetUrl(`${assetPathPrefix}/rupay.svg`),
-        width: 230,
-        height: 60,
+        width: 85,
+        height: 22.1875,
         alt: 'Rupay',
       };
   }
