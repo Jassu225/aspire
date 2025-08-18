@@ -32,7 +32,7 @@ npm run serve
     ├── stores/                # Pinia state management
     ├── services/              # API and business logic
     │   ├── api/               # API endpoints and HTTP calls
-    │   ├── mock-backend/      # Business logic and card generation
+    │   ├── mock-backend/      # Business logic, card generation, new card form validation
     │   └── mockery/           # Intercepts api calls to return mock responses
     │   └── mock-db/           # Mock db using IndexedDB
     │       └── migrations/    # Migrations for IndexedDB
@@ -41,6 +41,7 @@ npm run serve
     │   ├── db/                # Database model types
     │   └── ui/                # UI model and component types
     └── utils/                 # Helper functions
+        └── form.ts            # form validation rules and helpers
 ```
 
 ## Tech Stack
