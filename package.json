@@ -1,7 +1,7 @@
 {
   "name": "aspire",
   "version": "0.0.1",
-  "description": "Aspire example app",
+  "description": "A mock banking admin application using a mock backend ecosystem that runs entirely in the browser. Built with Vue.js 3, Quasar (with Vite + Typescript), Tailwindcss, IndexedDB (as mock DB), firebase hosting.",
   "productName": "aspire",
   "author": "Jaswanth Sai Sattenapalli <jaswanthsaisattenapalli@gmail.com>",
   "type": "module",

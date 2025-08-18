@@ -1,6 +1,6 @@
 # Aspire - Banking App
 
-A Vue.js 3 + Quasar banking application with card management features and mock backend.
+A mock banking admin application using a mock backend ecosystem that runs entirely in the browser. Built with Vue.js 3, Quasar (with Vite + Typescript), Tailwindcss, IndexedDB (as mock DB), firebase hosting.
 
 **Live Demo:** [https://aspire-play.web.app/cards](https://aspire-play.web.app/cards)
 
