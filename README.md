@@ -46,10 +46,10 @@ npm run serve
 
 ## Tech Stack
 
-- **Frontend**: Vue 3 + Quasar Framework
+- **Frontend**: Vue 3 + Quasar Framework (Vite + TypeScript)
 - **State**: Pinia
 - **Styling**: Tailwind CSS + SCSS
-- **Build**: Vite + TypeScript
+- **Back-end**: Mock back-end - intercepting fetch API calls
 - **Database**: IndexedDB (browser)
 
 ## Main Features
