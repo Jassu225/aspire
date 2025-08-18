@@ -1,8 +1,7 @@
 import { nanoid } from 'nanoid';
-import { type CardLimit, CardLimitType } from 'src/types/db/card/card-limits';
-import { getCardsFakeData } from './cards';
+import { CardLimitType } from 'src/types/db/card/card-limits';
 
-export const getFakeCardLimits = (cardUid: string, totalLimit = 150_000_00) => {
+const getFakeCardLimits = (cardUid: string, totalLimit = 150_000_00) => {
   const transactionLimit = 3_000_00;
   return [
     {
@@ -43,13 +42,4 @@ export const getFakeCardLimits = (cardUid: string, totalLimit = 150_000_00) => {
   ];
 };
 
-const getCardLimitsFakeData = (totalLimit = 150_000_00): CardLimit[] => {
-  const limits: CardLimit[] = [];
-
-  getCardsFakeData().forEach((card) => {
-    limits.push(...getFakeCardLimits(card.uid, totalLimit));
-  });
-  return limits;
-};
-
-export default getCardLimitsFakeData;
+export default getFakeCardLimits;

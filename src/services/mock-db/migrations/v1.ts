@@ -5,9 +5,9 @@ import { COLLECTIONS } from '../types';
 import BaseMigration from './types';
 import { getIndexNameFromKeys } from '../helper';
 
-class MigrationV0 extends BaseMigration {
+class MigrationV1 extends BaseMigration {
   override get VERSION() {
-    return 0;
+    return 1;
   }
 
   override migration(db: IDBDatabase) {
@@ -79,5 +79,5 @@ class MigrationV0 extends BaseMigration {
   }
 }
 
-const migrationV0 = new MigrationV0();
-export default migrationV0;
+const migrationV1 = new MigrationV1();
+export default migrationV1;

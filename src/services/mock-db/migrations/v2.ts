@@ -1,13 +1,13 @@
 import { inrCurrency, sgdCurrency } from 'src/services/mockery/fake-data/cards';
-import { COLLECTIONS } from '../types';
+import getFakeCardLimits from 'src/services/mockery/fake-data/card-limits';
+import type { Card } from 'src/types/db/card';
 import BaseMigration from './types';
 import { getAll, getIndexNameFromKeys } from '../helper';
-import type { Card } from 'src/types/db/card';
-import getCardLimitsFakeData from 'src/services/mockery/fake-data/card-limits';
+import { COLLECTIONS } from '../types';
 
-class MigrationV1 extends BaseMigration {
+class MigrationV2 extends BaseMigration {
   override get VERSION() {
-    return 1;
+    return 2;
   }
 
   override migration(db: IDBDatabase, transaction: IDBTransaction): void {
@@ -55,6 +55,7 @@ class MigrationV1 extends BaseMigration {
       transaction.oncomplete = () => resolve();
 
       transaction.onerror = () => reject(transaction.error as Error);
+      const cards: Card[] = [];
       try {
         {
           console.log(`------ ADDING currency to all cards ----- `);
@@ -70,6 +71,7 @@ class MigrationV1 extends BaseMigration {
                     : sgdCurrency,
               };
               cardsStore.put(newCard);
+              cards.push(newCard);
             });
           });
           console.log(`------ ADDED currency to all cards ----- `);
@@ -91,9 +93,12 @@ class MigrationV1 extends BaseMigration {
         {
           console.log(`----- ADDING Card limits -------- `);
           const cardLimitsStore = transaction.objectStore(COLLECTIONS.CARD_LIMITS);
-          getCardLimitsFakeData().forEach((limit) => {
-            cardLimitsStore.add(limit);
+          cards.forEach((card) => {
+            getFakeCardLimits(card.uid).forEach((limit) => {
+              cardLimitsStore.add(limit);
+            });
           });
+
           console.log(`----- ADDED Card limits -------- `);
         }
 
@@ -127,5 +132,5 @@ class MigrationV1 extends BaseMigration {
   }
 }
 
-const migrationV1 = new MigrationV1();
-export default migrationV1;
+const migrationV2 = new MigrationV2();
+export default migrationV2;

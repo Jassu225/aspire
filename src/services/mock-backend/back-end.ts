@@ -10,7 +10,7 @@ import type { UiCard, UiCardTransaction } from 'src/types/ui/card';
 import { generateNewCard } from './card-generator';
 import db, { COLLECTIONS } from '../mock-db/db';
 import { type CardAction, type Card, type CardTransaction } from 'src/types/db/card';
-import { getFakeCardLimits } from '../mockery/fake-data/card-limits';
+import getFakeCardLimits from '../mockery/fake-data/card-limits';
 import { getFakeCardActions } from '../mockery/fake-data/cards';
 import type { CardLimit } from 'src/types/db/card/card-limits';
 import { toUiCard } from './utils';

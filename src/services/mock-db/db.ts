@@ -1,10 +1,15 @@
 import { COLLECTIONS, ERRORS } from './types';
 import { getAll, getIndexNameFromKeys } from './helper';
-import migrationV1 from './migrations/for-v1';
-import migrationV0 from './migrations/for-v0';
+import migrationV1 from './migrations/v1';
+import migrationV2 from './migrations/v2';
+import migrationV3 from './migrations/v3';
 import type BaseMigration from './migrations/types';
 
-const migrations: BaseMigration[] = [migrationV0, migrationV1];
+const migrations: Record<number, BaseMigration> = {
+  [migrationV1.VERSION]: migrationV1,
+  [migrationV2.VERSION]: migrationV2,
+  [migrationV3.VERSION]: migrationV3,
+};
 
 type Filter = Record<string, IDBValidKey>;
 type SortDirection = 'ASC' | 'DESC';
@@ -17,7 +22,7 @@ class DB {
   private needDataOps = false;
   private oldVersion = 0;
   private get VERSION() {
-    return 2;
+    return 3;
   }
 
   constructor() {
@@ -50,11 +55,11 @@ class DB {
           console.log(`---- Upgrading DB from  v${oldVersion} to  v${this.VERSION} ----`);
 
           // Run all migrations from oldVersion to currentVersion
-          for (let version = oldVersion; version < this.VERSION; version++) {
+          for (let version = oldVersion + 1; version <= this.VERSION; version++) {
             const migration = migrations[version]!;
-            console.log(`----  Running migration for version ${migration.VERSION} ---- `);
+            console.log(`----  Running migration to version ${migration.VERSION} ---- `);
             migration.migration(db, transaction);
-            console.log(`---- Completed migration for version ${migration.VERSION} ---- `);
+            console.log(`---- Completed migration to version ${migration.VERSION} ---- `);
           }
         } catch (e) {
           console.error('Error in onupgradeneeded:', e);
@@ -72,7 +77,7 @@ class DB {
     }).then(async () => {
       if (!this.needDataOps) return true;
       const db = await this.openDB();
-      for (let version = this.oldVersion; version < this.VERSION; version++) {
+      for (let version = this.oldVersion + 1; version <= this.VERSION; version++) {
         const migration = migrations[version]!;
 
         console.log(` ------ Running Data Ops for version ${migration.VERSION} ---- `);
