@@ -79,7 +79,7 @@ npm run serve
 ### Database
 
 - **DB Class**: Manages IndexedDB operations
-- **Collections**: CARDS, TRANSACTIONS, CARD_ACTIONS
+- **Collections**: CARDS, TRANSACTIONS, CARD_ACTIONS, CARD_LIMITS
 - **Auto-seeding**: Populates database with sample data on first run
 - **CRUD Operations**: Add, retrieve, and query data (index-based)
 - **Migration Operations**: Migration classes for modifying schema and data in client browsers.
