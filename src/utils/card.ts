@@ -24,8 +24,8 @@ export enum CashFlow {
   OUTWARDS = 'OUTWARDS',
 }
 
-export const getCashFlow = (transaction: UiCardTransaction) => {
-  switch (transaction.type) {
+export const getCashFlow = (transactionType: CardTransactionType) => {
+  switch (transactionType) {
     case CardTransactionType.CASHBACK_ADJUSTMENT:
     case CardTransactionType.FEE:
     case CardTransactionType.PURCHASE:
@@ -39,23 +39,23 @@ export const getCashFlow = (transaction: UiCardTransaction) => {
   }
 };
 
-export const getTransactionCaption = (transaction: UiCardTransaction, cardType: CardType) => {
-  switch (transaction.type) {
+export const getTransactionCaption = (transactionType: CardTransactionType, cardType: CardType) => {
+  switch (transactionType) {
     case CardTransactionType.CASHBACK_RECEIVED:
     case CardTransactionType.REFUND:
     case CardTransactionType.PAYMENT_RECEIVED:
     case CardTransactionType.WITHDRAWL:
-      return `${enumToSentence(transaction.type)} on the ${enumToSentence(cardType).toLowerCase()} card`;
+      return `${enumToSentence(transactionType)} on the ${enumToSentence(cardType).toLowerCase()} card`;
     case CardTransactionType.CASHBACK_ADJUSTMENT:
     case CardTransactionType.DEPOSIT:
-      return `${enumToSentence(transaction.type)} to the ${enumToSentence(cardType).toLowerCase()} card`;
+      return `${enumToSentence(transactionType)} to the ${enumToSentence(cardType).toLowerCase()} card`;
     case CardTransactionType.FEE:
     case CardTransactionType.PURCHASE:
       return `Charged to the ${enumToSentence(cardType).toLowerCase()} card`;
   }
 };
 
-export const getCardNetworkLogo = (cardNetwork: CardNetwork): ImageResource | undefined => {
+export const getCardNetworkLogo = (cardNetwork: CardNetwork): ImageResource | null => {
   const assetPathPrefix = '/icons/card/networks';
   switch (cardNetwork) {
     case CardNetwork.VISA:
@@ -80,7 +80,7 @@ export const getCardNetworkLogo = (cardNetwork: CardNetwork): ImageResource | un
         alt: 'Rupay',
       };
   }
-  return undefined;
+  return null;
 };
 
 export const MAX_CARD_NAME_LENGTH = 16;

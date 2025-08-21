@@ -44,7 +44,7 @@
         <div class="icon-container row inline flex-center tw:rounded-full">
           <q-icon size="10px" color="white"><CardIcon /></q-icon>
         </div>
-        <span class="caption">{{ getTransactionCaption(transaction, cardType) }}</span>
+        <span class="caption">{{ getTransactionCaption(transaction.type, cardType) }}</span>
       </div>
     </q-item-section>
   </q-item>
@@ -66,7 +66,7 @@ const props = defineProps<{ transaction: UiCardTransaction; cardType: CardType }
 
 const { selectedCard } = storeToRefs(useCardsStore());
 const amount = computed(() => {
-  const cashFlow = getCashFlow(props.transaction);
+  const cashFlow = getCashFlow(props.transaction.type);
   return {
     cashFlow,
     sign: cashFlow === CashFlow.INWARDS ? '+' : '-',
