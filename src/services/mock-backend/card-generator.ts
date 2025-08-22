@@ -30,8 +30,8 @@ const calculateLuhnCheckDigit = (cardNumber: string): string => {
   for (let i = digits.length - 1; i >= 0; i--) {
     let digit = digits[i]!;
 
-    // Double every second digit from right
-    if ((digits.length - i) % 2 === 0) {
+    // Double every first digit from right
+    if ((digits.length - i - 1) % 2 === 0) {
       digit *= 2;
       if (digit > 9) {
         digit = digit - 9;
@@ -55,7 +55,7 @@ const generateRandomDigits = (length: number): string => {
   return result;
 };
 
-export const generateCardNumber = (cardType: CardType, cardNetwork: CardNetwork): string => {
+const generateCardNumber = (cardType: CardType, cardNetwork: CardNetwork): string => {
   // Get the appropriate BIN based on card type and network
   const bins = (cardType === CardType.CREDIT ? CREDIT_BINS : DEBIT_BINS) as Record<
     CardNetwork,
@@ -83,19 +83,19 @@ export const generateCardNumber = (cardType: CardType, cardNetwork: CardNetwork)
 };
 
 // Helper function to format card number with spaces
-export const formatCardNumber = (cardNumber: string): string => {
-  // Remove any existing spaces
-  const cleaned = cardNumber.replace(/\s/g, '');
+// export const formatCardNumber = (cardNumber: string): string => {
+//   // Remove any existing spaces
+//   const cleaned = cardNumber.replace(/\s/g, '');
 
-  // Format based on card length
-  if (cleaned.length === 15) {
-    // AMEX format: 4-6-5
-    return cleaned.replace(/(\d{4})(\d{6})(\d{5})/, '$1 $2 $3');
-  } else {
-    // Standard format: 4-4-4-4
-    return cleaned.replace(/(\d{4})/g, '$1 ').trim();
-  }
-};
+//   // Format based on card length
+//   if (cleaned.length === 15) {
+//     // AMEX format: 4-6-5
+//     return cleaned.replace(/(\d{4})(\d{6})(\d{5})/, '$1 $2 $3');
+//   } else {
+//     // Standard format: 4-4-4-4
+//     return cleaned.replace(/(\d{4})/g, '$1 ').trim();
+//   }
+// };
 
 // Helper function to validate if a card number is valid using Luhn algorithm
 export const isValidCardNumber = (cardNumber: string): boolean => {
@@ -134,12 +134,21 @@ const validateNewCardRequest = (cardRequest: SubmitNewCardFormRequest) => {
   if (!Object.values(CardType).includes(cardRequest.type)) {
     throw new Error(`Invalid card type ${cardRequest.type}.`);
   }
-  if (!Object.values(CardType).includes(cardRequest.type)) {
-    throw new Error(`Invalid card type ${cardRequest.type}.`);
+  if (!Object.values(CardNetwork).includes(cardRequest.network)) {
+    throw new Error(`Invalid card network ${cardRequest.network}.`);
   }
-  const successOrMsg = nameRule()(cardRequest.name);
-  if (successOrMsg !== true) {
-    throw new Error(`${successOrMsg} in name.`);
+  {
+    if (!cardRequest.name) {
+      cardRequest.name = '';
+    }
+    cardRequest.name = cardRequest.name.trim();
+    if (!cardRequest.name) {
+      throw new Error('Name is required.');
+    }
+    const successOrMsg = nameRule()(cardRequest.name);
+    if (successOrMsg !== true) {
+      throw new Error(`${successOrMsg} in name.`);
+    }
   }
   if (!CARD_VALIDITY_RANGE_IN_YEARS.includes(cardRequest.validityInYears)) {
     throw new Error(`Invalid valildity ${cardRequest.validityInYears}`);
@@ -167,7 +176,7 @@ export const generateNewCard = (cardRequest: SubmitNewCardFormRequest) => {
   const newCard: Card = {
     uid: nanoid(12),
     cardNumber: generateCardNumber(cardRequest.type, cardRequest.network),
-    cardHolderName: capitalizeSentence(cardRequest.name.trim()),
+    cardHolderName: capitalizeSentence(cardRequest.name?.trim() ?? ''),
     expiry: getExpiry(cardRequest.validityInYears),
     cvv: generateCvv(),
     type: cardRequest.type,
