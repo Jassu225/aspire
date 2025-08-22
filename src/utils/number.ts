@@ -18,7 +18,7 @@ export const getCurrencySign = (currency: Currency) => {
   return currency.sign || _getInternalCurrencySign(currency.type);
 };
 
-export const _formatAsCurrencyWithoutSign = (value: number, currency = 'INR'): string => {
+const _formatAsCurrencyWithoutSign = (value: number, currency = 'INR'): string => {
   const sign = _getInternalCurrencySign(currency);
   return _formatAsCurrency(value, currency).slice(sign.length); // Remove the currency sign
 };

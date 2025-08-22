@@ -1,4 +1,3 @@
 export const capitalizeSentence = (sentence: string) => {
-  const s = sentence.toLowerCase();
-  return s.charAt(0).toUpperCase() + s.slice(1);
+  return sentence.charAt(0).toUpperCase() + sentence.slice(1).toLowerCase();
 };
