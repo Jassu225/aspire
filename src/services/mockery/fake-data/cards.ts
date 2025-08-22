@@ -85,7 +85,7 @@ export const getFakeCardActions = (cardUid: string): CardAction[] => {
 
 export const getCardsFakeData: () => Card[] = () => [
   {
-    uid: 'mkMSzBvWSA77',
+    uid: process.env.NODE_ENV === 'test' ? nanoid(12) : 'mkMSzBvWSA77',
     type: CardType.DEBIT,
     cardNumber: '1234 5678 9012 3456',
     expiry: '12/25',
@@ -110,7 +110,7 @@ export const getCardsFakeData: () => Card[] = () => [
     cardNetwork: CardNetwork.VISA,
   },
   {
-    uid: 'omAesPcPttgV',
+    uid: process.env.NODE_ENV === 'test' ? nanoid(12) : 'omAesPcPttgV',
     type: CardType.DEBIT,
     cardNumber: '1111 5678 9012 3456',
     expiry: '12/26',

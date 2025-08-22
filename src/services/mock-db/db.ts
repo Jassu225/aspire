@@ -15,13 +15,13 @@ type Filter = Record<string, IDBValidKey>;
 type SortDirection = 'ASC' | 'DESC';
 
 class DB {
-  ready: Promise<boolean> | null = null;
-  private get DB_NAME() {
-    return 'aspire-play';
+  ready: Promise<boolean> = Promise.resolve(false);
+  get DB_NAME() {
+    return process.env.NODE_ENV === 'test' ? 'aspire-play-test' : 'aspire-play';
   }
   private needDataOps = false;
   private oldVersion = 0;
-  private get VERSION() {
+  get VERSION() {
     return 3;
   }
 
@@ -37,11 +37,11 @@ class DB {
     return new Promise<IDBDatabase>((resolve, reject) => {
       const request = this.getDbRequest();
       request.onerror = () => reject(request.error as Error);
-      request.onsuccess = () => resolve(request.result);
+      request.onsuccess = (e) => resolve((e.target as IDBOpenDBRequest).result);
     });
   }
 
-  initDB() {
+  private initDB() {
     this.ready = new Promise<void>((resolve, reject) => {
       const request = this.getDbRequest();
       request.onupgradeneeded = (evt: IDBVersionChangeEvent) => {
@@ -214,4 +214,4 @@ class DB {
 
 const db = new DB();
 export default db;
-export { COLLECTIONS };
+export { COLLECTIONS, ERRORS };
