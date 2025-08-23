@@ -14,8 +14,8 @@
     "build": "quasar build",
     "postinstall": "quasar prepare",
     "serve": "quasar serve dist/spa",
-    "test:unit": "vitest",
-    "test:unit:ci": "vitest run"
+    "test:unit": "TEST_TYPE=unit vitest",
+    "test:unit:ci": "TEST_TYPE=unit vitest run"
   },
   "dependencies": {
     "@quasar/extras": "^1.16.4",

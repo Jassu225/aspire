@@ -2,9 +2,10 @@ import { findMockAndExec } from 'src/services/mock-backend/back-end';
 
 const setupMockery = (): (() => void) => {
   console.log(`--------- Mockery Enabled -------`);
-  const originalFetch = self.fetch;
 
-  self.fetch = async (input: RequestInfo | URL, init?: RequestInit): Promise<Response> => {
+  const originalFetch = globalThis.fetch;
+
+  globalThis.fetch = async (input: RequestInfo | URL, init?: RequestInit): Promise<Response> => {
     if (typeof input === 'string') {
       try {
         const resPromise = findMockAndExec(input, JSON.parse((init?.body as string) || '{}'));
@@ -31,7 +32,7 @@ const setupMockery = (): (() => void) => {
   };
 
   return () => {
-    self.fetch = originalFetch;
+    globalThis.fetch = originalFetch;
   };
 };
 

@@ -7,9 +7,8 @@ import type {
 } from 'src/types/api/cards';
 import type { UiCard } from 'src/types/ui/card';
 import { Notify } from 'quasar';
-// import type { CardsInfoType } from 'src/types/ui/card';
 
-const API_BASE_URL = process.env.API_BASE_URL || window.origin;
+const API_BASE_URL = process.env.API_BASE_URL || window.location.origin;
 
 export type RequestOptions = {
   signal?: RequestInit['signal'];
@@ -17,7 +16,7 @@ export type RequestOptions = {
 
 async function makeApiCall<ReqT, ResT>({
   endpoint,
-  method = 'GET',
+  method,
   data,
   options = { signal: null },
 }: {
@@ -30,7 +29,6 @@ async function makeApiCall<ReqT, ResT>({
   url.pathname = endpoint;
   try {
     const requestOptions: RequestInit = {
-      method,
       signal: options.signal || null,
     };
     if (typeof data === 'object') {
@@ -38,6 +36,10 @@ async function makeApiCall<ReqT, ResT>({
       requestOptions.headers = {
         'Content-Type': 'application/json',
       };
+      requestOptions.method = 'POST';
+    }
+    if (method) {
+      requestOptions.method = method;
     }
     const res = await fetch(url.href, requestOptions);
     // Needed only in case of mockery
@@ -53,7 +55,12 @@ async function makeApiCall<ReqT, ResT>({
     if ((e as Error)?.name === 'AbortError') {
       throw e;
     }
-    Notify.create({ type: 'negative', message: (e as Error)?.message || 'Something went wrong!' });
+    if (process.env.TEST_TYPE !== 'unit') {
+      Notify.create({
+        type: 'negative',
+        message: (e as Error)?.message || 'Something went wrong!',
+      });
+    }
     throw e;
   }
 }

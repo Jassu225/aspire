@@ -5,5 +5,9 @@
 <script setup lang="ts">
 //
 import setupMockery from 'src/services/mockery/mockery';
-setupMockery();
+import { onBeforeUnmount } from 'vue';
+
+const cleanupMockery = setupMockery();
+
+onBeforeUnmount(cleanupMockery);
 </script>
