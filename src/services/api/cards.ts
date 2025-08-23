@@ -55,12 +55,10 @@ async function makeApiCall<ReqT, ResT>({
     if ((e as Error)?.name === 'AbortError') {
       throw e;
     }
-    if (process.env.TEST_TYPE !== 'unit') {
-      Notify.create({
-        type: 'negative',
-        message: (e as Error)?.message || 'Something went wrong!',
-      });
-    }
+    Notify.create({
+      type: 'negative',
+      message: (e as Error)?.message || 'Something went wrong!',
+    });
     throw e;
   }
 }

@@ -4,25 +4,36 @@ on:
     branches:
       - main
 jobs:
-  test:
-    name: Test
+  unit_test:
+    name: Unit Test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22.18.0'
-
       - name: Install dependencies
         run: npm ci
-
-      - name: Run tests
+      - name: Run unit tests
         run: npm run test:unit:ci
 
+  integration_test:
+    name: Integration Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.18.0'
+      - name: Install dependencies
+        run: npm ci
+      - name: Run integration tests
+        run: npm run test:integration:ci
+
   build_and_deploy:
-    needs: test
+    needs: [unit_test, integration_test]
     name: Build and Deploy
     runs-on: ubuntu-latest
     steps:

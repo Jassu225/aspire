@@ -1,20 +1,32 @@
-import { afterAll, beforeAll, describe, expect, it } from 'vitest';
+import { type App, createApp } from 'vue';
 import { createPinia, setActivePinia } from 'pinia';
+import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import 'fake-indexeddb/auto';
 import { CardsInfoType } from 'src/types/ui/card';
 import db from 'src/services/mock-db/db';
 import setupMockery from 'src/services/mockery/mockery';
 import useCardsStore from './cards';
+import { Notify, Quasar } from 'quasar';
 
 describe('Cards Store', () => {
   let cleanupMockery: () => void;
+  let appInstance: App<Element>;
   beforeAll(async () => {
     cleanupMockery = setupMockery();
     await db.ready;
-    setActivePinia(createPinia());
+    const app = createApp({});
+    const pinia = createPinia();
+    app.use(pinia);
+    setActivePinia(pinia);
+    appInstance = app.use(Quasar, {
+      plugins: {
+        Notify,
+      },
+    });
   });
 
   afterAll(() => {
+    appInstance.unmount();
     setActivePinia(undefined);
     cleanupMockery();
   });
