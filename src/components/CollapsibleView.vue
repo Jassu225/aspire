@@ -13,7 +13,7 @@
         <q-icon><component :is="icon" /></q-icon>
       </q-item-section>
 
-      <q-item-section class="title"> {{ title }} </q-item-section>
+      <q-item-section data-testid="title" class="title"> {{ title }} </q-item-section>
     </template>
 
     <q-card>
