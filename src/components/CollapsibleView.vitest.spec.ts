@@ -40,10 +40,10 @@ describe.concurrent('components/CollapsibleView', () => {
     const wrapper = mount(CollapsibleView, { props: { title: 'Test-3', icon } });
     expect(wrapper.emitted('show')).toBeFalsy();
     await wrapper.find('[data-testid="test-icon-3"]').trigger('click');
-    expect(wrapper.emitted('show')).toBeTruthy();
+    expect(wrapper.emitted('show')).toHaveLength(1);
     expect(wrapper.emitted('hide')).toBeFalsy();
     await wrapper.find('[data-testid="test-icon-3"]').trigger('click');
-    expect(wrapper.emitted('hide')).toBeTruthy();
+    expect(wrapper.emitted('hide')).toHaveLength(1);
   });
 
   it('should be able to show and hide the collapsible view when defaultOpened is true', async () => {
@@ -53,9 +53,9 @@ describe.concurrent('components/CollapsibleView', () => {
     });
     expect(wrapper.emitted('hide')).toBeFalsy();
     await wrapper.find('[data-testid="test-icon-4"]').trigger('click');
-    expect(wrapper.emitted('hide')).toBeTruthy();
+    expect(wrapper.emitted('hide')).toHaveLength(1);
     expect(wrapper.emitted('show')).toBeFalsy();
     await wrapper.find('[data-testid="test-icon-4"]').trigger('click');
-    expect(wrapper.emitted('show')).toBeTruthy();
+    expect(wrapper.emitted('show')).toHaveLength(1);
   });
 });
