@@ -40,14 +40,34 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22.18.0'
+
       - name: Install dependencies
         run: npm ci
-      - name: Install Quasar CLI
-        run: npm install -g @quasar/cli@latest
+
+      - name: Get Playwright version
+        id: playwright-version
+        run: echo "version=$(npm list @playwright/test --depth=0 | grep @playwright/test | sed 's/.*@playwright\/test@//' | sed 's/ .*//')" >> $GITHUB_OUTPUT
+
+      - name: Cache Playwright
+        uses: actions/cache@v4
+        id: playwright-cache
+        with:
+          path: |
+            ~/.cache/ms-playwright
+            /usr/lib/x86_64-linux-gnu
+            /usr/share/fonts
+          key: playwright-${{ runner.os }}-${{ steps.playwright-version.outputs.version }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            playwright-${{ runner.os }}-${{ steps.playwright-version.outputs.version }}-
+            playwright-${{ runner.os }}-
+
       - name: Install Playwright Dependencies
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install --with-deps
+
       - name: Run Playwright e2e tests
         run: npm run test:e2e:ci
+
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
