@@ -26,22 +26,23 @@ npm run serve
 <aspire>
 ├── public/icons/              # Icons to be served from back-end
 └── src/
-    ├── assets/icons           # Icons imported within code directly
-    ├── pages/cards/           # Card management pages
-    ├── components/            # Reusable UI components
-    ├── stores/                # Pinia state management
-    ├── services/              # API and business logic
-    │   ├── api/               # API endpoints and HTTP calls
-    │   ├── mock-backend/      # Business logic, card generation, new card form validation
-    │   └── mockery/           # Intercepts api calls to return mock responses
-    │   └── mock-db/           # Mock db using IndexedDB
-    │       └── migrations/    # Migrations for IndexedDB
-    ├── types/                 # TypeScript definitions
-    │   ├── api/               # API request/response types
-    │   ├── db/                # Database model types
-    │   └── ui/                # UI model and component types
-    └── utils/                 # Helper functions
-        └── form.ts            # form validation rules and helpers
+│   ├── assets/icons           # Icons imported within code directly
+│   ├── pages/cards/           # Card management pages
+│   ├── components/            # Reusable UI components
+│   ├── stores/                # Pinia state management
+│   ├── services/              # API and business logic
+│   │   ├── api/               # API endpoints and HTTP calls
+│   │   ├── mock-backend/      # Business logic, card generation, new card form validation
+│   │   └── mockery/           # Intercepts api calls to return mock responses
+│   │   └── mock-db/           # Mock db using IndexedDB
+│   │       └── migrations/    # Migrations for IndexedDB
+│   ├── types/                 # TypeScript definitions
+│   │   ├── api/               # API request/response types
+│   │   ├── db/                # Database model types
+│   │   └── ui/                # UI model and component types
+│   └── utils/                 # Helper functions
+│       └── form.ts            # form validation rules and helpers
+└── tests/e2e                  # Playwright end-to-end tests
 ```
 
 ## Tech Stack
