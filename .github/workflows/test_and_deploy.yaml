@@ -48,22 +48,20 @@ jobs:
         id: playwright-version
         run: echo "version=$(npm list @playwright/test --depth=0 | grep @playwright/test | sed 's/.*@playwright\/test@//' | sed 's/ .*//')" >> $GITHUB_OUTPUT
 
-      - name: Cache Playwright
+      - name: Cache Playwright browsers
         uses: actions/cache@v4
         id: playwright-cache
         with:
-          path: |
-            ~/.cache/ms-playwright
-            /usr/lib/x86_64-linux-gnu
-            /usr/share/fonts
-          key: playwright-${{ runner.os }}-${{ steps.playwright-version.outputs.version }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            playwright-${{ runner.os }}-${{ steps.playwright-version.outputs.version }}-
-            playwright-${{ runner.os }}-
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ steps.playwright-version.outputs.version }}
 
       - name: Install Playwright Dependencies
         if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install --with-deps
+
+      - name: Install only system dependencies if cache hit
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
+        run: npx playwright install-deps
 
       - name: Run Playwright e2e tests
         run: npm run test:e2e:ci
