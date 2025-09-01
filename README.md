@@ -24,8 +24,10 @@ npm run serve
 
 ```
 <aspire>
+├── .github/workflows/
+|   └── test_and_deploy.yaml   # Workflow to run tests before deployment
 ├── public/icons/              # Icons to be served from back-end
-└── src/
+├── src/
 │   ├── assets/icons           # Icons imported within code directly
 │   ├── pages/cards/           # Card management pages
 │   ├── components/            # Reusable UI components
