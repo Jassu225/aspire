@@ -17,7 +17,9 @@
     "test:unit": "TEST_TYPE=unit vitest src/**/*.vitest.spec.ts",
     "test:unit:ci": "TEST_TYPE=unit vitest run src/**/*.vitest.spec.ts",
     "test:integration": "TEST_TYPE=integration vitest src/**/*.vitest.integration.test.ts",
-    "test:integration:ci": "TEST_TYPE=integration vitest run src/**/*.vitest.integration.test.ts"
+    "test:integration:ci": "TEST_TYPE=integration vitest run src/**/*.vitest.integration.test.ts",
+    "test:e2e": "npm run build && PORT=4001 TEST_TYPE=e2e playwright test",
+    "test:e2e:ci": "npm run build && PORT=4001 CI=true TEST_TYPE=e2e playwright test"
   },
   "dependencies": {
     "@quasar/extras": "^1.16.4",

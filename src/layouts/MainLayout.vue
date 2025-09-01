@@ -9,9 +9,19 @@
       persistent
       :width="340"
       class="q-py-xl main-layout__drawer"
+      :data-testid="mainLayout.drawer.id"
     >
-      <q-img src="~assets/icons/logo/logo-with-name.svg" width="125px" class="lr-margin" />
-      <p style="margin-bottom: 0; margin-top: 20px" class="trust-indicator lr-padding">
+      <q-img
+        src="~assets/icons/logo/logo-with-name.svg"
+        width="125px"
+        class="lr-margin"
+        :data-testid="mainLayout.drawer.logoId"
+      />
+      <p
+        style="margin-bottom: 0; margin-top: 20px"
+        class="trust-indicator lr-padding"
+        :data-testid="mainLayout.drawer.trustIndicatorId"
+      >
         Trusted way of banking for 3,000+ SMEs and startups in Singapore
       </p>
       <q-list>
@@ -33,32 +43,38 @@ import CardBackIcon from 'assets/icons/navigation/card-back.svg?component';
 import TransactionsIcon from 'assets/icons/navigation/transactions.svg?component';
 import CreditIcon from 'assets/icons/navigation/credit.svg?component';
 import AccountIcon from 'assets/icons/navigation/account.svg?component';
+import { mainLayout } from 'src/constants/tests/locators/main-layout';
 
 const linksList: NavLinkProps[] = [
   {
     title: 'Home',
     link: '/',
     icon: HomeIcon,
+    dataTestId: mainLayout.drawer.navLinks.homeId,
   },
   {
     title: 'Cards',
     icon: CardBackIcon,
     link: '/cards',
+    dataTestId: mainLayout.drawer.navLinks.cardsId,
   },
   {
     title: 'Payments',
     icon: TransactionsIcon,
     link: '/payments',
+    dataTestId: mainLayout.drawer.navLinks.paymentsId,
   },
   {
     title: 'Credit',
     icon: CreditIcon,
     link: '/credit',
+    dataTestId: mainLayout.drawer.navLinks.creditId,
   },
   {
     title: 'Settings',
     icon: AccountIcon,
     link: '/settings',
+    dataTestId: mainLayout.drawer.navLinks.settingsId,
   },
 ];
 

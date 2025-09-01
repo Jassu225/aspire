@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="link" class="nav-link">
+  <router-link :to="link" class="nav-link" :data-testid="dataTestId">
     <q-item :class="$attrs.class">
       <q-item-section avatar>
         <q-icon size="24px"><component :is="icon" /></q-icon>
@@ -22,9 +22,10 @@ export interface NavLinkProps {
   title: string;
   link?: string;
   icon: Component;
+  dataTestId: string;
 }
 
-const { link = '#', title, icon } = defineProps<NavLinkProps>();
+const { link = '#', title, icon, dataTestId } = defineProps<NavLinkProps>();
 </script>
 
 <style lang="scss" scoped>
