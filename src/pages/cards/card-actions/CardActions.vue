@@ -1,5 +1,8 @@
 <template>
-  <div class="card-actions row items-center justify-between tw:rounded-2xl tw:px-7 tw:py-5">
+  <div
+    class="card-actions row items-center justify-between tw:rounded-2xl tw:px-7 tw:py-5"
+    :data-testid="cardsPage.cardAction.cardActionContainer"
+  >
     <q-btn
       v-for="action in cardsStore.selectedCard?.actions"
       :key="action.type"
@@ -19,6 +22,7 @@
 
 <script setup lang="ts">
 import useCardsStore from 'src/stores/cards';
+import { cardsPage } from 'src/constants/tests/locators/cards-page';
 
 const cardsStore = useCardsStore();
 

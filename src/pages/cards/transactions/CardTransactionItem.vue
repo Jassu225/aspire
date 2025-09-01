@@ -1,5 +1,8 @@
 <template>
-  <q-item class="card-transaction-item items-start">
+  <q-item
+    class="card-transaction-item items-start"
+    :data-testid="cardsPage.cardTransaction.cardTransactionItem"
+  >
     <q-item-section side class="icon-wrapper">
       <div class="icon-container tw:rounded-full tw:relative">
         <div
@@ -30,21 +33,31 @@
               negative: amount.cashFlow === CashFlow.OUTWARDS,
             }"
           >
-            <span>{{ amount.sign }}</span>
-            <span class="tw:ml-1">{{ amount.currencySign }}</span>
-            <span>&nbsp;{{ amount.value }}</span>
+            <span :data-testid="cardsPage.cardTransaction.cardTransactionAmountSign">{{
+              amount.sign
+            }}</span>
+            <span
+              class="tw:ml-1"
+              :data-testid="cardsPage.cardTransaction.cardTransactionAmountCurrency"
+              >{{ amount.currencySign }}</span
+            >
+            <span :data-testid="cardsPage.cardTransaction.cardTransactionAmountValue"
+              >&nbsp;{{ amount.value }}</span
+            >
           </span>
           <q-icon name="r_arrow_forward_ios" tag="span" class="tw:ml-2"
         /></span>
       </div>
-      <span class="date tw:mt-1">{{
+      <span class="date tw:mt-1" :data-testid="cardsPage.cardTransaction.cardTransactionDate">{{
         formatAsDate(transaction.settledAt || transaction.createdAt)
       }}</span>
       <div class="row no-wrap items-center tw:gap-1 tw:mt-3">
         <div class="icon-container row inline flex-center tw:rounded-full">
           <q-icon size="10px" color="white"><CardIcon /></q-icon>
         </div>
-        <span class="caption">{{ getTransactionCaption(transaction.type, cardType) }}</span>
+        <span class="caption" :data-testid="cardsPage.cardTransaction.cardTransactionDescription">{{
+          getTransactionCaption(transaction.type, cardType)
+        }}</span>
       </div>
     </q-item-section>
   </q-item>
@@ -61,6 +74,7 @@ import { type CardType } from 'src/types/db/card';
 import { toPx } from 'src/utils/ui';
 import { storeToRefs } from 'pinia';
 import useCardsStore from 'src/stores/cards';
+import { cardsPage } from 'src/constants/tests/locators/cards-page';
 
 const props = defineProps<{ transaction: UiCardTransaction; cardType: CardType }>();
 

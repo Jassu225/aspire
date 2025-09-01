@@ -9,26 +9,29 @@
     transition-prev="slide-right"
     transition-next="slide-left"
     height="364px"
+    :data-testid="cardsPage.cardsCarousel.cardsContainer"
   >
     <template #navigation-icon="{ active, onClick, index }">
       <q-btn round @click="onClick" size="xs" push unelevated flat>
         <span
           class="tw:rounded-full tw:inline-block control-icon"
           :class="{ active: active || cards[index]?.uid === cardsStore.selectedCardUid }"
+          :data-testid="cardsPage.cardsCarousel.cardNavigationButton"
         ></span>
       </q-btn>
     </template>
     <q-carousel-slide v-for="card in cards" :key="card.uid" :name="card.uid">
-      <CardView :card="card" />
+      <CardView :card="card" :data-testid="cardsPage.cardsCarousel.cardViewContainer" />
     </q-carousel-slide>
   </q-carousel>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import CardView from '../cards-carousel/CardView.vue';
 import useCardsStore from 'src/stores/cards';
 import { emptyList } from 'src/utils/empty';
+import { cardsPage } from 'src/constants/tests/locators/cards-page';
+import CardView from '../cards-carousel/CardView.vue';
 
 const cardsStore = useCardsStore();
 const cards = computed(() => cardsStore.cardsInfoResponse?.cards || emptyList);

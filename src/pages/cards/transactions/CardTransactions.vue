@@ -11,7 +11,7 @@
         :key="transaction.uid"
       >
         <q-separator v-if="index > 0" />
-        <CardTransactionItem :transaction="transaction" :card-type="CardType.DEBIT" />
+        <CardTransactionItem :transaction="transaction" :card-type="selectedCard?.type!" />
       </template>
       <q-item v-if="cardsStore.isFetchingSelectedCardTransactions">
         <q-item-section>
@@ -38,11 +38,10 @@ import { storeToRefs } from 'pinia';
 import CollapsibleView from 'src/components/CollapsibleView.vue';
 import TransactionsIcon from 'assets/icons/card/transactions.svg?component';
 import useCardsStore from 'src/stores/cards';
-import { CardType } from 'src/types/db/card/index';
 import CardTransactionItem from './CardTransactionItem.vue';
 
 const cardsStore = useCardsStore();
-const { selectedCardUid } = storeToRefs(cardsStore);
+const { selectedCardUid, selectedCard } = storeToRefs(cardsStore);
 
 const expanded = ref(false);
 

@@ -6,6 +6,7 @@
       @click="detailsVisible = !detailsVisible"
       class="visibility-btn q-ml-auto"
       :style="{ color: card.cardDesign?.backgroundColor }"
+      :data-testid="cardsPage.cardsCarousel.card.visibilityButton"
     >
       <q-icon :name="detailsVisible ? 'o_visibility_off' : 'visibility'" size="xs" />
       <span class="tw:ml-1 tw:font-bold">{{ detailsVisible ? 'Hide' : 'Show' }} details</span>
@@ -15,7 +16,11 @@
       :style="{ backgroundColor: card.cardDesign?.backgroundColor }"
     >
       <div class="row no-wrap justify-between">
-        <span :style="{ color: card.cardDesign?.textColor }">{{ enumToSentence(card.type) }}</span>
+        <span
+          :style="{ color: card.cardDesign?.textColor }"
+          :data-testid="cardsPage.cardsCarousel.card.cardType"
+          >{{ enumToSentence(card.type) }}</span
+        >
         <div v-if="logo !== null || card.issuingBank">
           <q-img
             no-spinner
@@ -31,13 +36,17 @@
             v-if="(logo === null || !card.cardDesign?.logoHasName) && card.issuingBank"
             class="tw:ml-1"
             :style="{ color: card.cardDesign?.textColor }"
+            :data-testid="cardsPage.cardsCarousel.card.issuingBank"
             >{{ capitalizeSentence(card.issuingBank) }}</span
           >
         </div>
       </div>
-      <span class="tw:m-0 tw:text-2xl tw:mt-7" :style="{ color: card.cardDesign?.textColor }">{{
-        card.cardHolderName
-      }}</span>
+      <span
+        class="tw:m-0 tw:text-2xl tw:mt-7"
+        :style="{ color: card.cardDesign?.textColor }"
+        :data-testid="cardsPage.cardsCarousel.card.cardHolderName"
+        >{{ card.cardHolderName }}</span
+      >
       <div
         class="card-number row items-center tw:mt-8"
         :style="{ color: card.cardDesign?.textColor }"
@@ -47,6 +56,7 @@
           :key="index"
           class="card-number-group"
           :class="{ mask: !detailsVisible && index < cardNumberGroups.length - 1 }"
+          :data-testid="cardsPage.cardsCarousel.card.cardNumberContainer"
         >
           {{
             !detailsVisible && index < cardNumberGroups.length - 1
@@ -60,16 +70,25 @@
           class="expiry-cvv-container row items-center tw:text=[13px] tw:mt-5"
           :style="{ color: card.cardDesign?.textColor }"
         >
-          <span class="expiry-container">
+          <span
+            class="expiry-container"
+            :data-testid="cardsPage.cardsCarousel.card.expiryContainer"
+          >
             Thru: <span class="expiry tw:tracking-[1px]">{{ card.expiry }}</span>
           </span>
-          <div class="cvv-container row inline items-center tw:ml-9">
+          <div
+            class="cvv-container row inline items-center tw:ml-9"
+            :data-testid="cardsPage.cardsCarousel.card.cvvContainer"
+          >
             <span>CVV:&nbsp;</span>
             <span v-if="detailsVisible" class="cvv">{{ card.cvv || '- - -' }}</span>
             <span v-else class="mask">&#10034; &#10034; &#10034;</span>
           </div>
         </div>
-        <div class="row no-wrap justify-end tw:self-end">
+        <div
+          class="row no-wrap justify-end tw:self-end"
+          :data-testid="cardsPage.cardsCarousel.card.networkLogoContainer"
+        >
           <q-img
             v-if="card.cardDesign?.networkLogo?.url"
             :src="card.cardDesign.networkLogo.url"
@@ -91,6 +110,7 @@ import { splitCardNumber } from 'src/utils/card';
 import { toPx } from 'src/utils/ui';
 import { enumToSentence } from 'src/utils/enum';
 import { capitalizeSentence } from 'src/utils/text';
+import { cardsPage } from 'src/constants/tests/locators/cards-page';
 
 const props = defineProps<{
   card: Card;

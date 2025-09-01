@@ -1,6 +1,6 @@
 <template>
   <q-dialog v-model="model" persistent>
-    <q-card style="min-width: 350px">
+    <q-card style="min-width: 350px" :data-testid="cardsPage.newCardForm.id">
       <q-card-section>
         <div class="text-h6">Issue new card</div>
       </q-card-section>
@@ -21,6 +21,7 @@
             label="Select card type *"
             lazy-rules
             :rules="[requiredRule()]"
+            :data-testid="cardsPage.newCardForm.cardTypeSelect"
           />
           <q-select
             v-model="newCardFormData.network"
@@ -29,6 +30,7 @@
             label="Select card network *"
             lazy-rules
             :rules="[requiredRule()]"
+            :data-testid="cardsPage.newCardForm.cardNetworkSelect"
           />
           <q-input
             filled
@@ -36,6 +38,7 @@
             label="Name on the card *"
             lazy-rules
             :rules="[requiredRule(), nameRule(), maxLengthRule(MAX_CARD_NAME_LENGTH)]"
+            :data-testid="cardsPage.newCardForm.nameOnCardInput"
           />
           <q-select
             v-model="newCardFormData.validityInYears"
@@ -43,11 +46,22 @@
             label="Validity (in years) *"
             lazy-rules
             :rules="[requiredRule()]"
+            :data-testid="cardsPage.newCardForm.validityInYearsSelect"
           />
 
           <q-card-actions align="right" class="text-primary">
-            <q-btn flat label="Cancel" v-close-popup />
-            <q-btn label="Submit" type="submit" color="primary" />
+            <q-btn
+              flat
+              label="Cancel"
+              v-close-popup
+              :data-testid="cardsPage.newCardForm.cancelButton"
+            />
+            <q-btn
+              label="Submit"
+              type="submit"
+              color="primary"
+              :data-testid="cardsPage.newCardForm.submitButton"
+            />
           </q-card-actions>
         </q-form>
       </q-card-section>
@@ -66,6 +80,7 @@ import type { SubmitNewCardFormRequest } from 'src/types/api/cards';
 import { useFetch } from 'src/composables/useFetch';
 import { submitNewCardForm } from 'src/services/api/cards';
 import useCardsStore from 'src/stores/cards';
+import { cardsPage } from 'src/constants/tests/locators/cards-page';
 
 const model = defineModel<boolean>({
   default: () => false,

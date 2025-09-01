@@ -2,15 +2,21 @@
   <q-page padding>
     <!-- content -->
     <div class="row justify-between items-end tw:pb-1">
-      <div class="balance-container">
-        <p>Available balance</p>
+      <div class="balance-container" :data-testid="cardsPage.availableBalanceContainer.id">
+        <p :data-testid="cardsPage.availableBalanceContainer.label">Available balance</p>
         <div v-if="selectedCard" class="row inline items-center" style="gap: 12px">
           <div class="currency-sign-container">
-            <span class="sign text-white tw:font-bold">{{
-              getCurrencySign(selectedCard.currency)
-            }}</span>
+            <span
+              class="sign text-white tw:font-bold"
+              :data-testid="cardsPage.availableBalanceContainer.amount.sign"
+              >{{ getCurrencySign(selectedCard.currency) }}</span
+            >
           </div>
-          <span class="balance-amount tw:text-[26px] tw:font-bold">{{ usableLimit }}</span>
+          <span
+            class="balance-amount tw:text-[26px] tw:font-bold"
+            :data-testid="cardsPage.availableBalanceContainer.amount.value"
+            >{{ usableLimit }}</span
+          >
         </div>
       </div>
       <q-btn
@@ -18,6 +24,7 @@
         class="new-card-btn"
         :ripple="false"
         :no-caps="true"
+        :data-testid="cardsPage.newCardButton.id"
         @click="showNewCardForm = true"
       >
         <q-icon name="r_add_circle" />
@@ -41,6 +48,7 @@
         :name="tab.type"
         :label="tab.label"
         :ripple="false"
+        :data-testid="cardsPage.tabs[tab.type]"
       />
     </q-tabs>
     <q-tab-panels v-model="selectedTab" animated keep-alive>
@@ -58,14 +66,13 @@
 import { computed, onWatcherCleanup, ref, watch } from 'vue';
 import { storeToRefs } from 'pinia';
 import { getCurrencySign } from 'src/utils/number';
+import { cardsPage } from 'src/constants/tests/locators/cards-page';
 import { formatAsCurrencyWithoutSign } from 'src/utils/number';
 import useCardsStore from 'src/stores/cards';
 import { tabs } from './types';
 import NewCardForm from './NewCardForm.vue';
 
 const { selectedTab, selectedCard } = storeToRefs(useCardsStore());
-
-console.log(selectedCard.value?.currency);
 
 const usableLimit = computed(() =>
   selectedCard.value
