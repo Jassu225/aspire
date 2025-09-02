@@ -31,6 +31,7 @@
               height: toPx(logo.height),
               alt: logo.alt || 'Card Logo',
             }"
+            :data-testid="cardsPage.cardsCarousel.card.bankLogo"
           />
           <span
             v-if="(logo === null || !card.cardDesign?.logoHasName) && card.issuingBank"
@@ -50,13 +51,13 @@
       <div
         class="card-number row items-center tw:mt-8"
         :style="{ color: card.cardDesign?.textColor }"
+        :data-testid="cardsPage.cardsCarousel.card.cardNumberContainer"
       >
         <span
           v-for="(group, index) in cardNumberGroups"
           :key="index"
           class="card-number-group"
           :class="{ mask: !detailsVisible && index < cardNumberGroups.length - 1 }"
-          :data-testid="cardsPage.cardsCarousel.card.cardNumberContainer"
         >
           {{
             !detailsVisible && index < cardNumberGroups.length - 1

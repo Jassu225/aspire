@@ -111,7 +111,7 @@ export const getCardsFakeData: () => Card[] = () => [
   },
   {
     uid: process.env.NODE_ENV === 'test' ? nanoid(12) : 'omAesPcPttgV',
-    type: CardType.DEBIT,
+    type: CardType.CREDIT,
     cardNumber: '1111 5678 9012 3456',
     expiry: '12/26',
     cardHolderName: 'Jane Doe',
