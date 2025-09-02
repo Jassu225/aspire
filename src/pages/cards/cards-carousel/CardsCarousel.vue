@@ -12,11 +12,18 @@
     :data-testid="cardsPage.cardsCarousel.cardsContainer"
   >
     <template #navigation-icon="{ active, onClick, index }">
-      <q-btn round @click="onClick" size="xs" push unelevated flat>
+      <q-btn
+        round
+        @click="onClick"
+        size="xs"
+        push
+        unelevated
+        flat
+        :data-testid="cardsPage.cardsCarousel.cardNavigationButton"
+      >
         <span
           class="tw:rounded-full tw:inline-block control-icon"
           :class="{ active: active || cards[index]?.uid === cardsStore.selectedCardUid }"
-          :data-testid="cardsPage.cardsCarousel.cardNavigationButton"
         ></span>
       </q-btn>
     </template>
